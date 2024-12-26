@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A348" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="BodyEditor" representedClassName="BodyEditor" syncable="YES" codeGenerationType="class">
+        <attribute name="accessories" optional="YES" attributeType="String"/>
+        <attribute name="accessoriesZ" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="body" optional="YES" attributeType="String"/>
+        <attribute name="bodyZ" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bottom" optional="YES" attributeType="String"/>
+        <attribute name="bottomZ" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fullImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hair" optional="YES" attributeType="String"/>
+        <attribute name="hairZ" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="idPeople" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="randomKey" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="shoes" optional="YES" attributeType="String"/>
+        <attribute name="shoesZ" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="smallPreviewImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="top" optional="YES" attributeType="String"/>
+        <attribute name="topZ" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="BodyElement" representedClassName="BodyElement" syncable="YES" codeGenerationType="class">
+        <attribute name="editImageString" optional="YES" attributeType="String"/>
+        <attribute name="editroImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="genderType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="idElement" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isNew" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isTop" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="previewImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="previewImageString" optional="YES" attributeType="String"/>
+        <attribute name="typeOfPart" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="zIndex" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Farm" representedClassName="Farm" syncable="YES" codeGenerationType="class">
+        <attribute name="farmDescriptions" optional="YES" attributeType="String"/>
+        <attribute name="file" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="isFavorited" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="new" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="top" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Map" representedClassName="Map" syncable="YES" codeGenerationType="class">
+        <attribute name="file" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="isFavorited" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="mapDescriptions" optional="YES" attributeType="String"/>
+        <attribute name="new" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="top" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Mod" representedClassName="Mod" syncable="YES" codeGenerationType="class">
+        <attribute name="file" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="isFavorited" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="modDescriptions" optional="YES" attributeType="String"/>
+        <attribute name="new" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="top" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Skins" representedClassName="Skins" syncable="YES" codeGenerationType="class">
+        <attribute name="file" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="isFavorited" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="new" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="skinsDescription" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="top" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+</model>
