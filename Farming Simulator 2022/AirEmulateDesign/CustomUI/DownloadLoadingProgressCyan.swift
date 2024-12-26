@@ -15,7 +15,7 @@ struct DownloadLoadingProgressCyan: View {
         HStack(spacing: bigSize ? 25 : 8){
             ForEach(0..<20) { item in
                 RoundedRectangle(cornerRadius: 50)
-                    .fill(item < howManyDownload ? ColorTurboGear.colorPicker(.cyan) : ColorTurboGear.colorPicker(.gray))
+                    .fill(item < howManyDownload ? ColorTurboGear.colorPicker(.green) : ColorTurboGear.colorPicker(.green))
                     .rotationEffect(.degrees(25))
                     .frame(maxWidth: 15)
             }
@@ -24,7 +24,7 @@ struct DownloadLoadingProgressCyan: View {
         .padding(.horizontal, bigSize ? 35 : 24)
         .frame(height: 90)
         .frame(maxWidth: .infinity)
-        .background(ColorTurboGear.colorPicker(.darkGray))
+        .background(ColorTurboGear.colorPicker(.grey))
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .onAppear(){
             howManyDownload = Int(progressDownload * 20)

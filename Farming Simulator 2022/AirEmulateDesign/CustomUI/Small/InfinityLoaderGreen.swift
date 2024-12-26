@@ -3,11 +3,11 @@
 //  Farming Simulator 2022
 //
 //  Created by Sim on 25/09/24.
-//
+//  Redesigned By Adi
 
 import SwiftUI
 
-struct InfinityLoaderCyan: View {
+struct InfinityLoaderGreen: View {
     @State var progressLoader: Int = 0
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State private var stopTimer: Bool = false
@@ -15,7 +15,7 @@ struct InfinityLoaderCyan: View {
         Circle()
             .fill(Color.clear)
             .overlay(
-                AngularGradient(colors: [ColorTurboGear.colorPicker(.cyan).opacity(0), ColorTurboGear.colorPicker(.cyan).opacity(0.5), ColorTurboGear.colorPicker(.cyan)], center: .center)
+                AngularGradient(colors: [ColorTurboGear.colorPicker(.green).opacity(0), ColorTurboGear.colorPicker(.green).opacity(0.5), ColorTurboGear.colorPicker(.green)], center: .center)
                     .rotationEffect(.degrees(Double(progressLoader * 45)))
             )
             .clipShape(Circle())
@@ -47,5 +47,5 @@ struct InfinityLoaderCyan: View {
 }
 
 #Preview {
-    InfinityLoaderCyan()
+    InfinityLoaderGreen()
 }

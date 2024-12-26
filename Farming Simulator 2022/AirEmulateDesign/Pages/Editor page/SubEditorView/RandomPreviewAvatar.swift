@@ -75,7 +75,7 @@ struct RandomPreviewAvatar: View {
                             .resizable()
                             .scaledToFit()
                     } else {
-                        InfinityLoaderCyan()
+                        InfinityLoaderGreen()
                             .frame(height: 55)
                     }
                 }

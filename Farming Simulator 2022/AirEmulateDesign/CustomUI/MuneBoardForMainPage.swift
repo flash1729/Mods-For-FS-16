@@ -44,5 +44,5 @@ struct MuneBoardForMainPage: View {
 }
 
 #Preview {
-    MuneBoardForMainPage(iconType: .nickGen, choosedItem: .constant(.dads), openPage: .constant(false))
+    MuneBoardForMainPage(iconType: .editor, choosedItem: .constant(.dads), openPage: .constant(false))
 }

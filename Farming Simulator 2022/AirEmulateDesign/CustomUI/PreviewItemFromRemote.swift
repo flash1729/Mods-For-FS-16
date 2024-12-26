@@ -34,7 +34,7 @@ struct PreviewItemFromRemote: View {
                                 .scaledToFill()
                             if imageData == nil {
                                 ColorTurboGear.colorPicker(.darkGray)
-                                InfinityLoaderCyan()
+                                InfinityLoaderGreen()
                                     .frame(height: 55)
                             }
                         }

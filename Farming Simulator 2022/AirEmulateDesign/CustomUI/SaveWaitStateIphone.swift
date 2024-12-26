@@ -26,7 +26,7 @@ struct SaveWaitStateIphone: View {
     
     private var waitCustomView: some View {
         VStack(spacing: 25) {
-            InfinityLoaderCyan()
+            InfinityLoaderGreen()
                 .frame(height: 55)
             Text("Please wait...")
                 .font(FontTurboGear.montserratStyle(size: 24, type: .medium))

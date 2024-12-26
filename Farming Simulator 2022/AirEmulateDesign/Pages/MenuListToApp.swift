@@ -129,6 +129,49 @@ struct MenuListToApp: View {
     }
 }
 
-#Preview {
-    MenuListToApp()
+#if DEBUG
+struct MenuListToApp_Previews: PreviewProvider {
+    static var previews: some View {
+        let persistenceController = PersistenceController(inMemory: true)
+        let context = persistenceController.container.viewContext
+        
+        // Create a sample BodyElement for preview
+        let bodyElement = BodyElement(context: context)
+        bodyElement.idElement = UUID()
+        bodyElement.previewImageString = "sample"
+        bodyElement.editImageString = "sample"
+        bodyElement.genderType = 0
+        bodyElement.typeOfPart = 0
+        bodyElement.zIndex = "0"
+        
+        try? context.save()
+        
+        return Group {
+            // iPhone Preview
+            MenuListToApp(
+                crotel: LoadingPreviewVMCyan(),
+                viewMotel: EditorViewModel()
+            )
+            .environment(\.managedObjectContext, context)
+            .environmentObject(NetworkManager_SimulatorFarm())
+            .environmentObject(DropBoxManager_SimulatorFarm.shared)
+            .previewDisplayName("iPhone")
+            
+            // iPad Preview
+            MenuListToApp(
+                crotel: LoadingPreviewVMCyan(),
+                viewMotel: EditorViewModel()
+            )
+            .environment(\.managedObjectContext, context)
+            .environmentObject(NetworkManager_SimulatorFarm())
+            .environmentObject(DropBoxManager_SimulatorFarm.shared)
+            .previewDevice(PreviewDevice(rawValue: "iPad Pro (11-inch) (4th generation)"))
+            .previewDisplayName("iPad")
+        }
+    }
 }
+#endif
+
+//#Preview {
+//    MenuListToApp()
+//}

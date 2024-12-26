@@ -162,8 +162,8 @@ struct AboutItemPageWithDownloadButton: View {
                         .resizable()
                         .scaledToFill()
                     if imageData == nil {
-                        ColorTurboGear.colorPicker(.darkGray)
-                        InfinityLoaderCyan()
+                        ColorTurboGear.colorPicker(.grey)
+                        InfinityLoaderGreen()
                             .frame(height: 55)
                     }
                 }
@@ -281,6 +281,52 @@ struct AboutItemPageWithDownloadButton: View {
     
 }
 
-#Preview {
-    AboutItemPageWithDownloadButton(titleItemName: "Name", favoriteState: true, textItem: "Test text", idItemToLike: {_ in}, clearItemName: "")
+#if DEBUG
+struct AboutItemPageWithDownloadButton_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            // Regular state
+            AboutItemPageWithDownloadButton(
+                titleItemName: "Sample Item",
+                favoriteState: false,
+                imageData: nil,
+                linkDownloadItem: "sample/path",
+                textItem: "Sample description text",
+                idItemToLike: { _ in },
+                clearItemName: "sample"
+            )
+            .previewDisplayName("Regular State")
+            
+            // Favorited state
+            AboutItemPageWithDownloadButton(
+                titleItemName: "Favorited Item",
+                favoriteState: true,
+                imageData: nil,
+                linkDownloadItem: "sample/path",
+                textItem: "Sample description with favorite",
+                idItemToLike: { _ in },
+                clearItemName: "sample"
+            )
+            .previewDisplayName("Favorited State")
+            
+            // With Image Data
+            AboutItemPageWithDownloadButton(
+                titleItemName: "With Image",
+                favoriteState: false,
+                imageData: UIImage(systemName: "photo")?.pngData(),
+                linkDownloadItem: "sample/path",
+                textItem: "Sample with image",
+                idItemToLike: { _ in },
+                clearItemName: "sample"
+            )
+            .previewDisplayName("With Image")
+        }
+        .environmentObject(NetworkManager_SimulatorFarm())
+        .environmentObject(DropBoxManager_SimulatorFarm.shared)
+    }
 }
+#endif
+
+//#Preview {
+//    AboutItemPageWithDownloadButton(titleItemName: "Name", favoriteState: true, textItem: "Test text", idItemToLike: {_ in}, clearItemName: "")
+//}

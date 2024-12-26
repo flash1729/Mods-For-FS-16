@@ -41,7 +41,7 @@ struct ElementCellForEditor: View {
                             } else {
                                 ZStack {
                                     ColorTurboGear.colorPicker(.darkGray)
-                                    InfinityLoaderCyan()
+                                    InfinityLoaderGreen()
                                         .frame(height: 55)
                                 }
                                 .onAppear {

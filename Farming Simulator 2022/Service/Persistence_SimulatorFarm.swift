@@ -18,30 +18,48 @@ struct PersistenceController {
     private var farms = [Farm]()
     private var skins = [Skins]()
     
-    private init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "mods_farming_simulator22")
-        
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+//    private init(inMemory: Bool = false) {
+//        container = NSPersistentContainer(name: "mods_farming_simulator22")
+//        
+//        if inMemory {
+//            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+//        }
+//        
+//        container.loadPersistentStores { description, error in
+//            guard error == nil else { print("Error of loading: \(error!.localizedDescription)"); return }
+//        }
+//        container.viewContext.automaticallyMergesChangesFromParent = true
+//        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+//        mods = arrayOf_SimulatorFarm (Mod.self, context: container.viewContext) ?? []
+//        maps = arrayOf_SimulatorFarm (Map.self, context: container.viewContext) ?? []
+//        farms = arrayOf_SimulatorFarm (Farm.self, context: container.viewContext) ?? []
+//        skins = arrayOf_SimulatorFarm (Skins.self, context: container.viewContext) ?? []
+//        
+//        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+//            fatalError("Unable to access document directory")
+//        }
+//        let dbUrl = documentDirectory.appendingPathComponent("mods_farming_simulator22")
+//        print("Path to database: \(dbUrl.path)")
+////        saveAll_SimulatorFarm()
+//    }
+    
+    init(inMemory: Bool = false) {
+            container = NSPersistentContainer(name: "mods_farming_simulator22")
+            
+            if inMemory {
+                container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+            }
+            
+            container.loadPersistentStores { description, error in
+                guard error == nil else { print("Error of loading: \(error!.localizedDescription)"); return }
+            }
+            container.viewContext.automaticallyMergesChangesFromParent = true
+            container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+            mods = arrayOf_SimulatorFarm(Mod.self, context: container.viewContext) ?? []
+            maps = arrayOf_SimulatorFarm(Map.self, context: container.viewContext) ?? []
+            farms = arrayOf_SimulatorFarm(Farm.self, context: container.viewContext) ?? []
+            skins = arrayOf_SimulatorFarm(Skins.self, context: container.viewContext) ?? []
         }
-        
-        container.loadPersistentStores { description, error in
-            guard error == nil else { print("Error of loading: \(error!.localizedDescription)"); return }
-        }
-        container.viewContext.automaticallyMergesChangesFromParent = true
-        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        mods = arrayOf_SimulatorFarm (Mod.self, context: container.viewContext) ?? []
-        maps = arrayOf_SimulatorFarm (Map.self, context: container.viewContext) ?? []
-        farms = arrayOf_SimulatorFarm (Farm.self, context: container.viewContext) ?? []
-        skins = arrayOf_SimulatorFarm (Skins.self, context: container.viewContext) ?? []
-        
-        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            fatalError("Unable to access document directory")
-        }
-        let dbUrl = documentDirectory.appendingPathComponent("mods_farming_simulator22")
-        print("Path to database: \(dbUrl.path)")
-//        saveAll_SimulatorFarm()
-    }
     
     
     

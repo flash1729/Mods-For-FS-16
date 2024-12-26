@@ -41,7 +41,7 @@ struct EditorConfigurator: View {
                                 .scaledToFit()
                         } else {
                             ColorTurboGear.colorPicker(.darkGray)
-                            InfinityLoaderCyan()
+                            InfinityLoaderGreen()
                                 .frame(height: 55)
                         }
                     }
