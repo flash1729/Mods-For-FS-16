@@ -38,7 +38,7 @@ struct SaveEditorAlert: View {
                 }
             }
             .padding( bigSize ? 51 : 32)
-            .font(FontTurboGear.montserratStyle(size: bigSize ? 32 : 20, type: .bold))
+            .font(FontTurboGear.gilroyStyle(size: bigSize ? 32 : 20, type: .bold))
             .foregroundStyle(.white)
             .frame(maxWidth: 530)
             .background(ColorTurboGear.colorPicker(.dirtYellow))

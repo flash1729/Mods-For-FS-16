@@ -47,7 +47,7 @@ struct AllEditorButtons: View {
                                             }
                                         } label: {
                                             Text("Man")
-                                                .font(FontTurboGear.montserratStyle(size: bigSize ? 34 : 16, type: .semibold))
+                                                .font(FontTurboGear.gilroyStyle(size: bigSize ? 34 : 16, type: .semibold))
                                                 .foregroundColor(.white)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.5)
@@ -60,7 +60,7 @@ struct AllEditorButtons: View {
                                             }
                                         } label: {
                                             Text("Woman")
-                                                .font(FontTurboGear.montserratStyle(size: bigSize ? 34 : 16, type: .semibold))
+                                                .font(FontTurboGear.gilroyStyle(size: bigSize ? 34 : 16, type: .semibold))
                                                 .foregroundColor(.white)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.5)
@@ -68,7 +68,7 @@ struct AllEditorButtons: View {
                                     }
                                 } else {
                                     Text(item.stringValue().capitalized)
-                                        .font(FontTurboGear.montserratStyle(size: bigSize ? 34 : 16, type: .semibold))
+                                        .font(FontTurboGear.gilroyStyle(size: bigSize ? 34 : 16, type: .semibold))
                                         .foregroundColor(.white)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)

@@ -141,7 +141,7 @@ struct AvatarRandomPageViolent: View {
             
             Text("Generate your new avatar")
                 .multilineTextAlignment(.center)
-                .font(FontTurboGear.montserratStyle(size: bigSize ? 28 : 22, type: .semibold))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 28 : 22, type: .semibold))
                 .foregroundColor(.white)
         }
         .padding(.top, bigSize ? 199 : 44)

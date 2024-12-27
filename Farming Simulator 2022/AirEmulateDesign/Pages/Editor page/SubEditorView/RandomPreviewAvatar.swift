@@ -134,7 +134,7 @@ struct RandomPreviewAvatar: View {
                     }
                 })
                 .clipShape(RoundedRectangle(cornerRadius: bigSize ? 30 : 16))
-                .font(FontTurboGear.montserratStyle(size: bigSize ? 34 : 18, type: .semibold))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 34 : 18, type: .semibold))
                 .foregroundColor(.white)
         }
     }

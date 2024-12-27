@@ -14,7 +14,7 @@ enum IconTurboGear {
     static let superBigBackToPad = "superBigBackToPad"
     static let generateNewAvatar = "generateNewAvatar"
     
-    enum MenuIconTurbo {
+    enum MenuIconTurbo: CaseIterable {
         case dads
         case maps
         case plane

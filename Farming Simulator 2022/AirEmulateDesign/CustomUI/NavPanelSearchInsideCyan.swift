@@ -25,7 +25,7 @@ struct NavPanelSearchInsideCyan: View {
                     NavButtonMiniIcon(typeOfImage: IconTurboGear.TopNavIconTurbo.windowIcon)
                 }
                 Text("\(searchTypeElement.rawValue.capitalized)s")
-                    .font(FontTurboGear.montserratStyle(size: 24, type: .bold))
+                    .font(FontTurboGear.gilroyStyle(size: 24, type: .bold))
                     .frame(maxWidth: .infinity)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)

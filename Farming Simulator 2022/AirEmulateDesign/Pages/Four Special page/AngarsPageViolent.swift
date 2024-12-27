@@ -72,7 +72,7 @@ struct AngarsPageViolent: View {
                         }
                     if skinsViewModel.filteredSkins.isEmpty {
                         Text("No result found")
-                            .font(FontTurboGear.montserratStyle(size: 24, type: .medium))
+                            .font(FontTurboGear.gilroyStyle(size: 24, type: .medium))
                             .foregroundColor(.white)
                             .padding(.top, 100)
                     } else {

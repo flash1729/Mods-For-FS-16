@@ -17,7 +17,7 @@ struct BlueButtonEditorWithBorder: View {
             blueButtonTap()
         } label: {
             RoundedRectangle(cornerRadius: bigSize ? 30 : 16)
-                .fill(ColorTurboGear.colorPicker(.cyan))
+                .fill(ColorTurboGear.colorPicker(.green))
                 .frame(height: bigSize ? 100 : 56)
                 .overlay {
                     ZStack {
@@ -57,7 +57,7 @@ struct BlueButtonEditorWithBorder: View {
                                 .rotationEffect(.degrees(-90))
                                 .opacity(0.0)
                             Text(titleButton)
-                                .font(FontTurboGear.montserratStyle(size: bigSize ? 30 : 18, type: .semibold))
+                                .font(FontTurboGear.gilroyStyle(size: bigSize ? 30 : 18, type: .semibold))
                                 .foregroundColor(Color.white)
                                 .frame(maxWidth: .infinity)
                             Image(IconTurboGear.TopNavIconTurbo.topNamBackChevron)

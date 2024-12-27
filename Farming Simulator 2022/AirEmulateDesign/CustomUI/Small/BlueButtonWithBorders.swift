@@ -17,7 +17,7 @@ struct BlueButtonWithBorders: View {
             blueButtonTap()
         } label: {
             RoundedRectangle(cornerRadius: bigSize ? 30 : 16)
-                .fill(ColorTurboGear.colorPicker(.cyan))
+                .fill(ColorTurboGear.colorPicker(.green))
                 .frame(height: bigSize ? 100 : 56)
                 .overlay {
                     ZStack {
@@ -50,7 +50,7 @@ struct BlueButtonWithBorders: View {
                             )
                         
                         Text(titleButton)
-                            .font(FontTurboGear.montserratStyle(size: bigSize ? 30 : 18, type: .semibold))
+                            .font(FontTurboGear.gilroyStyle(size: bigSize ? 30 : 18, type: .semibold))
                             .foregroundColor(Color.white)
                     }
                 }

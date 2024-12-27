@@ -20,7 +20,7 @@ struct SaveStateCustomView: View {
                         .resizable()
                         .scaledToFit()
                     Text(saveState.sendTitleOfIcon())
-                        .font(FontTurboGear.montserratStyle(size: bigSize ? 32 : 16, type: .medium))
+                        .font(FontTurboGear.gilroyStyle(size: bigSize ? 32 : 16, type: .medium))
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)

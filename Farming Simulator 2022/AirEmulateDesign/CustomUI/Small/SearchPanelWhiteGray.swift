@@ -40,7 +40,7 @@ struct SearchPanelWhiteGray: View {
                 }
             }
         }
-        .font(FontTurboGear.montserratStyle(size: bigSize ? 14 : 11, type: .regular))
+        .font(FontTurboGear.gilroyStyle(size: bigSize ? 14 : 11, type: .regular))
         .padding(.horizontal, 19)
         .frame(maxWidth: .infinity)
         .frame(height: 44)

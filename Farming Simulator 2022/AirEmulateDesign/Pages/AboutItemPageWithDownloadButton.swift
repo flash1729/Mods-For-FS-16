@@ -174,11 +174,11 @@ struct AboutItemPageWithDownloadButton: View {
     private var textSection: some View {
         VStack(alignment: .leading, spacing: bigSize ? 31 : 17) {
             Text(titleItemName)
-                .font(FontTurboGear.montserratStyle(size: bigSize ? 33 : 18, type: .semibold))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 33 : 18, type: .semibold))
                 .frame(maxWidth: .infinity)
                 .multilineTextAlignment(.center)
             Text(textItem)
-                .font(FontTurboGear.montserratStyle(size: bigSize ? 25 : 14, type: .regular))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 25 : 14, type: .regular))
         }
         .foregroundColor(.white)
     }

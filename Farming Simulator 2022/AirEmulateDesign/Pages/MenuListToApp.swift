@@ -22,23 +22,40 @@ struct MenuListToApp: View {
     @State var timer: Timer?
     @State var showDownloadView: Bool = false
     @ObservedObject var viewMotel: EditorViewModel = EditorViewModel()
+    
     var body: some View {
         NavigationView {
-            ZStack{
-                allLinks
-                Rectangle()
-                    .fill(Color.clear)
-                    .overlay {
-                        Image(bigSize ? IconTurboGear.superBigBackToPad : IconTurboGear.mediumRareBackToPhone)
-                            .resizable()
-                            .scaledToFill()
+            ZStack {
+                // New white background
+                Color.white.ignoresSafeArea()
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    // Menu Title
+                    Text("Menu")
+                        .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 34, type: .bold))
+                        .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
+                        .padding(.horizontal, 20)
+                        .padding(.top, bigSize ? 80 : 60)
+                        .padding(.bottom, bigSize ? 40 : 24)
+                    
+                    ScrollView(.vertical, showsIndicators: false) {
+                        listOfButtons
+                            .padding(.horizontal, 20)
                     }
-                    .ignoresSafeArea()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                
+                allLinks
+                
+                // Loading View
                 if showDownloadView {
                     LoadingLoaderCustomElement(progressTimer: $crotel.progress)
                         .frame(maxHeight: .infinity, alignment: .center)
-                        .onAppear(){
+                        .onAppear {
                             crotel.progress = 0
+                            Task {
+                                await crotel.addAllElementToCoreData(allData: allData, dropBoxManager: dropBoxManager, viewContext: viewContext)
+                            }
                         }
                         .onChange(of: crotel.progress) { newValue in
                             if newValue >= 100 {
@@ -51,19 +68,9 @@ struct MenuListToApp: View {
                                 }
                             }
                         }
-                        .onAppear(){
-                            Task {
-                                await crotel.addAllElementToCoreData(allData: allData, dropBoxManager: dropBoxManager, viewContext: viewContext)
-                            }
-                        }
-                } else {
-                    listOfButtons
-                        .frame(maxHeight: .infinity)
-                        .paddingFlyBullet()
-                        .transition(.opacity)
-                        .animation(.easeInOut(duration: 2), value: showDownloadView)
                 }
                 
+                // No Internet View
                 if !workInternetState {
                     LostConnectElement {
                         workInternetState.toggle()
@@ -74,16 +81,35 @@ struct MenuListToApp: View {
                         }
                     }
                 }
-                
             }
-            .onAppear(){
+            .onAppear {
                 workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
             }
-            .onDisappear(){
+            .onDisappear {
                 timer?.invalidate()
             }
         }
     }
+    
+    private var listOfButtons: some View {
+        VStack(spacing: bigSize ? 16 : 12) {
+            ForEach(IconTurboGear.MenuIconTurbo.allCases, id: \.self) { menuType in
+                MenuButton(
+                    iconType: menuType,
+                    isSelected: menuType == itemTypeChoosed,
+                    action: {
+                        itemTypeChoosed = menuType
+                        if menuType == .avaGen || menuType == .editor {
+                            showDownloadView.toggle()
+                        } else {
+                            openPage.toggle()
+                        }
+                    }
+                )
+            }
+        }
+    }
+    
     private var allLinks: some View {
         VStack {
             NavigationLink(isActive: $openPage, destination: {
@@ -113,22 +139,40 @@ struct MenuListToApp: View {
                     MotorsPageViolent()
                         .navigationBarBackButtonHidden()
                 }
-            }, label: {EmptyView()})
-        }
-    }
-    private var listOfButtons: some View {
-        VStack(spacing: 20) {
-            MuneBoardForMainPage(iconType: .dads, choosedItem: $itemTypeChoosed, openPage: $openPage)
-            MuneBoardForMainPage(iconType: .maps, choosedItem: $itemTypeChoosed, openPage: $openPage)
-            MuneBoardForMainPage(iconType: .plane, choosedItem: $itemTypeChoosed, openPage: $openPage)
-            MuneBoardForMainPage(iconType: .angar, choosedItem: $itemTypeChoosed, openPage: $openPage)
-            MuneBoardForMainPage(iconType: .nickGen, choosedItem: $itemTypeChoosed, openPage: $openPage)
-            MuneBoardForMainPage(iconType: .avaGen, choosedItem: $itemTypeChoosed, openPage: $showDownloadView)
-            MuneBoardForMainPage(iconType: .editor, choosedItem: $itemTypeChoosed, openPage: $showDownloadView)
+            }, label: { EmptyView() })
         }
     }
 }
 
+// New Menu Button Component
+struct MenuButton: View {
+   let iconType: IconTurboGear.MenuIconTurbo //no need
+   let isSelected: Bool
+   let action: () -> Void
+   
+   var body: some View {
+       Button(action: action) {
+           Text(iconType.sendTitleOfItem())
+               .font(FontTurboGear.gilroyStyle(size: 18, type: .bold))
+               .foregroundColor(isSelected ? .white : ColorTurboGear.colorPicker(.darkGreen))
+               .frame(maxWidth: .infinity)
+               .padding(.vertical, 12)
+               .padding(.horizontal, 24)
+               .background(
+                   RoundedRectangle(cornerRadius: 8)
+                       .fill(isSelected ? ColorTurboGear.colorPicker(.darkGreen) : .white)
+                       .overlay(
+                           RoundedRectangle(cornerRadius: 8)
+                               .stroke(Color(.sRGB, red: 143/255, green: 143/255, blue: 143/255, opacity: 0.25), lineWidth: 1)
+                       )
+                       .shadow(color: Color(.sRGB, red: 143/255, green: 143/255, blue: 143/255, opacity: 0.25), radius: 8, x: 0, y: 4)
+               )
+               .frame(height: 47)
+       }
+   }
+}
+
+// New preview upgraded to avoid xcode crashes
 #if DEBUG
 struct MenuListToApp_Previews: PreviewProvider {
     static var previews: some View {

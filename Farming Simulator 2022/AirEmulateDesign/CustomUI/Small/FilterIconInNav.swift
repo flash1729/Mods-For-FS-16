@@ -18,7 +18,7 @@ struct FilterIconInNav: View {
                 .scaledToFit()
                 .frame(height: bigSize ? 30 : 24)
             Text(iconType.sendTitleOfIcon())
-                .font(FontTurboGear.montserratStyle(size: bigSize ? 18 : 14, type: .medium))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 18 : 14, type: .medium))
         }
         .foregroundColor(iconType == choosedIconType ? Color.white : ColorTurboGear.colorPicker(.darkGray))
     }

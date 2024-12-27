@@ -184,7 +184,7 @@ struct CreateSelfAvatarAndEditPageViolent: View {
                 .multilineTextAlignment(.center)
                 .frame(maxHeight: .infinity)
                 .foregroundColor(.white)
-                .font(FontTurboGear.montserratStyle(size: bigSize ? 28 : 22, type: .semibold))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 28 : 22, type: .semibold))
         }
     }
     

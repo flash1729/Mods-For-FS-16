@@ -3,7 +3,7 @@
 //  Farming Simulator 2022
 //
 //  Created by Systems
-//
+//  Redesign by Adi
 
 import CoreData
 import SwiftUI

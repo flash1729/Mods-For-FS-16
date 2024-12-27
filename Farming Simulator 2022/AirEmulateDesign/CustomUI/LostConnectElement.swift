@@ -20,7 +20,7 @@ struct LostConnectElement: View {
                     .scaledToFit()
                     .frame(height: bigSize ? 100 : 56)
                 Text("No internet")
-                    .font(FontTurboGear.montserratStyle(size: bigSize ? 35 : 20, type: .bold))
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 35 : 20, type: .bold))
                 Button {
                     tapOkButton()
                 } label: {
@@ -57,7 +57,7 @@ struct LostConnectElement: View {
                                     )
                                 
                                 Text("Ok".uppercased())
-                                    .font(FontTurboGear.montserratStyle(size: bigSize ? 30 : 18, type: .semibold))
+                                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 30 : 18, type: .semibold))
                             }
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 16))

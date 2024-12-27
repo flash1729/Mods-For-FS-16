@@ -29,7 +29,7 @@ struct SaveWaitStateIphone: View {
             InfinityLoaderGreen()
                 .frame(height: 55)
             Text("Please wait...")
-                .font(FontTurboGear.montserratStyle(size: 24, type: .medium))
+                .font(FontTurboGear.gilroyStyle(size: 24, type: .medium))
                 .foregroundColor(Color.white)
         }
     }

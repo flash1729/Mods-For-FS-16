@@ -14,7 +14,7 @@ struct LoadingLoaderCustomElement: View {
     var body: some View {
         VStack {
             Text("Loading")
-                .font(FontTurboGear.montserratStyle(size: bigSize ? 44 : 24, type: .bold))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 24, type: .bold))
                 .foregroundColor(Color.white)
                 .padding(.bottom, bigSize ? 45 : 24)
             HStack(spacing: bigSize ? 8 : 4) {

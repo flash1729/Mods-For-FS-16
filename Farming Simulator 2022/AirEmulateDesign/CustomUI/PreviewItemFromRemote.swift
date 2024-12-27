@@ -44,14 +44,14 @@ struct PreviewItemFromRemote: View {
 
             HStack {
                 Text(titleData ?? "...")
-                    .font(FontTurboGear.montserratStyle(size: bigSize ? 33 : 18, type: .semibold))
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 33 : 18, type: .semibold))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 FavoritHeartButtonCyan(stateFavoritHeart: $likeState, onTapButton: tappedLikeButton)
             }
             Text(previewText ?? "...")
-                .font(FontTurboGear.montserratStyle(size: bigSize ? 25 : 14, type: .regular))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 25 : 14, type: .regular))
                 .lineLimit(2)
         }
         .foregroundColor(.white)

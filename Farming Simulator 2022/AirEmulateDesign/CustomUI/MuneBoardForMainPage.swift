@@ -4,7 +4,7 @@
 //
 //  Created by Sim on 25/09/24.
 //
-
+// no need rn
 import SwiftUI
 
 struct MuneBoardForMainPage: View {
@@ -24,7 +24,7 @@ struct MuneBoardForMainPage: View {
                     .frame(width: bigSize ? 62 : 42)
                 
                 Text(iconType.sendTitleOfItem())
-                    .font(FontTurboGear.montserratStyle(size: bigSize ? 30 : 20, type: .semibold))
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 30 : 20, type: .semibold))
                     .minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .lineLimit(1)

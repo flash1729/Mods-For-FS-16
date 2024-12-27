@@ -21,7 +21,7 @@ struct NavPanelCyanWithoutFavButton: View {
                     NavButtonMiniIcon(typeOfImage: typeIcon)
                 }
                 Text(titleName)
-                    .font(FontTurboGear.montserratStyle(size: 24, type: .bold))
+                    .font(FontTurboGear.gilroyStyle(size: 24, type: .bold))
                     .frame(maxWidth: .infinity)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
@@ -51,5 +51,5 @@ struct NavPanelCyanWithoutFavButton: View {
 }
 
 #Preview {
-    NavPanelCyanWithoutFavButton(titleName: "")
+    NavPanelCyanWithoutFavButton(titleName: "Checking")
 }

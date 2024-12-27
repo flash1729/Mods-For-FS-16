@@ -24,7 +24,7 @@ struct NavPanelCyanEditors: View {
                     NavButtonMiniIcon(typeOfImage: leftbuttonIconType)
                 }
                 Text(titleName)
-                    .font(FontTurboGear.montserratStyle(size: 24, type: .bold))
+                    .font(FontTurboGear.gilroyStyle(size: 24, type: .bold))
                     .frame(maxWidth: .infinity)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
