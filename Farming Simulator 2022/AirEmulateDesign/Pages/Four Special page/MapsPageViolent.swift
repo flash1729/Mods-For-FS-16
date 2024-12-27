@@ -27,6 +27,9 @@ struct MapsPageViolent: View {
     @State var ifOpenAboutPage: Bool = false
     var body: some View {
         ZStack {
+            Color.white
+                .ignoresSafeArea()
+            
             NavigationLink(isActive: $openAboutPage, destination: {
                 AboutItemPageWithDownloadButton(titleItemName: choosedItem?.title ?? "", favoriteState: choosedItem?.isFavorited ?? false, imageData: choosedItem?.imageData, linkDownloadItem: "\(DropBoxKeys_SimulatorFarm.mapsFilePartPath)\(choosedItem?.file ?? "")", textItem: choosedItem?.description ?? "", idItemToLike: { bool in
                     if let choosedItem {
@@ -49,7 +52,7 @@ struct MapsPageViolent: View {
                     .navigationBarBackButtonHidden()
             }, label: {EmptyView()})
             VStack(spacing: bigSize ? 20 : 12) {
-                NavPanelSearchInsideCyan(searchText: $searchText, filterType: $filterType, searchTypeElement: .maps, onCommit: {}, choosedFilter: {item in
+                NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .maps, onCommit: {}, choosedFilter: {item in
                     switch item {
                     case .filterAllItems:
                         mapsViewModel.mapsSelectedFilter = .all
@@ -236,7 +239,20 @@ struct MapsPageViolent: View {
     }
 }
 
-#Preview {
-    MapsPageViolent()
-        .environmentObject(NetworkManager_SimulatorFarm())
+struct MapsPageViolent_Previews: PreviewProvider {
+    static var previews: some View {
+        // Create a navigation view container
+        NavigationView {
+            MapsPageViolent()
+                // Inject required environment objects
+                .environmentObject(NetworkManager_SimulatorFarm())
+                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                // Set up environment
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
+        // Apply navigation view style for consistency
+        .navigationViewStyle(StackNavigationViewStyle())
+        // Set up preview parameters
+        .previewDisplayName("Maps Page")
+    }
 }

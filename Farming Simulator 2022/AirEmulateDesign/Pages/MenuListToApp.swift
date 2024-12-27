@@ -33,6 +33,7 @@ struct MenuListToApp: View {
                     // Menu Title
                     Text("Menu")
                         .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 34, type: .bold))
+                        .lineSpacing((32 * 0.3))
                         .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
                         .padding(.horizontal, 20)
                         .padding(.top, bigSize ? 80 : 60)

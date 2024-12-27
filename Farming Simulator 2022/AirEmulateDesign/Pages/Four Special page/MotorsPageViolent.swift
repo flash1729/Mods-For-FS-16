@@ -27,6 +27,9 @@ struct MotorsPageViolent: View {
     @State var ifOpenAboutPage: Bool = false
     var body: some View {
         ZStack {
+            Color.white
+                .ignoresSafeArea()
+            
             NavigationLink(isActive: $openAboutPage, destination: {
                 AboutItemPageWithDownloadButton(titleItemName: choosedItem?.title ?? "", favoriteState: choosedItem?.isFavorited ?? false, imageData: choosedItem?.imageData, linkDownloadItem: "\(DropBoxKeys_SimulatorFarm.modsFilePartPath)\(choosedItem?.file ?? "")", textItem: choosedItem?.description ?? "", idItemToLike: { bool in
                     if let choosedItem {
@@ -49,7 +52,7 @@ struct MotorsPageViolent: View {
                     .navigationBarBackButtonHidden()
             }, label: {EmptyView()})
             VStack(spacing: bigSize ? 20 : 12) {
-                NavPanelSearchInsideCyan(searchText: $searchText, filterType: $filterType, searchTypeElement: .dads, onCommit: {}, choosedFilter: {item in
+                NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .dads, onCommit: {}, choosedFilter: {item in
                     switch item {
                     case .filterAllItems:
                         dadsViewModel.modsSelectedFilter = .all

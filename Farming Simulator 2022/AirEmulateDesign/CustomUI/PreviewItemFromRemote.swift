@@ -45,6 +45,7 @@ struct PreviewItemFromRemote: View {
             HStack {
                 Text(titleData ?? "...")
                     .font(FontTurboGear.gilroyStyle(size: bigSize ? 33 : 18, type: .semibold))
+                    .foregroundStyle(ColorTurboGear.colorPicker(.green))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -52,6 +53,7 @@ struct PreviewItemFromRemote: View {
             }
             Text(previewText ?? "...")
                 .font(FontTurboGear.gilroyStyle(size: bigSize ? 25 : 14, type: .regular))
+                .foregroundStyle(ColorTurboGear.colorPicker(.green))
                 .lineLimit(2)
         }
         .foregroundColor(.white)
