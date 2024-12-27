@@ -21,12 +21,12 @@ struct LoadignPreviewPage: View {
                 MenuListToApp()
             } else {
                 ZStack {
-                    // Removed the background image, now using plain background
+                    // Plain background
                     Color.white.edgesIgnoringSafeArea(.all)
                     
                     LoadingLoaderCustomElement(progressTimer: $crotel.progress)
-                        .frame(maxHeight: .infinity, alignment: .bottom)
-                        .padding(.bottom, 70)
+                        .frame(maxHeight: .infinity, alignment: .center) // Changed to center
+                        // Removed bottom padding since we want it centered
                     
                     if !workInternetState {
                         LostConnectElement {
