@@ -30,6 +30,13 @@
 		72F381902ADD3D86005549F1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72F3818F2ADD3D86005549F1 /* Preview Assets.xcassets */; };
 		72F381952ADD3D86005549F1 /* mods_farming_simulator22.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 72F381932ADD3D86005549F1 /* mods_farming_simulator22.xcdatamodeld */; };
 		72FC3A202AFD051B00046985 /* NetworkManager_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FC3A1F2AFD051B00046985 /* NetworkManager_SimulatorFarm.swift */; };
+		EC52D6A92D1F297A003C1F2F /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A32D1F297A003C1F2F /* Gilroy-Bold.ttf */; };
+		EC52D6AA2D1F297A003C1F2F /* Gilroy-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A42D1F297A003C1F2F /* Gilroy-ExtraBold.ttf */; };
+		EC52D6AB2D1F297A003C1F2F /* Gilroy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A72D1F297A003C1F2F /* Gilroy-Regular.ttf */; };
+		EC52D6AC2D1F297A003C1F2F /* Gilroy-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A82D1F297A003C1F2F /* Gilroy-SemiBold.ttf */; };
+		EC52D6AD2D1F297A003C1F2F /* Gilroy-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A22D1F297A003C1F2F /* Gilroy-Black.ttf */; };
+		EC52D6AE2D1F297A003C1F2F /* Gilroy-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A52D1F297A003C1F2F /* Gilroy-Heavy.ttf */; };
+		EC52D6AF2D1F297A003C1F2F /* Gilroy-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A62D1F297A003C1F2F /* Gilroy-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,6 +78,13 @@
 		72F3818F2ADD3D86005549F1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		72F381942ADD3D86005549F1 /* mods_farming_simulator22.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mods_farming_simulator22.xcdatamodel; sourceTree = "<group>"; };
 		72FC3A1F2AFD051B00046985 /* NetworkManager_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager_SimulatorFarm.swift; sourceTree = "<group>"; };
+		EC52D6A22D1F297A003C1F2F /* Gilroy-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Black.ttf"; sourceTree = "<group>"; };
+		EC52D6A32D1F297A003C1F2F /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		EC52D6A42D1F297A003C1F2F /* Gilroy-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ExtraBold.ttf"; sourceTree = "<group>"; };
+		EC52D6A52D1F297A003C1F2F /* Gilroy-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Heavy.ttf"; sourceTree = "<group>"; };
+		EC52D6A62D1F297A003C1F2F /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
+		EC52D6A72D1F297A003C1F2F /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		EC52D6A82D1F297A003C1F2F /* Gilroy-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -101,6 +115,13 @@
 		7287ACFA2AF1315600657FD8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EC52D6A22D1F297A003C1F2F /* Gilroy-Black.ttf */,
+				EC52D6A32D1F297A003C1F2F /* Gilroy-Bold.ttf */,
+				EC52D6A42D1F297A003C1F2F /* Gilroy-ExtraBold.ttf */,
+				EC52D6A52D1F297A003C1F2F /* Gilroy-Heavy.ttf */,
+				EC52D6A62D1F297A003C1F2F /* Gilroy-Medium.ttf */,
+				EC52D6A72D1F297A003C1F2F /* Gilroy-Regular.ttf */,
+				EC52D6A82D1F297A003C1F2F /* Gilroy-SemiBold.ttf */,
 				729DA3C92AFE55F600D8190E /* Montserrat-Medium.ttf */,
 				729DA3C72AFE513C00D8190E /* Montserrat.ttf */,
 				729DA3C52AFE511D00D8190E /* Montserrat-SemiBold.ttf */,
@@ -306,6 +327,13 @@
 				72F381902ADD3D86005549F1 /* Preview Assets.xcassets in Resources */,
 				729DA3CA2AFE55F600D8190E /* Montserrat-Medium.ttf in Resources */,
 				729DA3C62AFE511E00D8190E /* Montserrat-SemiBold.ttf in Resources */,
+				EC52D6A92D1F297A003C1F2F /* Gilroy-Bold.ttf in Resources */,
+				EC52D6AA2D1F297A003C1F2F /* Gilroy-ExtraBold.ttf in Resources */,
+				EC52D6AB2D1F297A003C1F2F /* Gilroy-Regular.ttf in Resources */,
+				EC52D6AC2D1F297A003C1F2F /* Gilroy-SemiBold.ttf in Resources */,
+				EC52D6AD2D1F297A003C1F2F /* Gilroy-Black.ttf in Resources */,
+				EC52D6AE2D1F297A003C1F2F /* Gilroy-Heavy.ttf in Resources */,
+				EC52D6AF2D1F297A003C1F2F /* Gilroy-Medium.ttf in Resources */,
 				729DA3C82AFE513C00D8190E /* Montserrat.ttf in Resources */,
 				729DA3C42AFE509E00D8190E /* Montserrat-Bold.ttf in Resources */,
 				72F3818D2ADD3D86005549F1 /* Assets.xcassets in Resources */,

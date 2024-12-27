@@ -22,17 +22,15 @@ enum FontTurboGear {
     }
     
     static func gilroyStyle(size: CGFloat, type: TypeOfFontTurboGear) -> Font {
-        switch type {
-        case .regular:
-            return Font.custom("Gilroy-Regular", size: size)
-        case .bold:
-            // Weight: 700
-            return Font.custom("Gilroy-Bold", size: size)
-                .weight(.bold) // This is weight 700
-        case .semibold:
-            return Font.custom("Gilroy-Semibold", size: size)
-        case .medium:
-            return Font.custom("Gilroy-Medium", size: size)
+            switch type {
+            case .regular:
+                return Font.custom("Gilroy-Regular", size: size)
+            case .bold:
+                return Font.custom("Gilroy-Black", size: size)
+            case .semibold:
+                return Font.custom("Gilroy-SemiBold", size: size)
+            case .medium:
+                return Font.custom("Gilroy-Medium", size: size)
+            }
         }
-    }
 }

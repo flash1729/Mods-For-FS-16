@@ -127,7 +127,7 @@ enum IconTurboGear {
         }
     }
     
-    enum FilterIconTurbo: String {
+    enum FilterIconTurbo: String , CaseIterable{
         case filterAllItems
         case filterNewItems
         case filterFavoriteItems

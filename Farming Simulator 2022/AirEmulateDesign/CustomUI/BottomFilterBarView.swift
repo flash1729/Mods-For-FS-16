@@ -8,78 +8,57 @@
 import SwiftUI
 
 struct BottomFilterBarView: View {
-    @Binding var selectedFilter: FilterType_SimulatorFarm
-    var onFilterChange: (FilterType_SimulatorFarm) -> Void
+    // MARK: - Properties
+    @Binding var filterType: IconTurboGear.FilterIconTurbo
+    let choosedFilter: (IconTurboGear.FilterIconTurbo) -> Void
+    
+    // Device check for responsive sizing
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     
+    // MARK: - Body
     var body: some View {
-        // Container for the entire bottom bar
         VStack(spacing: 0) {
-            // Green background container with buttons
-            HStack(spacing: 8) {
-                // Individual filter buttons
-                filterButton(type: .all, title: "All")
-                filterButton(type: .new, title: "New")
-                filterButton(type: .favorite, title: "Favorite")
-                filterButton(type: .top, title: "Top")
+            // Filter buttons container
+            HStack {
+                filterButtonElement(typeElement: .filterAllItems, choosedType: $filterType)
+                filterButtonElement(typeElement: .filterNewItems, choosedType: $filterType)
+                filterButtonElement(typeElement: .filterFavoriteItems, choosedType: $filterType)
+                filterButtonElement(typeElement: .filterTopItems, choosedType: $filterType)
             }
-            .padding(.horizontal, bigSize ? 24 : 16)
-            .padding(.vertical, bigSize ? 20 : 12)
-            .background(ColorTurboGear.colorPicker(.darkGreen))
-            .cornerRadius(bigSize ? 24 : 16)
             .padding(.horizontal, bigSize ? 40 : 20)
-            
-            // Safe area spacing for home indicator
-            Rectangle()
-                .fill(Color.clear)
-                .frame(height: bigSize ? 40 : 20)
+            .padding(.vertical, bigSize ? 20 : 16)
         }
-        .background(Color.black)
-        .ignoresSafeArea(.all, edges: .bottom)
+        .background(
+                GeometryReader { geometry in
+                    ColorTurboGear.colorPicker(.green)
+                        .cornerRadius(16, corners: [.topLeft, .topRight])
+                        .edgesIgnoringSafeArea(.bottom)
+                }
+            )
     }
     
-    private func filterButton(type: FilterType_SimulatorFarm, title: String) -> some View {
-        Button(action: {
-            selectedFilter = type
-            onFilterChange(type)
-        }) {
-            Text(title)
-                .font(FontTurboGear.montserratStyle(
-                    size: bigSize ? 20 : 16,
-                    type: .semibold
-                ))
-                // Text color changes based on selection
-                .foregroundColor(selectedFilter == type ? .black : .white)
-                .frame(maxWidth: .infinity)
-                .frame(height: bigSize ? 48 : 36)
-                // Button background changes based on selection
-                .background(
-                    selectedFilter == type ? Color.white : Color.clear
-                )
-                .cornerRadius(bigSize ? 16 : 12)
+    // MARK: - Helper Views
+    private func filterButtonElement(typeElement: IconTurboGear.FilterIconTurbo, choosedType: Binding<IconTurboGear.FilterIconTurbo>) -> some View {
+        Button {
+            choosedType.wrappedValue = typeElement
+            if typeElement == choosedType.wrappedValue {
+                choosedFilter(typeElement)
+            }
+        } label: {
+            FilterIconInNav(iconType: typeElement, choosedIconType: choosedType)
         }
-        .buttonStyle(PlainButtonStyle())
+        .frame(maxWidth: .infinity)
     }
 }
 
-// Preview provider for testing
+// MARK: - Preview
 struct BottomFilterBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            // iPhone preview
-            BottomFilterBarView(
-                selectedFilter: .constant(.all),
-                onFilterChange: { _ in }
-            )
-            .previewDisplayName("iPhone")
-            
-            // iPad preview
-            BottomFilterBarView(
-                selectedFilter: .constant(.all),
-                onFilterChange: { _ in }
-            )
-            .previewDevice(PreviewDevice(rawValue: "iPad Pro (12.9-inch) (6th generation)"))
-            .previewDisplayName("iPad")
-        }
-    }
+   static var previews: some View {
+       
+           // Preview with All filter
+           BottomFilterBarView(
+               filterType: .constant(.filterAllItems),
+               choosedFilter: { _ in }
+           )
+   }
 }
