@@ -25,7 +25,7 @@ struct DeleteItemAlert: View {
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.5)
                     .padding(.vertical, bigSize ? 44 : 28)
-                BlueButtonWithBorders(blueButtonTap: {
+                GreenButtonRounded(blueButtonTap: {
                     stateTapped(true)
                 }, titleButton: "OK")
                 .frame(maxWidth: bigSize ? 350 : 169)

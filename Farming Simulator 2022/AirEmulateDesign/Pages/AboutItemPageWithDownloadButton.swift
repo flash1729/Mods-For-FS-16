@@ -202,7 +202,7 @@ struct AboutItemPageWithDownloadButton: View {
     private var downloadButton: some View {
         VStack {
             if linkDownloadItem != nil {
-                BlueButtonWithBorders(blueButtonTap: {
+                GreenButtonRounded(blueButtonTap: {
                     disableButton = true
                     guard networkManager.checkInternetConnectivity_SimulatorFarm() else {
                         workInternetState = false
@@ -271,7 +271,7 @@ struct AboutItemPageWithDownloadButton: View {
                 .disabled(disableButton)
                 .opacity(disableButton ? 0.5 : 1.0)
             } else {
-                BlueButtonWithBorders(blueButtonTap: {
+                GreenButtonRounded(blueButtonTap: {
                     showSaveAlert = true
                 }, titleButton: "Download", infinityWidth: true)
                 .padding(.bottom, bigSize ? 50 : 10)

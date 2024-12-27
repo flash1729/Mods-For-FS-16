@@ -10,64 +10,26 @@ import SwiftUI
 struct LostConnectElement: View {
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State var tapOkButton: () -> Void
+    
     var body: some View {
         ZStack {
-            Color.black.opacity(0.3)
+            Color.white
                 .ignoresSafeArea()
-            VStack(spacing: bigSize ? 50 : 28) {
-                Image(IconTurboGear.NoInternetIconForceNitro)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: bigSize ? 100 : 56)
-                Text("No internet")
-                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 35 : 20, type: .bold))
-                Button {
-                    tapOkButton()
-                } label: {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(ColorTurboGear.colorPicker(.cyan))
-                        .frame(height: bigSize ? 100 : 56)
-                        .overlay {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(
-                                        LinearGradient(
-                                            gradient: Gradient(colors: [
-                                                Color.white.opacity(0.3),
-                                                Color.white.opacity(0),
-                                                Color.white.opacity(0)
-                                            ]),
-                                            startPoint: .leading,
-                                            endPoint: .trailing
-                                        ),
-                                        lineWidth: bigSize ? 6 : 3
-                                    )
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(
-                                        LinearGradient(
-                                            gradient: Gradient(colors: [
-                                                Color.black.opacity(0.3),
-                                                Color.black.opacity(0),
-                                                Color.black.opacity(0)
-                                            ]),
-                                            startPoint: .trailing,
-                                            endPoint: .leading
-                                        ),
-                                        lineWidth: bigSize ? 6 : 3
-                                    )
-                                
-                                Text("Ok".uppercased())
-                                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 30 : 18, type: .semibold))
-                            }
-                        }
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                }
-                .frame(maxWidth: bigSize ? 300 : 169)
+            
+            VStack(spacing: bigSize ? 24 : 16) {
+                Text("Internet connection error")
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 24 : 16, type: .bold))
+                    .foregroundColor(ColorTurboGear.colorPicker(.green))
+                
+                GreenButtonRounded(
+                    blueButtonTap: tapOkButton,
+                    titleButton: "OK",
+                    infinityWidth: false
+                )
             }
-            .padding(.vertical, bigSize ? 56 : 32)
-            .frame(maxWidth: bigSize ? 530 : 300)
-            .foregroundColor(Color.white)
-            .background(ColorTurboGear.colorPicker(.gray))
+            .padding(.vertical, bigSize ? 32 : 24)
+            .padding(.horizontal, bigSize ? 40 : 32)
+            .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 16))
         }
     }

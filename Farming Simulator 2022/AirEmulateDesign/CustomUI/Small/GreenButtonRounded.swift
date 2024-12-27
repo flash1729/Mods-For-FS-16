@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-@available(*, deprecated, message: "BlueButtonWithBorders is deprecated. Use GreenButtonWithBorders instead.")
-struct BlueButtonWithBorders: View {
+struct GreenButtonRounded: View {
     @State var blueButtonTap: () -> Void
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State var titleButton: String
@@ -115,7 +114,7 @@ struct GreenButtonWithBorders: View {
 }
 
 // Preview for development
-struct GreenButtonPrecise_Previews: PreviewProvider {
+struct GreenButtonWithBorders_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             ColorTurboGear.colorPicker(.green)

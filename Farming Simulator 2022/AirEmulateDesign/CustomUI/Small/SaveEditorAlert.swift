@@ -27,11 +27,11 @@ struct SaveEditorAlert: View {
                     .minimumScaleFactor(0.5)
                     .padding(.vertical, bigSize ? 44 : 28)
                 HStack {
-                    BlueButtonWithBorders(blueButtonTap: {
+                    GreenButtonRounded(blueButtonTap: {
                         stateTapped(true)
                     }, titleButton: "OK")
                     .frame(maxWidth: bigSize ? 350 : 169)
-                    BlueButtonWithBorders(blueButtonTap: {
+                    GreenButtonRounded(blueButtonTap: {
                         stateTapped(false)
                     }, titleButton: "Cancel")
                     .frame(maxWidth: bigSize ? 350 : 169)

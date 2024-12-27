@@ -107,7 +107,7 @@ struct AboutEditorPage: View {
                     .padding(.top, bigSize ? 50 : 10)
                     .paddingFlyBullet()
                 Spacer()
-                BlueButtonWithBorders(blueButtonTap: {
+                GreenButtonRounded(blueButtonTap: {
                     showSaveAlert.toggle()
                 }, titleButton: "Save", infinityWidth: true)
                 .paddingFlyBullet()

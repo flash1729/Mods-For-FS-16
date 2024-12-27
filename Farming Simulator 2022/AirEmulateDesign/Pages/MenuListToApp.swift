@@ -216,6 +216,3 @@ struct MenuListToApp_Previews: PreviewProvider {
 }
 #endif
 
-//#Preview {
-//    MenuListToApp()
-//}
