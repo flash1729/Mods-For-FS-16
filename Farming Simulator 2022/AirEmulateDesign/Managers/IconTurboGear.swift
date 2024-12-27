@@ -161,7 +161,7 @@ enum IconTurboGear {
     }
     
     enum FavoritHeartIconTurbo {
-        static let unfavoriteHeartCyan = "UnfavoriteHeartCyan"
-        static let favoriteHeartCyan = "FavoriteHeartCyan"
+        static let unfavoriteHeartCyan = "GreenUnbookmarked"
+        static let favoriteHeartCyan = "GreenBookmarked"
     }
 }

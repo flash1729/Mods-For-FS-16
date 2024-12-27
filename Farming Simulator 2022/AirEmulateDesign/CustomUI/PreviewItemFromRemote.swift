@@ -24,6 +24,7 @@ struct PreviewItemFromRemote: View {
         VStack(alignment: .leading, spacing: bigSize ? 24 : 16) {
             // Title at the top
             Text(titleData ?? "Name")
+                .frame(maxWidth: .infinity, alignment: .center)
                 .font(FontTurboGear.gilroyStyle(size: bigSize ? 32 : 24, type: .bold))
                 .foregroundStyle(ColorTurboGear.colorPicker(.darkGreen))
                 .padding(.bottom, bigSize ? 16 : 8)
@@ -44,7 +45,7 @@ struct PreviewItemFromRemote: View {
                                         .resizable()
                                         .scaledToFill()
                                 } else {
-                                    ColorTurboGear.colorPicker(.darkGray)
+                                    ColorTurboGear.colorPicker(.grey)
                                     InfinityLoaderGreen()
                                         .frame(height: 55)
                                 }
@@ -60,10 +61,11 @@ struct PreviewItemFromRemote: View {
                     .padding(bigSize ? 16 : 12)
                 }
             }
-            .frame(maxHeight: bigSize ? 578 : 318)
+            .frame(maxHeight: bigSize ? 578 : 304)
             
             // Description text
             Text(previewText ?? "Description unavailable")
+                .frame(maxWidth: .infinity, alignment: .center)
                 .font(FontTurboGear.gilroyStyle(size: bigSize ? 18 : 14, type: .regular))
                 .foregroundStyle(ColorTurboGear.colorPicker(.darkGreen))
                 .lineLimit(3)

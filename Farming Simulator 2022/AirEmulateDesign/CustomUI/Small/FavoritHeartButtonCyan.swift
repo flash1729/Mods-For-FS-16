@@ -19,7 +19,7 @@ struct FavoritHeartButtonCyan: View {
             Image(stateFavoritHeart ? IconTurboGear.FavoritHeartIconTurbo.favoriteHeartCyan : IconTurboGear.FavoritHeartIconTurbo.unfavoriteHeartCyan)
                 .resizable()
                 .scaledToFit()
-                .frame(height: bigSize ? 58 : 32)
+                .frame(width: bigSize ? 58 : 44,height: bigSize ? 58 : 44)
         }
 
     }
