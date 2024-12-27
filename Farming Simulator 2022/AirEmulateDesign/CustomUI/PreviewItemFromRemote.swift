@@ -19,44 +19,57 @@ struct PreviewItemFromRemote: View {
     @State var tappedLikeButton: (Bool) -> Void
     @State var openDescriptionItem: () -> Void
     @State var sendBackImageData: (Data) -> Void
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: bigSize ? 31 : 17) {
+        VStack(alignment: .leading, spacing: bigSize ? 24 : 16) {
+            // Title at the top
+            Text(titleData ?? "Name")
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 32 : 24, type: .bold))
+                .foregroundStyle(ColorTurboGear.colorPicker(.darkGreen))
+                .padding(.bottom, bigSize ? 16 : 8)
+            
+            // Image container with heart overlay
             Button {
                 openDescriptionItem()
             } label: {
-                RoundedRectangle(cornerRadius: bigSize ? 36 : 20)
-                    .fill(Color.white)
-                    .frame(maxHeight: bigSize ? 578 : 318)
-                    .overlay {
-                        ZStack {
-                            Image(uiImage: UIImage(data: imageData ?? Data()) ?? UIImage())
-                                .resizable()
-                                .scaledToFill()
-                            if imageData == nil {
-                                ColorTurboGear.colorPicker(.darkGray)
-                                InfinityLoaderGreen()
-                                    .frame(height: 55)
+                ZStack(alignment: .topLeading) {
+                    // Main image
+                    RoundedRectangle(cornerRadius: bigSize ? 24 : 16)
+                        .fill(Color.white)
+                        .overlay {
+                            ZStack {
+                                if let imageData = imageData,
+                                   let uiImage = UIImage(data: imageData) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                } else {
+                                    ColorTurboGear.colorPicker(.darkGray)
+                                    InfinityLoaderGreen()
+                                        .frame(height: 55)
+                                }
                             }
                         }
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .clipShape(RoundedRectangle(cornerRadius: bigSize ? 24 : 16))
+                    
+                    // Heart button overlay
+                    FavoritHeartButtonCyan(
+                        stateFavoritHeart: $likeState,
+                        onTapButton: tappedLikeButton
+                    )
+                    .padding(bigSize ? 16 : 12)
+                }
             }
-
-            HStack {
-                Text(titleData ?? "...")
-                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 33 : 18, type: .semibold))
-                    .foregroundStyle(ColorTurboGear.colorPicker(.green))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                FavoritHeartButtonCyan(stateFavoritHeart: $likeState, onTapButton: tappedLikeButton)
-            }
-            Text(previewText ?? "...")
-                .font(FontTurboGear.gilroyStyle(size: bigSize ? 25 : 14, type: .regular))
-                .foregroundStyle(ColorTurboGear.colorPicker(.green))
-                .lineLimit(2)
+            .frame(maxHeight: bigSize ? 578 : 318)
+            
+            // Description text
+            Text(previewText ?? "Description unavailable")
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 18 : 14, type: .regular))
+                .foregroundStyle(ColorTurboGear.colorPicker(.darkGreen))
+                .lineLimit(3)
+                .multilineTextAlignment(.leading)
+                .padding(.top, bigSize ? 16 : 8)
         }
-        .foregroundColor(.white)
     }
 }
 
