@@ -26,70 +26,106 @@ struct AngarsPageViolent: View {
     @State var openAboutPage: Bool = false
     @State var ifOpenAboutPage: Bool = false
     var body: some View {
-        ZStack {
-            Color.white
-                .ignoresSafeArea()
-            
-            NavigationLink(isActive: $openAboutPage, destination: {
-                AboutItemPageWithDownloadButton(titleItemName: choosedItem?.title ?? "", favoriteState: choosedItem?.isFavorited ?? false, imageData: choosedItem?.imageData, linkDownloadItem: "\(DropBoxKeys_SimulatorFarm.skinFilePartPath)\(choosedItem?.file ?? "")", textItem: choosedItem?.description ?? "", idItemToLike: { bool in
-                    if let choosedItem {
-                        PersistenceController.shared.updateFavoriteSkins(with: choosedItem.id) //For every type diffierent
-                    }
-                    choosedLikeState = bool
-                    let firstIndex = skinsViewModel.skins.firstIndex(where: {$0.id == choosedItem?.id})
-                    if let firstIndex {
-                        skinsViewModel.skins[firstIndex].isFavorited = bool
-                        skinsViewModel.generateFavoriteSkin()
-                        if skinsViewModel.skinsSelectedFilter == .favorite {
-                            skinsViewModel.filteredSkins = skinsViewModel.filterFavoriteSkins
+            ZStack {
+                Color.white
+                    .ignoresSafeArea()
+                
+                NavigationLink(isActive: $openAboutPage, destination: {
+                    AboutItemPageWithDownloadButton(
+                        titleItemName: choosedItem?.title ?? "",
+                        favoriteState: choosedItem?.isFavorited ?? false,
+                        imageData: choosedItem?.imageData,
+                        linkDownloadItem: "\(DropBoxKeys_SimulatorFarm.skinFilePartPath)\(choosedItem?.file ?? "")",
+                        textItem: choosedItem?.description ?? "",
+                        idItemToLike: { bool in
+                            if let choosedItem {
+                                PersistenceController.shared.updateFavoriteSkins(with: choosedItem.id)
+                            }
+                            choosedLikeState = bool
+                            let firstIndex = skinsViewModel.skins.firstIndex(where: {$0.id == choosedItem?.id})
+                            if let firstIndex {
+                                skinsViewModel.skins[firstIndex].isFavorited = bool
+                                skinsViewModel.generateFavoriteSkin()
+                                if skinsViewModel.skinsSelectedFilter == .favorite {
+                                    skinsViewModel.filteredSkins = skinsViewModel.filterFavoriteSkins
+                                    firstElementUpdate()
+                                }
+                                skinsViewModel.pressingfilterSkin()
+                                collectionUpdateId = UUID()
+                            }
+                            choosedItem?.isFavorited = bool
+                        },
+                        clearItemName: choosedItem?.file ?? "")
+                        .navigationBarBackButtonHidden()
+                }, label: {EmptyView()})
+                
+                VStack {
+                    NavPanelSearchInsideGreen(
+                        searchText: $searchText,
+                        filterType: $filterType,
+                        searchTypeElement: .farm,  // This should probably be .angars when available
+                        onCommit: {},
+                        choosedFilter: { item in
+                            switch item {
+                            case .filterAllItems:
+                                skinsViewModel.skinsSelectedFilter = .all
+                            case .filterNewItems:
+                                skinsViewModel.skinsSelectedFilter = .new
+                            case .filterFavoriteItems:
+                                skinsViewModel.skinsSelectedFilter = .favorite
+                            case .filterTopItems:
+                                skinsViewModel.skinsSelectedFilter = .top
+                            }
+                            skinsViewModel.pressingfilterSkin()
                             firstElementUpdate()
                         }
-                        skinsViewModel.pressingfilterSkin()
-                        collectionUpdateId = UUID()
-                    }
-                    choosedItem?.isFavorited = bool
-                }, clearItemName: choosedItem?.file ?? "")
-                    .navigationBarBackButtonHidden()
-            }, label: {EmptyView()})
-            VStack(spacing: bigSize ? 20 : 12) {
-                NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .farm, onCommit: {}, choosedFilter: {item in
-                    switch item {
-                    case .filterAllItems:
-                        skinsViewModel.skinsSelectedFilter = .all
-                    case .filterNewItems:
-                        skinsViewModel.skinsSelectedFilter = .new
-                    case .filterFavoriteItems:
-                        skinsViewModel.skinsSelectedFilter = .favorite
-                    case .filterTopItems:
-                        skinsViewModel.skinsSelectedFilter = .top
-                    }
-                    skinsViewModel.pressingfilterSkin()
-                    firstElementUpdate()
-                })
-                .padding(.bottom, bigSize ? 30 : 0)
-                ZStack {
-                    Color.clear
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            UIApplication.shared.endEditing()
-                        }
+                    )
+
                     if skinsViewModel.filteredSkins.isEmpty {
                         Text("No result found")
                             .font(FontTurboGear.gilroyStyle(size: 24, type: .medium))
                             .foregroundColor(.white)
                             .padding(.top, 100)
                     } else {
-                        VStack(spacing: bigSize ? 20 : 12) {
+                        VStack(spacing: 16) {
                             bodyMiddleSection
                                 .paddingFlyBullet()
-                                .frame(maxHeight: .infinity)
+                                .frame(maxHeight: 424)
                             bottomSection
+                        }
+                        .ignoresSafeArea(.all)
+                    }
+                    
+                    Spacer()
+                    
+                    BottomFilterBarView(
+                        filterType: $filterType,
+                        choosedFilter: { item in
+                            switch item {
+                            case .filterAllItems:
+                                skinsViewModel.skinsSelectedFilter = .all
+                            case .filterNewItems:
+                                skinsViewModel.skinsSelectedFilter = .new
+                            case .filterFavoriteItems:
+                                skinsViewModel.skinsSelectedFilter = .favorite
+                            case .filterTopItems:
+                                skinsViewModel.skinsSelectedFilter = .top
+                            }
+                            skinsViewModel.pressingfilterSkin()
+                            firstElementUpdate()
+                        }
+                    )
+                }
+                
+                if !workInternetState {
+                    LostConnectElement {
+                        workInternetState.toggle()
+                        timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
+                            workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
                         }
                     }
                 }
             }
-            .ignoresSafeArea(.all, edges: .top)
-            .frame(maxHeight: .infinity, alignment: .top)
             .onChange(of: searchText) { _ in
                 skinsViewModel.searchText = searchText
                 skinsViewModel.pressingfilterSkin()
@@ -110,26 +146,12 @@ struct AngarsPageViolent: View {
                 }
                 ifOpenAboutPage = false
                 skinsViewModel.pressingfilterSkin()
+                workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
             }
-            
-            if !workInternetState {
-                LostConnectElement {
-                    workInternetState.toggle()
-                    timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
-                        if workInternetState {
-                            workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
-                        }
-                    }
-                }
+            .onDisappear(){
+                timer?.invalidate()
             }
         }
-        .onAppear(){
-            workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
-        }
-        .onDisappear(){
-            timer?.invalidate()
-        }
-    }
     
     private func firstElementUpdate() {
         if !skinsViewModel.filteredSkins.isEmpty {
@@ -239,6 +261,14 @@ struct AngarsPageViolent: View {
     }
 }
 
-#Preview {
-    AngarsPageViolent()
+struct AngarsPageViolent_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            AngarsPageViolent()
+                .environmentObject(NetworkManager_SimulatorFarm())
+                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
 }
