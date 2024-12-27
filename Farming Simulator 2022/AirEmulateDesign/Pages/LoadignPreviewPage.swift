@@ -11,24 +11,18 @@ struct LoadignPreviewPage: View {
     @ObservedObject var crotel: LoadingPreviewVMCyan = LoadingPreviewVMCyan()
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
     @State var workInternetState: Bool = true
-    @State var progressTimer: Int = 0
     @State var openMenuPage: Bool = false
     @State var timer: Timer?
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+    
     var body: some View {
         ZStack {
             if openMenuPage {
                 MenuListToApp()
             } else {
-                ZStack{
-                    Rectangle()
-                        .fill(Color.clear)
-                        .overlay {
-                            Image(bigSize ? IconTurboGear.superBigBackToPad : IconTurboGear.mediumRareBackToPhone)
-                                .resizable()
-                                .scaledToFill()
-                        }
-                        .ignoresSafeArea()
+                ZStack {
+                    // Removed the background image, now using plain background
+                    Color.white.edgesIgnoringSafeArea(.all)
                     
                     LoadingLoaderCustomElement(progressTimer: $crotel.progress)
                         .frame(maxHeight: .infinity, alignment: .bottom)

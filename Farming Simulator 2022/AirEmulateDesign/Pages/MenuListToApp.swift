@@ -3,7 +3,7 @@
 //  Farming Simulator 2022
 //
 //  Created by Sim on 24/09/24.
-//
+//  Redesigned by Adi
 
 import SwiftUI
 

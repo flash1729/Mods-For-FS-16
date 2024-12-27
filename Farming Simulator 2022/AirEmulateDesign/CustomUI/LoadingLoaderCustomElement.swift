@@ -11,84 +11,55 @@ struct LoadingLoaderCustomElement: View {
     @Binding var progressTimer: Int
     @State var countOfRectangle: Int = 0
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+    
+    // Constants updated to match design specifications
+    private let capsuleHeight: CGFloat = 53 // Updated to match design spec
+    private let capsuleWidth: CGFloat = 34  // Updated to match design spec
+    private let capsuleRadius: CGFloat = 24 // Updated to match design spec
+    private let containerPadding: CGFloat = 24
+    private let numberOfCapsules = 8
+    private let unfilliedOpacity: Double = 0.3 // Updated opacity for unfilled capsules
+    
     var body: some View {
-        VStack {
-            Text("Loading")
-                .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 24, type: .bold))
-                .foregroundColor(Color.white)
-                .padding(.bottom, bigSize ? 45 : 24)
-            HStack(spacing: bigSize ? 8 : 4) {
-                ForEach(0..<13) { item in
-                    rectangleElement
-                        .opacity(item < countOfRectangle ? 1.0 : 0.0)
+        VStack(alignment: .leading, spacing: 12) {
+            // Loading text showing current progress
+            Text("Loading, \(progressTimer)%")
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
+                .frame(maxWidth: .infinity, alignment: .center)
+            
+            // Progress capsules
+            HStack(spacing: 8) {
+                ForEach(0..<numberOfCapsules, id: \.self) { index in
+                    Capsule()
+                        .fill(ColorTurboGear.colorPicker(.darkGreen))
+                        .opacity(shouldFillCapsule(at: index) ? 1.0 : unfilliedOpacity)
+                        .frame(width: capsuleWidth, height: capsuleHeight)
                 }
             }
-            .padding(bigSize ? 8 : 4)
-            .frame(maxWidth: bigSize ? 600 : 324)
-            .frame(height: bigSize ? 63 : 34)
-            .background(ColorTurboGear.colorPicker(.gray))
-            .overlay(
-                ZStack {
-                    RoundedRectangle(cornerRadius: bigSize ? 23 : 12)
-                        .stroke(
-                            LinearGradient(
-                                gradient: Gradient(colors: [
-                                    Color.white.opacity(0.2),
-                                    Color.white.opacity(0),
-                                    Color.white.opacity(0)
-                                ]),
-                                startPoint: .top,
-                                endPoint: .bottom
-                            ),
-                            lineWidth: bigSize ? 6 : 3
-                        )
-                    RoundedRectangle(cornerRadius: bigSize ? 23 : 12)
-                        .stroke(
-                            LinearGradient(
-                                gradient: Gradient(colors: [
-                                    Color.white.opacity(0.2),
-                                    Color.white.opacity(0),
-                                    Color.white.opacity(0)
-                                ]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            ),
-                            lineWidth: bigSize ? 6 : 3
-                        )
-                }
-            )
-            .clipShape(RoundedRectangle(cornerRadius: bigSize ? 23 : 12))
         }
-        .paddingFlyBullet()
+        .padding(containerPadding)
+        .frame(maxWidth: bigSize ? 600 : 343)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: capsuleRadius))
+        .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 4)
         .onChange(of: progressTimer) { newValue in
-            let tempCount = Double(progressTimer) / 7.5
-            countOfRectangle = Int(tempCount)
-
+            let progress = Double(progressTimer)
+            let filledCapsules = Int((progress / 100.0) * Double(numberOfCapsules))
+            countOfRectangle = min(filledCapsules, numberOfCapsules)
         }
     }
     
-    
-    
-    private var rectangleElement: some View {
-        RoundedRectangle(cornerRadius: bigSize ? 12 : 6)
-            .fill(ColorTurboGear.colorPicker(.cyan))
-            .overlay(
-                ZStack {
-                    RoundedRectangle(cornerRadius: bigSize ? 12 : 6)
-                        .stroke(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.white.opacity(0.3), Color.white.opacity(0)]),
-                                startPoint: .trailing,
-                                endPoint: .leading
-                            ),
-                            lineWidth: bigSize ? 6 : 3
-                        )
-                }
-            )
-            .clipShape(RoundedRectangle(cornerRadius: bigSize ? 12 : 6))
+    private func shouldFillCapsule(at index: Int) -> Bool {
+        return index < countOfRectangle
     }
 }
-
-#Preview {
-    LoadingLoaderCustomElement(progressTimer: .constant(6))
+// Preview provider for development and testing
+struct LoadingLoaderCustomElement_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            Color.gray.opacity(0.1).edgesIgnoringSafeArea(.all)
+            LoadingLoaderCustomElement(progressTimer: .constant(50))
+        }
+    }
 }
