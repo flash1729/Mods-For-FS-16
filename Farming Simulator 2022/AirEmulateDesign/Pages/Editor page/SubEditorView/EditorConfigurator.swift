@@ -53,7 +53,7 @@ struct EditorConfigurator: View {
                 .padding(.top, bigSize ? 50 : 10)
                 .paddingFlyBullet()
             parstOfChoosedElement
-            BlueButtonEditorWithBorder(blueButtonTap: {
+            GreenButtonEditorWithBorder(blueButtonTap: {
                 withAnimation {
                     tappedButton.toggle()
                 }

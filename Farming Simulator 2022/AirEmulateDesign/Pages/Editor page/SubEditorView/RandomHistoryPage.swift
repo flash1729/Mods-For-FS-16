@@ -48,7 +48,7 @@ struct RandomHistoryPage: View {
     private var bodySectionMain: some View {
         ZStack {
             VStack(spacing: bigSize ? 31 : 10) {
-                NavPanelCyanWithoutFavButton(titleName: "History")
+                NavPanelGreenWithoutFavButton(titleName: "History")
                 .padding(.bottom, bigSize ? 10 : 5)
                 downloadSection
                     .paddingFlyBullet()

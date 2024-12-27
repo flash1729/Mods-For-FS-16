@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BlueButtonEditorWithBorder: View {
+struct GreenButtonEditorWithBorder: View {
     @State var blueButtonTap: () -> Void
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @Binding var titleButton: String
@@ -76,5 +76,5 @@ struct BlueButtonEditorWithBorder: View {
 }
 
 #Preview {
-    BlueButtonEditorWithBorder(blueButtonTap: {}, titleButton: .constant("Ok"))
+    GreenButtonEditorWithBorder(blueButtonTap: {}, titleButton: .constant("Ok"))
 }

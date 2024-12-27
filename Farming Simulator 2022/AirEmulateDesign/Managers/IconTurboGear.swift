@@ -14,6 +14,7 @@ enum IconTurboGear {
     static let superBigBackToPad = "superBigBackToPad"
     static let generateNewAvatar = "generateNewAvatar"
     
+    
     enum MenuIconTurbo: CaseIterable {
         case dads
         case maps
@@ -71,7 +72,9 @@ enum IconTurboGear {
     }
     
     enum TopNavIconTurbo {
+        @available(*, deprecated, message: "Use menuHam instead")
         static let topNavWindowIcon = "topNavWindowIcon"
+        
         static let topNamBackChevron = "topNamBackChevron"
         static let topNavFavoriteInactiveIcon = "topNavFavoriteInactiveIcon"
         static let topNavFavoriteActiveIcon = "topNavFavoriteActiveIcon"
@@ -82,6 +85,7 @@ enum IconTurboGear {
         static let removeItemFromDB = "removeItemFromDB"
         static let editItemFromDB = "editItemFromDB"
         static let saveImageToGallary = "saveImageToGallary"
+        static let menuHam = "menuHam"
         
         case windowIcon
         case backChev
@@ -98,7 +102,7 @@ enum IconTurboGear {
         func sendNameOfIcon() -> String {
             switch self {
             case .windowIcon:
-                return IconTurboGear.TopNavIconTurbo.topNavWindowIcon
+                return IconTurboGear.TopNavIconTurbo.menuHam
             case .backChev:
                 return IconTurboGear.TopNavIconTurbo.topNamBackChevron
             case .favActive:

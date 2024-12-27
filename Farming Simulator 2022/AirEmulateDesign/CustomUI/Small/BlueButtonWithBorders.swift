@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(*, deprecated, message: "BlueButtonWithBorders is deprecated. Use GreenButtonWithBorders instead.")
 struct BlueButtonWithBorders: View {
     @State var blueButtonTap: () -> Void
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
@@ -60,6 +61,72 @@ struct BlueButtonWithBorders: View {
     }
 }
 
-#Preview {
-    BlueButtonWithBorders(blueButtonTap: {}, titleButton: "Ok")
+
+
+struct GreenButtonWithBorders: View {
+    // Required properties
+    let title: String
+    let action: () -> Void
+    
+    // Optional properties with defaults
+    var disabled: Bool = false
+    var showIcon: Bool = true
+    
+    // Device type check for responsive sizing
+    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+    
+    // Constants from design specs
+    private let buttonHeight: CGFloat = 37
+    private let cornerRadius: CGFloat = 8
+    private let horizontalPadding: CGFloat = 24
+    private let verticalPadding: CGFloat = 8
+    private let borderWidth: CGFloat = 1
+    private let spacing: CGFloat = 10
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: spacing) {
+                Text(title)
+                    .font(FontTurboGear.gilroyStyle(
+                        size: bigSize ? 22 : 16,
+                        type: .semibold
+                    ))
+                    .foregroundColor(.white)
+            }
+            .frame(height: buttonHeight)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, horizontalPadding)
+            .padding(.vertical, verticalPadding)
+            .background(
+                ColorTurboGear.colorPicker(.darkGreen)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .strokeBorder(
+                        Color.white.opacity(0.16),
+                        lineWidth: borderWidth
+                    )
+            )
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+        }
+        .disabled(disabled)
+        .opacity(disabled ? 0.5 : 1.0)
+    }
+}
+
+// Preview for development
+struct GreenButtonPrecise_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            ColorTurboGear.colorPicker(.green)
+            VStack(spacing: 20) {
+                GreenButtonWithBorders(
+                    title: "Generate new +",
+                    action: {}
+                )
+            }
+            .padding()
+        }
+        .previewLayout(.sizeThatFits)
+    }
 }
