@@ -8,16 +8,12 @@
 import SwiftUI
 
 struct NavButtonMiniIcon: View {
-    @State var typeOfImage: IconTurboGear.TopNavIconTurbo
-    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+    let typeOfImage: IconTurboGear.TopNavIconTurbo
+    
     var body: some View {
-        RoundedRectangle(cornerRadius: 14)
+        Image(typeOfImage.sendNameOfIcon())
+            .resizable()
             .frame(width: 44, height: 44)
-            .overlay {
-                Image(typeOfImage.sendNameOfIcon())
-                    .resizable()
-                    .scaledToFit()
-            }
     }
 }
 

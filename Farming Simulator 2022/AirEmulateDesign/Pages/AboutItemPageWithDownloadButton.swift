@@ -84,10 +84,20 @@ struct AboutItemPageWithDownloadButton: View {
     
     var body: some View {
         ZStack {
+            Color.white.ignoresSafeArea()
+            
             VStack(spacing: bigSize ? 31 : 10) {
-                NavPanelCyan(titleName: titleItemName, favoriteState: favoriteState, favoriteTapped: {bool in
-                    idItemToLike(bool)
-                })
+                NavPanelGreenWithDown(
+                    // Existing parameters
+                    titleName: titleItemName,
+                    favoriteState: favoriteState,
+                    favoriteTapped: { bool in
+                        idItemToLike(bool)
+                    },
+                    // New parameters needed for download functionality
+                    linkDownloadItem: linkDownloadItem,     // Pass through from parent view
+                    clearItemName: clearItemName            // Pass through from parent view
+                )
                 .id(navUpdateId)
                 .padding(.bottom, bigSize ? 10 : 5)
                 downloadSection
@@ -104,11 +114,9 @@ struct AboutItemPageWithDownloadButton: View {
                     }
                 }
                 Spacer()
-                downloadButton
-                    .paddingFlyBullet()
             }
             .ignoresSafeArea(.all, edges: .top)
-            .frame(maxHeight: .infinity, alignment: .top)
+            .frame(alignment: .top)
             
             if showSaveAlert {
                 SaveEditorAlert(stateTapped: {state in
