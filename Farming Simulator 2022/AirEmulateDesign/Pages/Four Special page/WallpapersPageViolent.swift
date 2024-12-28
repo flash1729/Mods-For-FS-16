@@ -27,88 +27,107 @@ struct WallpapersPageViolent: View {
     @State var ifOpenAboutPage: Bool = false
     var body: some View {
         ZStack {
-            // Main background color
             Color.white
                 .ignoresSafeArea()
             
-            // Navigation link for detail view
             NavigationLink(isActive: $openAboutPage, destination: {
-                AboutItemPageWithDownloadButton(
-                    titleItemName: choosedItem?.title ?? "",
-                    favoriteState: choosedItem?.isFavorited ?? false,
-                    imageData: choosedItem?.imageData,
-                    linkDownloadItem: nil,
-                    textItem: choosedItem?.description ?? "",
-                    idItemToLike: { bool in
-                        // Maintaining existing favorite handling logic
-                        if let choosedItem {
-                            PersistenceController.shared.updateFavoriteFarms(with: choosedItem.id)
-                        }
-                        choosedLikeState = bool
-                        let firstIndex = farmViewModel.farms.firstIndex(where: {$0.id == choosedItem?.id})
-                        if let firstIndex {
-                            farmViewModel.farms[firstIndex].isFavorited = bool
-                            farmViewModel.generateFavoriteFarms()
-                            if farmViewModel.farmsSelectedFilter == .favorite {
-                                farmViewModel.filteredFarms = farmViewModel.filterFavoriteFarms
-                                firstElementUpdate()
-                            }
-                            farmViewModel.pressingFilterFarms()
-                            collectionUpdateId = UUID()
-                        }
-                        choosedItem?.isFavorited = bool
-                    },
-                    clearItemName: ""
-                )
-                .navigationBarBackButtonHidden()
-            }, label: {EmptyView()})
-            
-            VStack(spacing: 0) {
-                // Navigation and search header
-                NavPanelSearchInsideGreen(
-                    searchText: $searchText,
-                    filterType: $filterType,
-                    searchTypeElement: .plane,
-                    onCommit: {},
-                    choosedFilter: { item in
-                        switch item {
-                        case .filterAllItems:
-                            farmViewModel.farmsSelectedFilter = .all
-                        case .filterNewItems:
-                            farmViewModel.farmsSelectedFilter = .new
-                        case .filterFavoriteItems:
-                            farmViewModel.farmsSelectedFilter = .favorite
-                        case .filterTopItems:
-                            farmViewModel.farmsSelectedFilter = .top
+                AboutItemPageWithDownloadButton(titleItemName: choosedItem?.title ?? "", favoriteState: choosedItem?.isFavorited ?? false, imageData: choosedItem?.imageData, linkDownloadItem: nil, textItem: choosedItem?.description ?? "", idItemToLike: { bool in
+                    if let choosedItem {
+                        PersistenceController.shared.updateFavoriteFarms(with: choosedItem.id) //For every type diffierent
+                    }
+                    choosedLikeState = bool
+                    let firstIndex = farmViewModel.farms.firstIndex(where: {$0.id == choosedItem?.id})
+                    if let firstIndex {
+                        farmViewModel.farms[firstIndex].isFavorited = bool
+                        farmViewModel.generateFavoriteFarms()
+                        if farmViewModel.farmsSelectedFilter == .favorite {
+                            farmViewModel.filteredFarms = farmViewModel.filterFavoriteFarms
+                            firstElementUpdate()
                         }
                         farmViewModel.pressingFilterFarms()
-                        firstElementUpdate()
-                    },
-                    showSearchPanel: false
-                )
-                .padding(.top, 60)
-                .padding(.bottom, bigSize ? 24 : 16)
+                        collectionUpdateId = UUID()
+                    }
+                    choosedItem?.isFavorited = bool
+                }, clearItemName: "")
+                    .navigationBarBackButtonHidden()
+            }, label: {EmptyView()})
+            VStack{
+                NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .plane, onCommit: {}, choosedFilter: {item in
+                    switch item {
+                    case .filterAllItems:
+                        farmViewModel.farmsSelectedFilter = .all
+                    case .filterNewItems:
+                        farmViewModel.farmsSelectedFilter = .new
+                    case .filterFavoriteItems:
+                        farmViewModel.farmsSelectedFilter = .favorite
+                    case .filterTopItems:
+                        farmViewModel.farmsSelectedFilter = .top
+                    }
+                    farmViewModel.pressingFilterFarms()
+                    firstElementUpdate()
+                }, showSearchPanel: false)
+                .padding(.bottom, bigSize ? 30 : 0)
                 
-                // Main content area
-                ScrollView(.vertical, showsIndicators: false) {
+                
                     if farmViewModel.filteredFarms.isEmpty {
                         Text("No result found")
                             .font(FontTurboGear.gilroyStyle(size: 24, type: .medium))
                             .foregroundColor(.white)
                             .padding(.top, 100)
                     } else {
-                        VStack(spacing: 24) {
+                        VStack(spacing: bigSize ? 24 : 16) {
                             bodyMiddleSection
                                 .paddingFlyBullet()
+                                .frame(maxHeight: 465)
                             bottomSection
                         }
-                        .padding(.top, 24)
+                        .ignoresSafeArea(.all)
+                    }
+                
+                Spacer()
+                
+                BottomFilterBarView(
+                                filterType: $filterType,
+                                choosedFilter: { item in
+                                    switch item {
+                                    case .filterAllItems:
+                                        farmViewModel.farmsSelectedFilter = .all
+                                    case .filterNewItems:
+                                        farmViewModel.farmsSelectedFilter = .new
+                                    case .filterFavoriteItems:
+                                        farmViewModel.farmsSelectedFilter = .favorite
+                                    case .filterTopItems:
+                                        farmViewModel.farmsSelectedFilter = .top
+                                    }
+                                    farmViewModel.pressingFilterFarms()
+                                    firstElementUpdate()
+                                }
+                            )
+                
+            }
+//            .ignoresSafeArea(.all, edges: .top)
+//            .frame(maxHeight: .infinity, alignment: .top)
+            .onChange(of: searchText) { _ in
+                farmViewModel.searchText = searchText
+                farmViewModel.pressingFilterFarms()
+                firstElementUpdate()
+            }
+            .onAppear {
+                NotificationCenter.default.addObserver(forName: NSNotification.Name("FarmModelChanged"), object: nil, queue: nil) { notification in
+                    if let updatedMaps = notification.object as? FarmModel {
+                        if let index = farmViewModel.farms.firstIndex(where: { $0.id == updatedMaps.id }) {
+                            farmViewModel.farms[index] = updatedMaps
+                            farmViewModel.generateFavoriteFarms()
+                        }
                     }
                 }
+                if !ifOpenAboutPage {
+                    farmViewModel.farmsSelectedFilter = .all
+                    firstElementUpdate()
+                }
+                ifOpenAboutPage = false
+                farmViewModel.pressingFilterFarms()
             }
-            .ignoresSafeArea(.all, edges: .top)
-            
-            // No internet connection overlay
             if !workInternetState {
                 LostConnectElement {
                     workInternetState.toggle()
@@ -120,33 +139,10 @@ struct WallpapersPageViolent: View {
                 }
             }
         }
-        .onChange(of: searchText) { _ in
-            farmViewModel.searchText = searchText
-            farmViewModel.pressingFilterFarms()
-            firstElementUpdate()
-        }
-        .onAppear {
-            NotificationCenter.default.addObserver(
-                forName: NSNotification.Name("FarmModelChanged"),
-                object: nil,
-                queue: nil
-            ) { notification in
-                if let updatedMaps = notification.object as? FarmModel {
-                    if let index = farmViewModel.farms.firstIndex(where: { $0.id == updatedMaps.id }) {
-                        farmViewModel.farms[index] = updatedMaps
-                        farmViewModel.generateFavoriteFarms()
-                    }
-                }
-            }
-            if !ifOpenAboutPage {
-                farmViewModel.farmsSelectedFilter = .all
-                firstElementUpdate()
-            }
-            ifOpenAboutPage = false
-            farmViewModel.pressingFilterFarms()
+        .onAppear(){
             workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
         }
-        .onDisappear {
+        .onDisappear(){
             timer?.invalidate()
         }
     }
@@ -260,6 +256,36 @@ struct WallpapersPageViolent: View {
     }
 }
 
-#Preview {
-    WallpapersPageViolent()
+
+struct WallpapersPageViolent_Previews: PreviewProvider {
+    static var previews: some View {
+        // Create a preview container with required dependencies
+        NavigationView {
+            WallpapersPageViolent()
+                // Inject required environment objects
+                .environmentObject(NetworkManager_SimulatorFarm())
+                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                // Set up Core Data environment
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
+        // Apply navigation view style for consistency
+        .navigationViewStyle(StackNavigationViewStyle())
+        // Set up preview parameters
+        .previewDisplayName("Wallpapers Page")
+        // Optional: Add different color schemes and device types
+        .preferredColorScheme(.dark)
+        // Add preview device
+        .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+        
+        // Add an iPad preview as well
+        NavigationView {
+            WallpapersPageViolent()
+                .environmentObject(NetworkManager_SimulatorFarm())
+                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .previewDisplayName("Wallpapers Page - iPad")
+        .previewDevice(PreviewDevice(rawValue: "iPad Pro (12.9-inch) (6th generation)"))
+    }
 }

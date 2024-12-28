@@ -26,7 +26,7 @@ enum FontTurboGear {
             case .regular:
                 return Font.custom("Gilroy-Regular", size: size)
             case .bold:
-                return Font.custom("Gilroy-Black", size: size)
+                return Font.custom("Gilroy-Bold", size: size)
             case .semibold:
                 return Font.custom("Gilroy-SemiBold", size: size)
             case .medium:

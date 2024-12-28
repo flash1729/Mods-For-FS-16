@@ -46,7 +46,7 @@ struct NavPanelCyanEditors: View {
         .frame(height: bigSize ? 137 : 128)
         .background(
             ZStack {
-                ColorTurboGear.colorPicker(.cyan)
+                ColorTurboGear.colorPicker(.green)
                 Color.clear
                     .contentShape(RoundedRectangle(cornerRadius: 12))
                     .onTapGesture {

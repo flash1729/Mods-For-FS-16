@@ -52,7 +52,6 @@ struct MapsPageViolent: View {
                }, clearItemName: choosedItem?.file ?? "")
                    .navigationBarBackButtonHidden()
            }, label: {EmptyView()})
-           
            VStack{
                NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .maps, onCommit: {}, choosedFilter: {item in
                    switch item {
@@ -68,7 +67,7 @@ struct MapsPageViolent: View {
                    mapsViewModel.pressingfilterMaps()
                    firstElementUpdate()
                })
-//               .padding(.bottom, 16)
+               .padding(.bottom, bigSize ? 30 : 0)
                
                if mapsViewModel.filteredMaps.isEmpty {
                    Text("No result found")
@@ -76,17 +75,16 @@ struct MapsPageViolent: View {
                        .foregroundColor(.white)
                        .padding(.top, 100)
                } else {
-                   VStack(spacing: 16) {
+                   VStack(spacing: bigSize ? 20 : 12) {
                        bodyMiddleSection
                            .paddingFlyBullet()
-                           .frame(maxHeight: 424)
+                           .frame(maxHeight: 465)
                        bottomSection
-//                       Spacer()
                    }
                    .ignoresSafeArea(.all)
                }
                
-               Spacer() // Push content up
+               Spacer()
                
                BottomFilterBarView(
                        filterType: $filterType,
@@ -116,6 +114,8 @@ struct MapsPageViolent: View {
                }
            }
        }
+//     .ignoresSafeArea(.all, edges: .top)
+//     .frame(maxHeight: .infinity, alignment: .top)
        .onChange(of: searchText) { _ in
            mapsViewModel.searchText = searchText
            mapsViewModel.pressingfilterMaps()

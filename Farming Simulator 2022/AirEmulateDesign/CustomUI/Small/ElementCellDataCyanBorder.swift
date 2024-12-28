@@ -64,7 +64,7 @@ struct ElementCellDataCyanBorder: View {
                 }
                 .overlay(content: {
                     RoundedRectangle(cornerRadius: bigSize ? 36 : 20)
-                        .strokeBorder(imageName == choosedImageName ? ColorTurboGear.colorPicker(.cyan) : Color.clear, lineWidth: bigSize ? 5 : 3, antialiased: true)
+                        .strokeBorder(imageName == choosedImageName ? ColorTurboGear.colorPicker(.green) : Color.clear, lineWidth: bigSize ? 5 : 3, antialiased: true)
                 })
                 .clipShape(RoundedRectangle(cornerRadius: bigSize ? 36 : 20))
                 .contentShape(RoundedRectangle(cornerRadius: bigSize ? 36 : 20))

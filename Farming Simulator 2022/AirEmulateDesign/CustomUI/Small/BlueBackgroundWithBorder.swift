@@ -12,7 +12,7 @@ struct BlueBackgroundWithBorder: View {
     @State var cornerRadiusCustom: CGFloat
     var body: some View {
         RoundedRectangle(cornerRadius: cornerRadiusCustom)
-            .fill(ColorTurboGear.colorPicker(.cyan))
+            .fill(ColorTurboGear.colorPicker(.green))
             .overlay {
                 ZStack {
                     RoundedRectangle(cornerRadius: cornerRadiusCustom)

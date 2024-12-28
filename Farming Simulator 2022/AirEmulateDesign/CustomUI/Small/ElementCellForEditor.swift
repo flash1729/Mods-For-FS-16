@@ -40,7 +40,7 @@ struct ElementCellForEditor: View {
                                     .scaledToFit()
                             } else {
                                 ZStack {
-                                    ColorTurboGear.colorPicker(.darkGray)
+                                    ColorTurboGear.colorPicker(.grey)
                                     InfinityLoaderGreen()
                                         .frame(height: 55)
                                 }
@@ -72,7 +72,7 @@ struct ElementCellForEditor: View {
                 }
                 .overlay(content: {
                     RoundedRectangle(cornerRadius: bigSize ? 36 : 20)
-                        .strokeBorder(index == choosedIndex ? ColorTurboGear.colorPicker(.cyan) : Color.clear, lineWidth: bigSize ? 5 : 3, antialiased: true)
+                        .strokeBorder(index == choosedIndex ? ColorTurboGear.colorPicker(.green) : Color.clear, lineWidth: bigSize ? 5 : 3, antialiased: true)
                 })
                 .clipShape(RoundedRectangle(cornerRadius: bigSize ? 36 : 20))
                 .contentShape(RoundedRectangle(cornerRadius: bigSize ? 36 : 20))

@@ -90,7 +90,7 @@ struct AngarsPageViolent: View {
                         VStack(spacing: 16) {
                             bodyMiddleSection
                                 .paddingFlyBullet()
-                                .frame(maxHeight: 424)
+                                .frame(maxHeight: 465)
                             bottomSection
                         }
                         .ignoresSafeArea(.all)

@@ -33,7 +33,7 @@ struct AllEditorButtons: View {
                     }
                 } label: {
                     RoundedRectangle(cornerRadius: bigSize ? 33 : 16)
-                        .fill(ColorTurboGear.colorPicker(.cyan))
+                        .fill(ColorTurboGear.colorPicker(.green))
                         .frame(height: bigSize ? 240 : 113)
                         .overlay {
                             ZStack {

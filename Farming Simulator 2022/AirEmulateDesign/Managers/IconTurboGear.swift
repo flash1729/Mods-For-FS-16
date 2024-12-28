@@ -75,7 +75,7 @@ enum IconTurboGear {
         @available(*, deprecated, message: "Use menuHam instead")
         static let topNavWindowIcon = "topNavWindowIcon"
         
-        static let topNamBackChevron = "topNamBackChevron"
+        static let topNamBackChevron = "backButtonGreen"
         static let topNavFavoriteInactiveIcon = "topNavFavoriteInactiveIcon"
         static let topNavFavoriteActiveIcon = "topNavFavoriteActiveIcon"
         static let chevronLeftButtonCustom = "chevronLeftButtonCustom"

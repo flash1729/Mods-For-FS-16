@@ -67,7 +67,7 @@ struct RandomPreviewAvatar: View {
     
     private var imageSection: some View {
         RoundedRectangle(cornerRadius: 12)
-            .fill(ColorTurboGear.colorPicker(.darkGray))
+            .fill(ColorTurboGear.colorPicker(.grey))
             .overlay {
                 ZStack {
                     if let image = smallImagePeopleToSave {
@@ -124,12 +124,12 @@ struct RandomPreviewAvatar: View {
             Text(title)
                 .frame(height: bigSize ? 100 : 56)
                 .frame(maxWidth: .infinity)
-                .background( border ? ColorTurboGear.colorPicker(.darkGray) : ColorTurboGear.colorPicker(.cyan))
+                .background( border ? ColorTurboGear.colorPicker(.grey) : ColorTurboGear.colorPicker(.green))
                 .overlay(content: {
                     ZStack {
                         if border {
                             RoundedRectangle(cornerRadius: bigSize ? 30 : 16)
-                                .strokeBorder(ColorTurboGear.colorPicker(.cyan), lineWidth: 3, antialiased: true)
+                                .strokeBorder(ColorTurboGear.colorPicker(.green), lineWidth: 3, antialiased: true)
                         }
                     }
                 })

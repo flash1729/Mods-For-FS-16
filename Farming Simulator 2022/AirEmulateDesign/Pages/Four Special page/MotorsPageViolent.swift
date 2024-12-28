@@ -51,7 +51,7 @@ struct MotorsPageViolent: View {
                 }, clearItemName: choosedItem?.file ?? "")
                     .navigationBarBackButtonHidden()
             }, label: {EmptyView()})
-            VStack(spacing: bigSize ? 20 : 12) {
+            VStack{
                 NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .dads, onCommit: {}, choosedFilter: {item in
                     switch item {
                     case .filterAllItems:
@@ -67,13 +67,9 @@ struct MotorsPageViolent: View {
                     firstElementUpdate()
                 })
                 .padding(.bottom, bigSize ? 30 : 0)
-                ZStack {
-                    Color.clear
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            UIApplication.shared.endEditing()
-                        }
-                    if dadsViewModel.filteredMods.isEmpty {
+                    
+                
+                if dadsViewModel.filteredMods.isEmpty {
                         Text("No result found")
                             .font(FontTurboGear.gilroyStyle(size: 24, type: .medium))
                             .foregroundColor(.white)
@@ -82,14 +78,35 @@ struct MotorsPageViolent: View {
                         VStack(spacing: bigSize ? 20 : 12) {
                             bodyMiddleSection
                                 .paddingFlyBullet()
-                                .frame(maxHeight: .infinity)
+                                .frame(maxHeight: 465)
                             bottomSection
                         }
+                        .ignoresSafeArea(.all)
                     }
-                }
+                
+                Spacer()
+                
+                BottomFilterBarView(
+                    filterType: $filterType,
+                    choosedFilter: { item in
+                        switch item {
+                        case .filterAllItems:
+                            dadsViewModel.modsSelectedFilter = .all
+                        case .filterNewItems:
+                            dadsViewModel.modsSelectedFilter = .new
+                        case .filterFavoriteItems:
+                            dadsViewModel.modsSelectedFilter = .favorite
+                        case .filterTopItems:
+                            dadsViewModel.modsSelectedFilter = .top
+                        }
+                        dadsViewModel.pressingfilterMods()
+                        firstElementUpdate()
+                    }
+                )
+                
             }
-            .ignoresSafeArea(.all, edges: .top)
-            .frame(maxHeight: .infinity, alignment: .top)
+//            .ignoresSafeArea(.all, edges: .top)
+//            .frame(maxHeight: .infinity, alignment: .top)
             .onChange(of: searchText) { _ in
                 dadsViewModel.searchText = searchText
                 dadsViewModel.pressingfilterMods()
@@ -239,6 +256,14 @@ struct MotorsPageViolent: View {
     }
 }
 
-#Preview {
-    MotorsPageViolent()
+struct MotorsPageViolent_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            MotorsPageViolent()
+                .environmentObject(NetworkManager_SimulatorFarm())
+                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
 }
