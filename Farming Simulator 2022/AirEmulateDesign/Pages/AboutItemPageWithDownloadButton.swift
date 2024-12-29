@@ -84,44 +84,49 @@ struct AboutItemPageWithDownloadButton: View {
     
     var body: some View {
         ZStack {
+            // Background color
             Color.white.ignoresSafeArea()
             
             VStack(spacing: bigSize ? 31 : 10) {
+                // Nav Panel with download
                 NavPanelGreenWithDown(
-                    // Existing parameters
                     titleName: titleItemName,
                     favoriteState: favoriteState,
                     favoriteTapped: { bool in
                         idItemToLike(bool)
                     },
-                    // New parameters needed for download functionality
-                    linkDownloadItem: linkDownloadItem,     // Pass through from parent view
-                    clearItemName: clearItemName            // Pass through from parent view
+                    linkDownloadItem: linkDownloadItem,
+                    clearItemName: clearItemName
                 )
                 .id(navUpdateId)
                 .padding(.bottom, bigSize ? 10 : 5)
+                
+                // Download status section
                 downloadSection
                     .paddingFlyBullet()
                 
-                imageSection
-                    .paddingFlyBullet()
-                    .padding(.top, bigSize ? 10 : 5)
-                if !titleItemName.isEmpty || !textItem.isEmpty {
-                    
-                    ScrollView(.vertical, showsIndicators: false) {
-                        textSection
-                            .paddingFlyBullet()
-                    }
-                }
+                // Main content using PreviewItemFromRemote
+                PreviewItemFromRemote(
+                    imageData: imageData,
+                    imagePath: "",  // Empty since we already have the image data
+                    titleData: titleItemName,
+                    previewText: textItem,
+                    likeState: .constant(favoriteState),
+                    tappedLikeButton: idItemToLike,
+                    openDescriptionItem: {},  // Empty since we're already in detail view
+                    sendBackImageData: { _ in }  // Empty since we already have image data
+                )
+                .paddingFlyBullet()
+                
                 Spacer()
             }
             .ignoresSafeArea(.all, edges: .top)
-            .frame(alignment: .top)
             
+            // Alerts and overlays
             if showSaveAlert {
-                SaveEditorAlert(stateTapped: {state in
+                SaveEditorAlert(stateTapped: { state in
                     if state {
-                        PhotoLibraryManager.shared.saveToGallary(image: UIImage(data: imageData ?? Data()), saveCompletion: {error in
+                        PhotoLibraryManager.shared.saveToGallary(image: UIImage(data: imageData ?? Data()), saveCompletion: { error in
                             if error == nil {
                                 saveState = .saveSuccesfulIconElement
                                 showSaveState = true
@@ -144,18 +149,18 @@ struct AboutItemPageWithDownloadButton: View {
                 }
             }
         }
-        .onAppear(){
+        .onAppear {
             workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
         }
-        .onDisappear(){
+        .onDisappear {
             timer?.invalidate()
         }
         .onChange(of: progressDownload) { newValue in
             if newValue >= 1.0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.showDownloadProgress = false
                     self.disableButton = false
-                })
+                }
             }
         }
     }
@@ -286,6 +291,8 @@ struct AboutItemPageWithDownloadButton: View {
             }
         }
     }
+    
+    
     
 }
 

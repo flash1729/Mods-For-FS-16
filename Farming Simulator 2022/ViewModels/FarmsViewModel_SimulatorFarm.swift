@@ -43,7 +43,7 @@ class FarmsViewModel: ObservableObject {
         
         if !searchText.isEmpty {
             filteredFarms = farms.filter { farm in
-                return farm.image.lowercased().contains(searchText.lowercased())
+                return farm.title?.lowercased().contains(searchText.lowercased()) ?? false
             }
         }
     }

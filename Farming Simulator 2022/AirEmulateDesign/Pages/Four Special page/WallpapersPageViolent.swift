@@ -26,49 +26,63 @@ struct WallpapersPageViolent: View {
     @State var openAboutPage: Bool = false
     @State var ifOpenAboutPage: Bool = false
     var body: some View {
-        ZStack {
-            Color.white
-                .ignoresSafeArea()
-            
-            NavigationLink(isActive: $openAboutPage, destination: {
-                AboutItemPageWithDownloadButton(titleItemName: choosedItem?.title ?? "", favoriteState: choosedItem?.isFavorited ?? false, imageData: choosedItem?.imageData, linkDownloadItem: nil, textItem: choosedItem?.description ?? "", idItemToLike: { bool in
-                    if let choosedItem {
-                        PersistenceController.shared.updateFavoriteFarms(with: choosedItem.id) //For every type diffierent
-                    }
-                    choosedLikeState = bool
-                    let firstIndex = farmViewModel.farms.firstIndex(where: {$0.id == choosedItem?.id})
-                    if let firstIndex {
-                        farmViewModel.farms[firstIndex].isFavorited = bool
-                        farmViewModel.generateFavoriteFarms()
-                        if farmViewModel.farmsSelectedFilter == .favorite {
-                            farmViewModel.filteredFarms = farmViewModel.filterFavoriteFarms
+            ZStack {
+                Color.white
+                    .ignoresSafeArea()
+                
+                NavigationLink(isActive: $openAboutPage, destination: {
+                    AboutItemPageWithDownloadButton(
+                        titleItemName: choosedItem?.title ?? "",
+                        favoriteState: choosedItem?.isFavorited ?? false,
+                        imageData: choosedItem?.imageData,
+                        linkDownloadItem: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(choosedItem?.file ?? "")",
+                        textItem: choosedItem?.description ?? "",
+                        idItemToLike: { bool in
+                            if let choosedItem {
+                                PersistenceController.shared.updateFavoriteFarms(with: choosedItem.id)
+                            }
+                            choosedLikeState = bool
+                            let firstIndex = farmViewModel.farms.firstIndex(where: {$0.id == choosedItem?.id})
+                            if let firstIndex {
+                                farmViewModel.farms[firstIndex].isFavorited = bool
+                                farmViewModel.generateFavoriteFarms()
+                                if farmViewModel.farmsSelectedFilter == .favorite {
+                                    farmViewModel.filteredFarms = farmViewModel.filterFavoriteFarms
+                                    firstElementUpdate()
+                                }
+                                farmViewModel.pressingFilterFarms()
+                                collectionUpdateId = UUID()
+                            }
+                            choosedItem?.isFavorited = bool
+                        },
+                        clearItemName: choosedItem?.file ?? ""
+                    )
+                    .navigationBarBackButtonHidden()
+                }, label: {EmptyView()})
+
+                VStack {
+                    NavPanelSearchInsideGreen(
+                        searchText: $searchText,
+                        filterType: $filterType,
+                        searchTypeElement: .plane,
+                        onCommit: {},
+                        choosedFilter: { item in
+                            switch item {
+                            case .filterAllItems:
+                                farmViewModel.farmsSelectedFilter = .all
+                            case .filterNewItems:
+                                farmViewModel.farmsSelectedFilter = .new
+                            case .filterFavoriteItems:
+                                farmViewModel.farmsSelectedFilter = .favorite
+                            case .filterTopItems:
+                                farmViewModel.farmsSelectedFilter = .top
+                            }
+                            farmViewModel.pressingFilterFarms()
                             firstElementUpdate()
                         }
-                        farmViewModel.pressingFilterFarms()
-                        collectionUpdateId = UUID()
-                    }
-                    choosedItem?.isFavorited = bool
-                }, clearItemName: "")
-                    .navigationBarBackButtonHidden()
-            }, label: {EmptyView()})
-            VStack{
-                NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .plane, onCommit: {}, choosedFilter: {item in
-                    switch item {
-                    case .filterAllItems:
-                        farmViewModel.farmsSelectedFilter = .all
-                    case .filterNewItems:
-                        farmViewModel.farmsSelectedFilter = .new
-                    case .filterFavoriteItems:
-                        farmViewModel.farmsSelectedFilter = .favorite
-                    case .filterTopItems:
-                        farmViewModel.farmsSelectedFilter = .top
-                    }
-                    farmViewModel.pressingFilterFarms()
-                    firstElementUpdate()
-                }, showSearchPanel: false)
-                .padding(.bottom, bigSize ? 30 : 0)
-                
-                
+                    )
+                    .padding(.bottom, bigSize ? 30 : 0)
+                    
                     if farmViewModel.filteredFarms.isEmpty {
                         Text("No result found")
                             .font(FontTurboGear.gilroyStyle(size: 24, type: .medium))
@@ -83,37 +97,50 @@ struct WallpapersPageViolent: View {
                         }
                         .ignoresSafeArea(.all)
                     }
-                
-                Spacer()
-                
-                BottomFilterBarView(
-                                filterType: $filterType,
-                                choosedFilter: { item in
-                                    switch item {
-                                    case .filterAllItems:
-                                        farmViewModel.farmsSelectedFilter = .all
-                                    case .filterNewItems:
-                                        farmViewModel.farmsSelectedFilter = .new
-                                    case .filterFavoriteItems:
-                                        farmViewModel.farmsSelectedFilter = .favorite
-                                    case .filterTopItems:
-                                        farmViewModel.farmsSelectedFilter = .top
-                                    }
-                                    farmViewModel.pressingFilterFarms()
-                                    firstElementUpdate()
-                                }
-                            )
-                
+                    
+                    Spacer()
+                    
+                    BottomFilterBarView(
+                        filterType: $filterType,
+                        choosedFilter: { item in
+                            switch item {
+                            case .filterAllItems:
+                                farmViewModel.farmsSelectedFilter = .all
+                            case .filterNewItems:
+                                farmViewModel.farmsSelectedFilter = .new
+                            case .filterFavoriteItems:
+                                farmViewModel.farmsSelectedFilter = .favorite
+                            case .filterTopItems:
+                                farmViewModel.farmsSelectedFilter = .top
+                            }
+                            farmViewModel.pressingFilterFarms()
+                            firstElementUpdate()
+                        }
+                    )
+                }
+
+                if !workInternetState {
+                    LostConnectElement {
+                        workInternetState.toggle()
+                        timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
+                            if workInternetState {
+                                workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
+                            }
+                        }
+                    }
+                }
             }
-//            .ignoresSafeArea(.all, edges: .top)
-//            .frame(maxHeight: .infinity, alignment: .top)
             .onChange(of: searchText) { _ in
                 farmViewModel.searchText = searchText
                 farmViewModel.pressingFilterFarms()
                 firstElementUpdate()
             }
             .onAppear {
-                NotificationCenter.default.addObserver(forName: NSNotification.Name("FarmModelChanged"), object: nil, queue: nil) { notification in
+                NotificationCenter.default.addObserver(
+                    forName: NSNotification.Name("FarmModelChanged"),
+                    object: nil,
+                    queue: nil
+                ) { notification in
                     if let updatedMaps = notification.object as? FarmModel {
                         if let index = farmViewModel.farms.firstIndex(where: { $0.id == updatedMaps.id }) {
                             farmViewModel.farms[index] = updatedMaps
@@ -127,25 +154,12 @@ struct WallpapersPageViolent: View {
                 }
                 ifOpenAboutPage = false
                 farmViewModel.pressingFilterFarms()
+                workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
             }
-            if !workInternetState {
-                LostConnectElement {
-                    workInternetState.toggle()
-                    timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
-                        if workInternetState {
-                            workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
-                        }
-                    }
-                }
+            .onDisappear {
+                timer?.invalidate()
             }
         }
-        .onAppear(){
-            workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
-        }
-        .onDisappear(){
-            timer?.invalidate()
-        }
-    }
     
     private func firstElementUpdate() {
         if !farmViewModel.filteredFarms.isEmpty {

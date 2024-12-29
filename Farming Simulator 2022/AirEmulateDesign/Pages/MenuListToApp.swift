@@ -154,7 +154,7 @@ struct MenuButton: View {
    var body: some View {
        Button(action: action) {
            Text(iconType.sendTitleOfItem())
-               .font(FontTurboGear.gilroyStyle(size: 18, type: .semibold))
+               .font(FontTurboGear.gilroyStyle(size: 18, type: .bold))
                .foregroundColor(isSelected ? .white : ColorTurboGear.colorPicker(.darkGreen))
                .frame(maxWidth: .infinity)
                .padding(.vertical, 12)

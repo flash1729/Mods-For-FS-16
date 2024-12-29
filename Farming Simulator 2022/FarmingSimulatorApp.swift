@@ -9,7 +9,7 @@ import SwiftUI
 import AVFoundation
 
 @main
-struct FlightSimulatorApp: App {
+struct FarmingSimulatorApp: App {
     let persistenceController = PersistenceController.shared
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let dropBox = DropBoxManager_SimulatorFarm.shared

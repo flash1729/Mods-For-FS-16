@@ -30,6 +30,8 @@ struct AvatarRandomPageViolent: View {
     @State var timer: Timer?
     var body: some View {
         ZStack{
+            Color.white.ignoresSafeArea()
+            
             bodySection
             
             if !workInternetState {
@@ -152,5 +154,37 @@ struct AvatarRandomPageViolent: View {
         genderType = GenderTypeModel(rawValue: Int16.random(in: 0..<2)) ?? .man
         viewMotel.randomItem = viewMotel.randomAvaterConfiguration(genderType: genderType, allData: allElementData)
         let _ = viewMotel.mergeImages(from: viewMotel.randomItem.sendAllImages())
+    }
+}
+
+struct AvatarRandomPageViolent_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            // iPhone Preview
+            NavigationView {
+                AvatarRandomPageViolent(viewMotel: EditorViewModel())
+                    // Inject required environment objects
+                    .environmentObject(NetworkManager_SimulatorFarm())
+                    .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                    // Set up Core Data environment
+                    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+            .previewDisplayName("Avatar Generator - iPhone")
+            .preferredColorScheme(.dark)
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+            
+            // iPad Preview
+            NavigationView {
+                AvatarRandomPageViolent(viewMotel: EditorViewModel())
+                    .environmentObject(NetworkManager_SimulatorFarm())
+                    .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+            .previewDisplayName("Avatar Generator - iPad")
+            .preferredColorScheme(.dark)
+            .previewDevice(PreviewDevice(rawValue: "iPad Pro (12.9-inch) (6th generation)"))
+        }
     }
 }

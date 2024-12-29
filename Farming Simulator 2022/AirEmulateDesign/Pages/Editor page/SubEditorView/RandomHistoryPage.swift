@@ -6,6 +6,52 @@
 //
 
 import SwiftUI
+import CoreData
+
+class PreviewHelpers {
+    static func createMockBodyEditor() -> BodyEditor {
+        let context = PersistenceController.shared.container.viewContext
+        let bodyEditor = BodyEditor(context: context)
+        bodyEditor.idPeople = UUID()
+        bodyEditor.date = Date()
+        bodyEditor.randomKey = true
+        bodyEditor.gender = 0 // man
+        
+        // Create a sample image
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 200, height: 300))
+        let sampleImage = renderer.image { context in
+            // Draw a gradient background
+            let colors = [
+                UIColor(red: 0.2, green: 0.6, blue: 1.0, alpha: 1.0).cgColor,
+                UIColor(red: 0.1, green: 0.4, blue: 0.8, alpha: 1.0).cgColor
+            ]
+            let gradient = CGGradient(
+                colorsSpace: CGColorSpaceCreateDeviceRGB(),
+                colors: colors as CFArray,
+                locations: [0, 1]
+            )!
+            context.cgContext.drawLinearGradient(
+                gradient,
+                start: CGPoint(x: 0, y: 0),
+                end: CGPoint(x: 0, y: 300),
+                options: []
+            )
+            
+            // Draw avatar shape
+            UIColor.white.setFill()
+            let circlePath = UIBezierPath(ovalIn: CGRect(x: 70, y: 60, width: 60, height: 60))
+            circlePath.fill()
+            
+            let bodyPath = UIBezierPath(roundedRect: CGRect(x: 85, y: 120, width: 30, height: 100), cornerRadius: 10)
+            bodyPath.fill()
+        }
+        
+        bodyEditor.smallPreviewImage = sampleImage.pngData()
+        bodyEditor.fullImage = sampleImage.pngData()
+        
+        return bodyEditor
+    }
+}
 
 struct RandomHistoryPage: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -27,6 +73,8 @@ struct RandomHistoryPage: View {
     @State var timer: Timer?
     var body: some View {
         ZStack {
+            Color.white.ignoresSafeArea()
+            
             bodySectionMain
             
             if !workInternetState {
@@ -107,69 +155,139 @@ struct RandomHistoryPage: View {
         ScrollView(.vertical) {
             LazyVGrid(columns: [GridItem(.flexible(), spacing: bigSize ? 30 : 10), GridItem(.flexible(), spacing: bigSize ? 30 : 10)], spacing: bigSize ? 30 : 10) {
                 ForEach(allData, id: \.idPeople) { item in
-                    cellToCollection(item: item)
+                    Self.cellToCollection(
+                        item: item,
+                        choosedData: $choosedData,
+                        deleteAlert: $deleteAlert,
+                        showSaveAlert: $showSaveAlert,
+                        dismissAction: { dismiss() },
+                        editCompletion: choosedToEditCompletion
+                    )
                 }
             }
             .padding(.top, bigSize ? 30 : 10)
         }
     }
     
-    private func cellToCollection(item: BodyEditor) -> some View {
-        RoundedRectangle(cornerRadius: bigSize ? 44 : 20)
-            .fill(ColorTurboGear.colorPicker(.darkGray))
-            .frame(height: bigSize ? 445 : 200)
-            .overlay {
-                ZStack {
-                    if let imageData = item.smallPreviewImage, let image = UIImage(data: imageData) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                    }
+    struct CustomGreenButton: View {
+        enum ButtonSize {
+            case large   // For Upload
+            case small   // For Edit
+            
+            var width: CGFloat {
+                switch self {
+                case .large:
+                    return UIDevice.current.userInterfaceIdiom == .pad ? 160 : 148
+                case .small:
+                    return UIDevice.current.userInterfaceIdiom == .pad ? 100 : 72
                 }
             }
-            .overlay(content: {
-                HStack {
-                    buttonCustom(tapped: {
-                        choosedData = item
-                        DispatchQueue.main.async {
-                            deleteAlert.toggle()
-                        }
-                    }, iconType: .removeItem, redColor: true)
-                    
-                    buttonCustom(tapped: {
-                        choosedData = item
-                        choosedToEditCompletion()
-                        dismiss()
-                    }, iconType: .editItem)
-                    
-                    buttonCustom(tapped: {
-                        choosedData = item
-                        showSaveAlert = true
-                    }, iconType: .saveImage)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                .padding(bigSize ? 20 : 10)
-
-            })
-            .clipShape(RoundedRectangle(cornerRadius: bigSize ? 44 : 20))
-    }
-    
-    private func buttonCustom(tapped: @escaping () -> Void, iconType: IconTurboGear.TopNavIconTurbo, redColor: Bool = false) -> some View {
-        Button {
-            tapped()
-        } label: {
-            RoundedRectangle(cornerRadius: bigSize ? 31 : 14)
-                .fill(redColor ? Color.red.opacity(0.74) : Color.white.opacity(0.55))
-                .frame(width: bigSize ? 93 : 40, height: bigSize ? 93 : 40)
-                .overlay {
-                    Image(iconType.sendNameOfIcon())
-                        .resizable()
-                        .scaledToFit()
-                        .padding( bigSize ? 20 : 10)
-                }
         }
-        .frame(maxWidth: .infinity)
+        
+        let action: () -> Void
+        let title: String
+        let size: ButtonSize
+        let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+        
+        var body: some View {
+            GreenButtonRounded(
+                blueButtonTap: action,
+                titleButton: title
+            )
+            .frame(width: size.width,height: 16)
+        }
     }
+
+    // Example usage:
+    // CustomGreenButton(action: { }, title: "Upload", size: .large)
+    // CustomGreenButton(action: { }, title: "Edit", size: .small)
+    
+    static func cellToCollection(
+            item: BodyEditor,
+            choosedData: Binding<BodyEditor?>,
+            deleteAlert: Binding<Bool>,
+            showSaveAlert: Binding<Bool>,
+            dismissAction: (() -> Void)? = nil,
+            editCompletion: (() -> Void)? = nil
+        ) -> some View {
+            let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+            
+            return VStack(spacing: bigSize ? 16 : 12) {
+                // Image Container
+                RoundedRectangle(cornerRadius: bigSize ? 24 : 16)
+                    .fill(ColorTurboGear.colorPicker(.grey))
+                    .frame(height: bigSize ? 345 : 150)
+                    .overlay {
+                        if let imageData = item.smallPreviewImage,
+                           let image = UIImage(data: imageData) {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(RoundedRectangle(cornerRadius: bigSize ? 24 : 16))
+                        }
+                    }
+                
+                VStack(spacing: 4) {  // Set spacing to 4
+                    // Upload button
+                    CustomGreenButton(
+                        action: {
+                            choosedData.wrappedValue = item
+                            showSaveAlert.wrappedValue = true
+                        },
+                        title: "Upload",
+                        size: .large
+                    )
+                    
+                    // Delete button and Edit button HStack
+                    HStack {
+                        Button {
+                            choosedData.wrappedValue = item
+                            deleteAlert.wrappedValue.toggle()
+                        } label: {
+                            Text("Delete")
+                                .font(FontTurboGear.gilroyStyle(size: bigSize ? 22 : 16, type: .semibold))
+                                .foregroundColor(.white)
+                                .frame(height: 37)
+                                .frame(maxWidth: .infinity)
+                                .background(Color(red: 0.6, green: 0.1, blue: 0.1))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        }
+                        
+                        // Edit button
+                        CustomGreenButton(
+                            action: {
+                                choosedData.wrappedValue = item
+                                editCompletion?()
+                                dismissAction?()
+                            },
+                            title: "Edit",
+                            size: .small
+                        )
+                    }
+                }
+                .frame(height: 72)  // Set fixed height for VStack
+                .padding(.horizontal, bigSize ? 12 : 8)
+            }
+            .padding(bigSize ? 16 : 12)
+            .clipShape(RoundedRectangle(cornerRadius: bigSize ? 28 : 20))
+        }
+        
+        static func buttonCustom(tapped: @escaping () -> Void, iconType: IconTurboGear.TopNavIconTurbo, redColor: Bool = false, bigSize: Bool) -> some View {
+            Button {
+                tapped()
+            } label: {
+                RoundedRectangle(cornerRadius: bigSize ? 31 : 14)
+                    .fill(redColor ? Color.red.opacity(0.74) : Color.white.opacity(0.55))
+                    .frame(width: bigSize ? 93 : 40, height: bigSize ? 93 : 40)
+                    .overlay {
+                        Image(iconType.sendNameOfIcon())
+                            .resizable()
+                            .scaledToFit()
+                            .padding(bigSize ? 20 : 10)
+                    }
+            }
+            .frame(maxWidth: .infinity)
+        }
     
     private var downloadSection: some View {
         VStack {
@@ -184,3 +302,41 @@ struct RandomHistoryPage: View {
         }
     }
 }
+
+#Preview("History Page") {
+    NavigationView {
+        RandomHistoryPage(
+            viewMotel: EditorViewModel(),
+            choosedToEditCompletion: {},
+            choosedData: .constant(PreviewHelpers.createMockBodyEditor())
+        )
+        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        .environmentObject(NetworkManager_SimulatorFarm())
+        .environmentObject(DropBoxManager_SimulatorFarm.shared)
+    }
+}
+
+#Preview("History Cell") {
+    VStack {
+        // iPhone size
+        RandomHistoryPage.cellToCollection(
+            item: PreviewHelpers.createMockBodyEditor(),
+            choosedData: .constant(nil),
+            deleteAlert: .constant(false),
+            showSaveAlert: .constant(false)
+        )
+        .frame(width: 180, height: 200)
+        .padding()
+        
+        // iPad size
+        RandomHistoryPage.cellToCollection(
+            item: PreviewHelpers.createMockBodyEditor(),
+            choosedData: .constant(nil),
+            deleteAlert: .constant(false),
+            showSaveAlert: .constant(false)
+        )
+        .frame(width: 360, height: 445)
+        .padding()
+    }
+}
+
