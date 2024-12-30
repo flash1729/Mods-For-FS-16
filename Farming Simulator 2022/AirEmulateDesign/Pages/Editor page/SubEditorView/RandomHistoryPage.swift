@@ -96,7 +96,7 @@ struct RandomHistoryPage: View {
     private var bodySectionMain: some View {
         ZStack {
             VStack(spacing: bigSize ? 31 : 10) {
-                NavPanelGreenWithoutFavButton(titleName: "History")
+                NavPanelGreenWithBackButton(titleName: "History")
                 .padding(.bottom, bigSize ? 10 : 5)
                 downloadSection
                     .paddingFlyBullet()
@@ -197,80 +197,94 @@ struct RandomHistoryPage: View {
             .frame(width: size.width,height: 16)
         }
     }
-
+    
     // Example usage:
     // CustomGreenButton(action: { }, title: "Upload", size: .large)
     // CustomGreenButton(action: { }, title: "Edit", size: .small)
     
     static func cellToCollection(
-            item: BodyEditor,
-            choosedData: Binding<BodyEditor?>,
-            deleteAlert: Binding<Bool>,
-            showSaveAlert: Binding<Bool>,
-            dismissAction: (() -> Void)? = nil,
-            editCompletion: (() -> Void)? = nil
-        ) -> some View {
-            let bigSize = UIDevice.current.userInterfaceIdiom == .pad
-            
-            return VStack(spacing: bigSize ? 16 : 12) {
-                // Image Container
-                RoundedRectangle(cornerRadius: bigSize ? 24 : 16)
-                    .fill(ColorTurboGear.colorPicker(.grey))
-                    .frame(height: bigSize ? 345 : 150)
-                    .overlay {
-                        if let imageData = item.smallPreviewImage,
-                           let image = UIImage(data: imageData) {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFit()
-                                .clipShape(RoundedRectangle(cornerRadius: bigSize ? 24 : 16))
-                        }
-                    }
-                
-                VStack(spacing: 4) {  // Set spacing to 4
-                    // Upload button
-                    CustomGreenButton(
-                        action: {
-                            choosedData.wrappedValue = item
-                            showSaveAlert.wrappedValue = true
-                        },
-                        title: "Upload",
-                        size: .large
-                    )
-                    
-                    // Delete button and Edit button HStack
-                    HStack {
-                        Button {
-                            choosedData.wrappedValue = item
-                            deleteAlert.wrappedValue.toggle()
-                        } label: {
-                            Text("Delete")
-                                .font(FontTurboGear.gilroyStyle(size: bigSize ? 22 : 16, type: .semibold))
-                                .foregroundColor(.white)
-                                .frame(height: 37)
-                                .frame(maxWidth: .infinity)
-                                .background(Color(red: 0.6, green: 0.1, blue: 0.1))
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                        }
-                        
-                        // Edit button
-                        CustomGreenButton(
-                            action: {
-                                choosedData.wrappedValue = item
-                                editCompletion?()
-                                dismissAction?()
-                            },
-                            title: "Edit",
-                            size: .small
-                        )
+        item: BodyEditor,
+        choosedData: Binding<BodyEditor?>,
+        deleteAlert: Binding<Bool>,
+        showSaveAlert: Binding<Bool>,
+        dismissAction: (() -> Void)? = nil,
+        editCompletion: (() -> Void)? = nil
+    ) -> some View {
+        let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+        
+        return VStack(spacing: 0) {
+            // Image Container
+            RoundedRectangle(cornerRadius: bigSize ? 24 : 16)
+                .fill(ColorTurboGear.colorPicker(.grey))
+                .frame(width: bigSize ? 345 : 154,height: bigSize ? 345 : 150)
+                .overlay {
+                    if let imageData = item.smallPreviewImage,
+                       let image = UIImage(data: imageData) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: bigSize ? 24 : 16))
                     }
                 }
-                .frame(height: 72)  // Set fixed height for VStack
-                .padding(.horizontal, bigSize ? 12 : 8)
+                .padding(.bottom, 8)
+            
+            // Buttons Container
+            VStack(spacing: 4) {
+                // Upload Button
+                Button {
+                    choosedData.wrappedValue = item
+                    showSaveAlert.wrappedValue = true
+                } label: {
+                    Text("Upload")
+                        .font(FontTurboGear.gilroyStyle(size: bigSize ? 22 : 16, type: .semibold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: 154)
+                        .frame(height: 37)
+                        .background(ColorTurboGear.colorPicker(.darkGreen))
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                }
+                
+                // Delete and Edit Row
+                HStack(spacing: 8) {
+                    // Delete Button
+                    Button {
+                        choosedData.wrappedValue = item
+                        deleteAlert.wrappedValue.toggle()
+                    } label: {
+                        Text("Delete")
+                            .font(FontTurboGear.gilroyStyle(size: bigSize ? 22 : 16, type: .semibold))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 37)
+                            .background(ColorTurboGear.colorPicker(.maroon))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                    }
+                    .frame(maxWidth: 72, maxHeight: 34)
+                    .layoutPriority(1)
+                    
+                    // Edit Button
+                    Button {
+                        choosedData.wrappedValue = item
+                        editCompletion?()
+                        dismissAction?()
+                    } label: {
+                        Text("Edit")
+                            .font(FontTurboGear.gilroyStyle(size: bigSize ? 22 : 16, type: .semibold))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 37)
+                            .background(ColorTurboGear.colorPicker(.darkGreen))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                    }
+                    .frame(maxWidth: 72, maxHeight: 34)
+                    .layoutPriority(0.6)
+                }
             }
-            .padding(bigSize ? 16 : 12)
-            .clipShape(RoundedRectangle(cornerRadius: bigSize ? 28 : 20))
+            .padding(.horizontal, 8)
+            .padding(.bottom, 8)
         }
+        .clipShape(RoundedRectangle(cornerRadius: bigSize ? 28 : 20))
+    }
         
         static func buttonCustom(tapped: @escaping () -> Void, iconType: IconTurboGear.TopNavIconTurbo, redColor: Bool = false, bigSize: Bool) -> some View {
             Button {

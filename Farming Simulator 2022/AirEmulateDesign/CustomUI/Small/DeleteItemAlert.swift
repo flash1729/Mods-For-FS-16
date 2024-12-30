@@ -10,6 +10,7 @@ import SwiftUI
 struct DeleteItemAlert: View {
     @State var stateTapped: (Bool) -> Void
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+    
     var body: some View {
         ZStack {
             Color.black.opacity(0.5)
@@ -17,32 +18,52 @@ struct DeleteItemAlert: View {
                 .onTapGesture {
                     stateTapped(false)
                 }
-            VStack(spacing: 0) {
-                Text("Are you sure?")
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                Text("This action will remove your character")
+            
+            VStack(spacing: 12) {
+                Text("This action will remove your all changes")
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 28 : 20, type: .semibold))
+                    .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
                     .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                    .padding(.vertical, bigSize ? 44 : 28)
-                GreenButtonRounded(blueButtonTap: {
+                    .padding(.horizontal, 16)
+                    .padding(.top, 24)
+                
+                // OK Button
+                Button {
                     stateTapped(true)
-                }, titleButton: "OK")
-                .frame(maxWidth: bigSize ? 350 : 169)
+                } label: {
+                    Text("OK")
+                        .font(FontTurboGear.gilroyStyle(size: bigSize ? 24 : 18, type: .semibold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 44)
+                        .background(ColorTurboGear.colorPicker(.darkGreen))
+                        .cornerRadius(16)
+                }
+                .padding(.horizontal, 24)
+                
+                // Cancel Button
+                Button {
+                    stateTapped(false)
+                } label: {
+                    Text("Cancel")
+                        .font(FontTurboGear.gilroyStyle(size: bigSize ? 24 : 18, type: .semibold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 44)
+                        .background(ColorTurboGear.colorPicker(.maroon))
+                        .cornerRadius(16)
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
-            .padding( bigSize ? 51 : 32)
-            .font(FontTurboGear.gilroyStyle(size: bigSize ? 32 : 20, type: .bold))
-            .foregroundStyle(.white)
-            .frame(maxWidth: 530)
-            .background(ColorTurboGear.colorPicker(.dirtYellow))
-            .clipShape(RoundedRectangle(cornerRadius: bigSize ? 26 : 16))
-            .paddingFlyBullet()
-                
-                
+            .background(Color.white)
+            .cornerRadius(16)
+            .padding(.horizontal, 40)
+            .frame(maxWidth: bigSize ? 400 : 336)
         }
     }
 }
 
 #Preview {
-    DeleteItemAlert(stateTapped: {_ in})
+    DeleteItemAlert { _ in }
 }
