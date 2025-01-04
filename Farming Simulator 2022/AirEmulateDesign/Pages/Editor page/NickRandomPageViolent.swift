@@ -47,7 +47,7 @@ struct NickRandomPageViolent: View {
             
             Color.white
                 .ignoresSafeArea()
-            
+
             VStack(spacing: bigSize ? 31 : 10) {
                 NavPanelGreenWithoutFavButton(titleName: "Nickname gen")
                     .padding(.bottom, bigSize ? 10 : 5)
@@ -56,7 +56,6 @@ struct NickRandomPageViolent: View {
                     .frame(maxHeight: .infinity)
                     .paddingFlyBullet()
                 
-                // New container for button with background
                 VStack {
                     GreenButtonWithBorders(
                         title: "Generate new +",
@@ -72,11 +71,14 @@ struct NickRandomPageViolent: View {
                     .padding(.top, bigSize ? 30 : 15)
                     .padding(.bottom, bigSize ? 50 : 25)
                 }
-                .background(ColorTurboGear.colorPicker(.green))
-                .ignoresSafeArea(.all, edges: .bottom)
+                .frame(maxWidth: .infinity)
+                .background(
+                    ColorTurboGear.colorPicker(.green)
+                        .cornerRadius(20, corners: [.topLeft, .topRight])
+                        .edgesIgnoringSafeArea(.bottom)
+                )
             }
             .ignoresSafeArea(.all, edges: .top)
-            .frame(maxHeight: .infinity, alignment: .top)
             
             if !workInternetState {
                 LostConnectElement {

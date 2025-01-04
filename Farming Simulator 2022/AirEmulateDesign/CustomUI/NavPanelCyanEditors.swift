@@ -25,6 +25,7 @@ struct NavPanelCyanEditors: View {
                 }
                 Text(titleName)
                     .font(FontTurboGear.gilroyStyle(size: 24, type: .bold))
+                    .foregroundStyle(ColorTurboGear.colorPicker(.darkGreen))
                     .frame(maxWidth: .infinity)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)

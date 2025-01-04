@@ -87,6 +87,7 @@ struct CreateSelfAvatarAndEditPageViolent: View {
     
     private var bodySection: some View {
         ZStack {
+            Color.white.ignoresSafeArea()
             NavigationLink(isActive: $openAboutItem, destination: {
                 AboutEditorPage(viewMotel: viewMotel, editTapped: {
                     openEditor.toggle()
@@ -180,7 +181,7 @@ struct CreateSelfAvatarAndEditPageViolent: View {
     
     private var emptyViewText: some View {
         VStack {
-            Text("There are currently no characters in your narrative.")
+            Text("Nothing was found here, let’s create new")
                 .multilineTextAlignment(.center)
                 .frame(maxHeight: .infinity)
                 .foregroundColor(.white)
@@ -191,69 +192,130 @@ struct CreateSelfAvatarAndEditPageViolent: View {
     private var collectionItmesView: some View {
         ZStack{
             
-            if allData.isEmpty {
-                emptyViewText
-                    .paddingFlyBullet()
-            } else {
-                ScrollView(.vertical) {
-                    LazyVGrid(columns: [GridItem(.flexible(), spacing: bigSize ? 30 : 10), GridItem(.flexible(), spacing: bigSize ? 30 : 10)], spacing: bigSize ? 30 : 10) {
-                        ForEach(allData, id: \.idPeople) { item in
-                            cellToCollection(image: item.smallPreviewImage, completionSave: {
-                                choosedData = item
-                                showSaveStateToGallery.toggle()
-//                                viewMotel.requestPhotoLibraryPermission { granted in
-//                                    if granted {
-//                                        choosedData = item
-//                                        if let imageData = choosedData?.fullImage, let result = UIImage(data: imageData) {
-//                                            UIImageWriteToSavedPhotosAlbum(result, self, nil, nil)
-//                                            showSaveState.toggle()
-//                                            choosedData = nil
-//                                        }
-//                                    }
-//                                }
-                            }, completionAbout: {
-                                choosedData = item
-                                openAboutItem.toggle()
-                            })
+            VStack{
+                if allData.isEmpty {
+                    emptyViewText
+                        .paddingFlyBullet()
+                } else {
+                    ScrollView(.vertical) {
+                        LazyVGrid(columns: [GridItem(.flexible(), spacing: bigSize ? 30 : 10), GridItem(.flexible(), spacing: bigSize ? 30 : 10)], spacing: bigSize ? 30 : 10) {
+                            ForEach(allData, id: \.idPeople) { item in
+                                cellToCollection(image: item.smallPreviewImage, completionSave: {
+                                    choosedData = item
+                                    showSaveStateToGallery.toggle()
+                                }, completionAbout: {
+                                    choosedData = item
+                                    openAboutItem.toggle()
+                                })
+                            }
                         }
+                        .padding(.top, bigSize ? 30 : 10)
                     }
-                    .padding(.top, bigSize ? 30 : 10)
+                    .paddingFlyBullet()
                 }
-                .paddingFlyBullet()
+                Spacer()
+                VStack {
+                   GreenButtonWithBorders(
+                       title: "Create new +",
+                       action: {
+                           @FetchRequest(sortDescriptors: []) var allElementData: FetchedResults<BodyElement>
+                           
+                           // Set default male body
+                           if let defaultBody = allElementData.first(where: {
+                               $0.typeOfPart == EditorTypePartOfBody.body.rawValue &&
+                               $0.genderType == GenderTypeModel.man.rawValue
+                           }) {
+                               let bodyItem = SandvichItemType(
+                                   image: UIImage(data: defaultBody.editroImage ?? Data()),
+                                   imageName: defaultBody.previewImageString,
+                                   zindex: 0
+                               )
+                               viewMotel.sandvichPeople.body = bodyItem
+                                   
+                               // Generate initial preview
+                               let _ = viewMotel.mergeImages(from: viewMotel.sandvichPeople.sendAllImages())
+                           }
+                           
+                           // Reset editor state
+                           viewMotel.tempManPeople = nil
+                           viewMotel.tempWomanPeople = nil
+                           viewMotel.updateData = false
+                           viewMotel.sandvichPeople.allNil()
+                           
+                           // Open editor
+                           openEditor = true
+                           choosedPart = .body
+                           genderType = .man
+                       }
+                   )
+                   .paddingFlyBullet()
+                   .padding(.top, bigSize ? 30 : 15)
+                   .padding(.bottom, bigSize ? 50 : 25)
+                }
+                .frame(maxWidth: .infinity)
+                .background(
+                   ColorTurboGear.colorPicker(.green)
+                       .cornerRadius(20, corners: [.topLeft, .topRight])
+                       .edgesIgnoringSafeArea(.bottom)
+                )
             }
         }
     }
     
+    func rightButtonTapped() {
+       
+    }
+    
     private func cellToCollection(image: Data?, completionSave: @escaping () -> Void, completionAbout: @escaping () -> Void) -> some View {
-        RoundedRectangle(cornerRadius: bigSize ? 44 : 20)
-            .fill(ColorTurboGear.colorPicker(.darkGray))
-            .frame(height: bigSize ? 445 : 200)
-            .overlay {
-                Image(uiImage: UIImage(data: image ?? Data()) ?? UIImage())
-                    .resizable()
-                    .scaledToFit()
-            }
-            .onTapGesture {
-                completionAbout()
-            }
-            .overlay(content: {
-                Button {
-                    completionSave()
-                } label: {
-                    RoundedRectangle(cornerRadius: bigSize ? 31 : 14)
-                        .fill(Color.white.opacity(0.55))
-                        .frame(width: bigSize ? 93 : 40, height: bigSize ? 93 : 40)
-                        .overlay {
-                            Image(IconTurboGear.TopNavIconTurbo.saveImageToGallary)
-                                .resizable()
-                                .scaledToFit()
-                                .padding( bigSize ? 20 : 10)
-                        }
+        VStack(spacing: 12) {
+            // Image Container
+            RoundedRectangle(cornerRadius: bigSize ? 24 : 16)
+                .frame(width: bigSize ? 148 : 148, height: bigSize ? 380 : 130)
+                .overlay {
+                    if let imageData = image, let uiImage = UIImage(data: imageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                    } else {
+                        // Loading indicator
+                        Image(systemName: "arrow.2.circlepath")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .rotationEffect(.degrees(360))
+                            .animation(
+                                Animation.linear(duration: 1)
+                                    .repeatForever(autoreverses: false),
+                                value: true
+                            )
+                    }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                .padding(bigSize ? 20 : 10)
-            })
-            .clipShape(RoundedRectangle(cornerRadius: bigSize ? 44 : 20))
+                .onTapGesture {
+                    completionAbout()
+                }
+                .clipShape(RoundedRectangle(cornerRadius: bigSize ? 24 : 16))
+            
+            // Upload Button
+            Button(action: completionSave) {
+                HStack(spacing: 8) {
+                    Text("Upload")
+                        .font(FontTurboGear.gilroyStyle(
+                            size: bigSize ? 18 : 14,
+                            type: .semibold
+                        ))
+                        .foregroundColor(.white)
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: bigSize ? 44 : 36)
+                .background(
+                    RoundedRectangle(cornerRadius: bigSize ? 16 : 12)
+                        .fill(ColorTurboGear.colorPicker(.darkGreen))
+                )
+                .clipShape(RoundedRectangle(cornerRadius: bigSize ? 28 : 16))
+            }
+            .padding(.horizontal, bigSize ? 16 : 12)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: bigSize ? 28 : 20))
     }
     
     private func saveStateToCoreData() async {

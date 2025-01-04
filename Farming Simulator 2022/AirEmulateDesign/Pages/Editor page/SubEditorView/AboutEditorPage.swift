@@ -79,7 +79,7 @@ struct AboutEditorPage: View {
                 downloadSection
                     .paddingFlyBullet()
                 RoundedRectangle(cornerRadius: bigSize ? 20 : 12)
-                    .fill(ColorTurboGear.colorPicker(.darkGray))
+                    .fill(ColorTurboGear.colorPicker(.grey))
                     .frame(maxHeight: bigSize ? 646 : 421)
                     .overlay {
                         Image(uiImage: UIImage(data: choosedData?.fullImage ?? Data()) ?? UIImage())
@@ -107,11 +107,24 @@ struct AboutEditorPage: View {
                     .padding(.top, bigSize ? 50 : 10)
                     .paddingFlyBullet()
                 Spacer()
-                GreenButtonRounded(blueButtonTap: {
-                    showSaveAlert.toggle()
-                }, titleButton: "Save", infinityWidth: true)
-                .paddingFlyBullet()
-                .padding(.bottom, bigSize ? 50 : 10)
+                VStack {
+                   GreenButtonRounded(
+                       blueButtonTap: {
+                           showSaveAlert.toggle()
+                       },
+                       titleButton: "Save",
+                       infinityWidth: true
+                   )
+                   .paddingFlyBullet()
+                   .padding(.top, bigSize ? 30 : 15)
+                   .padding(.bottom, bigSize ? 50 : 25)
+                }
+                .frame(maxWidth: .infinity)
+                .background(
+                   ColorTurboGear.colorPicker(.green)
+                       .cornerRadius(20, corners: [.topLeft, .topRight])
+                       .edgesIgnoringSafeArea(.bottom)
+                )
             }
             .ignoresSafeArea(.all, edges: .top)
             

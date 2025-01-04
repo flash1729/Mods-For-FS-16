@@ -8,68 +8,50 @@
 import SwiftUI
 
 struct GreenButtonEditorWithBorder: View {
-    @State var blueButtonTap: () -> Void
-    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+    let blueButtonTap: () -> Void
     @Binding var titleButton: String
-    @State var infinityWidth: Bool = false
+    var infinityWidth: Bool = false
+    
+    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+    
+
+    private let cornerRadius: CGFloat = 8
+    private let horizontalPadding: CGFloat = 24
+    private let verticalPadding: CGFloat = 8
+    private let borderWidth: CGFloat = 1
+    private let iconSize: CGFloat = 25
+    
     var body: some View {
-        Button {
-            blueButtonTap()
-        } label: {
-            RoundedRectangle(cornerRadius: bigSize ? 30 : 16)
-                .fill(ColorTurboGear.colorPicker(.green))
-                .frame(height: bigSize ? 100 : 56)
-                .overlay {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: bigSize ? 30 : 16)
-                            .stroke(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color.white.opacity(0.3),
-                                        Color.white.opacity(0),
-                                        Color.white.opacity(0)
-                                    ]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                ),
-                                lineWidth: bigSize ? 6 : 3
-                            )
-                        
-                        RoundedRectangle(cornerRadius: bigSize ? 30 : 16)
-                            .stroke(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color.black.opacity(0.3),
-                                        Color.black.opacity(0),
-                                        Color.black.opacity(0)
-                                    ]),
-                                    startPoint: .trailing,
-                                    endPoint: .leading
-                                ),
-                                lineWidth: bigSize ? 6 : 3
-                            )
-                        
-                        HStack {
-                            Image(IconTurboGear.TopNavIconTurbo.topNamBackChevron)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 30)
-                                .rotationEffect(.degrees(-90))
-                                .opacity(0.0)
-                            Text(titleButton)
-                                .font(FontTurboGear.gilroyStyle(size: bigSize ? 30 : 18, type: .semibold))
-                                .foregroundColor(Color.white)
-                                .frame(maxWidth: .infinity)
-                            Image(IconTurboGear.TopNavIconTurbo.topNamBackChevron)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 25)
-                                .rotationEffect(.degrees(-90))
-                        }
-                        .padding(.horizontal, 10)
-                    }
-                }
-                .clipShape(RoundedRectangle(cornerRadius: bigSize ? 30 : 16))
+        Button(action: blueButtonTap) {
+            HStack(spacing: 16) {
+                Text(titleButton)
+                    .font(FontTurboGear.gilroyStyle(
+                        size: bigSize ? 22 : 16,
+                        type: .semibold
+                    ))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                
+                Image(IconTurboGear.TopNavIconTurbo.topNamBackChevron)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: iconSize)
+                    .rotationEffect(.degrees(-90))
+            }
+            .frame(height: bigSize ? 56 : 37)
+            .padding(.horizontal, horizontalPadding)
+            .padding(.vertical, verticalPadding)
+            .background(
+                ColorTurboGear.colorPicker(.darkGreen)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .strokeBorder(
+                        Color.white.opacity(0.16),
+                        lineWidth: borderWidth
+                    )
+            )
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
         }
         .frame(maxWidth: bigSize ? 627 : (infinityWidth ? .infinity : 335))
     }

@@ -31,35 +31,43 @@ struct EditorConfigurator: View {
     @State var workInternetState: Bool = true
     var body: some View {
         VStack {
-            RoundedRectangle(cornerRadius: bigSize ? 20 : 12)
-                .fill(ColorTurboGear.colorPicker(.darkGray))
-                .overlay {
-                    ZStack {
-                        if let mergetImage = fullImagePeopleToSave {
-                            Image(uiImage: mergetImage)
-                                .resizable()
-                                .scaledToFit()
-                        } else {
-                            ColorTurboGear.colorPicker(.darkGray)
-                            InfinityLoaderGreen()
-                                .frame(height: 55)
-                        }
-                    }
-                }
-                .overlay {
-                    nextAndPreviesButtons
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .padding(.top, bigSize ? 50 : 10)
-                .paddingFlyBullet()
-            parstOfChoosedElement
-            GreenButtonEditorWithBorder(blueButtonTap: {
-                withAnimation {
-                    tappedButton.toggle()
-                }
-            }, titleButton: $choodedTitle, infinityWidth: true)
-            .paddingFlyBullet()
-            .padding(.bottom, bigSize ? 50 : 10)
+           RoundedRectangle(cornerRadius: bigSize ? 20 : 12)
+               .overlay {
+                   ZStack {
+                       if let mergetImage = fullImagePeopleToSave {
+                           Image(uiImage: mergetImage)
+                               .resizable()
+                               .scaledToFit()
+                       } else {
+                           InfinityLoaderGreen()
+                               .frame(height: 55)
+                       }
+                   }
+               }
+               .frame(width: 335, height: 335)
+               .clipShape(RoundedRectangle(cornerRadius: 12))
+               .padding(.top, bigSize ? 50 : 10)
+               .paddingFlyBullet()
+           nextAndPreviesButtons
+           
+           parstOfChoosedElement
+           
+           VStack {
+               GreenButtonEditorWithBorder(blueButtonTap: {
+                   withAnimation {
+                       tappedButton.toggle()
+                   }
+               }, titleButton: $choodedTitle, infinityWidth: true)
+               .paddingFlyBullet()
+               .padding(.top, bigSize ? 30 : 15)
+               .padding(.bottom, bigSize ? 50 : 25)
+           }
+           .frame(maxWidth: .infinity)
+           .background(
+               ColorTurboGear.colorPicker(.green)
+                   .cornerRadius(20, corners: [.topLeft, .topRight])
+                   .edgesIgnoringSafeArea(.bottom)
+           )
         }
         .ignoresSafeArea(.all, edges: .top)
         .onChange(of: choosedPartModel) { newValue in
@@ -164,7 +172,8 @@ struct EditorConfigurator: View {
     }
     
     private var nextAndPreviesButtons: some View {
-        HStack {
+        HStack(spacing: 41) {
+            Spacer()
             Button {
                 if changeIndex > 0 {
                     changeIndex -= 1
@@ -177,10 +186,11 @@ struct EditorConfigurator: View {
                         Image(IconTurboGear.TopNavIconTurbo.chevronLeftButtonCustom)
                             .resizable()
                             .scaledToFit()
+                            .frame(width: bigSize ? 88 : 44, height: bigSize ? 88 : 44)
                             .padding(bigSize ? 20 : 10)
                     }
             }
-            Spacer()
+            
             Button {
                 if changeIndex < filterElements(type: $choosedPartModel, genderType: $genderType).count {
                     changeIndex += 1
@@ -190,13 +200,14 @@ struct EditorConfigurator: View {
                     .fill(Color.white.opacity(0.55))
                     .frame(width: bigSize ? 88 : 44, height: bigSize ? 88 : 44)
                     .overlay {
-                        Image(IconTurboGear.TopNavIconTurbo.chevronLeftButtonCustom)
+                        Image(IconTurboGear.TopNavIconTurbo.chevronRightButtonCustom)
                             .resizable()
                             .scaledToFit()
+                            .frame(width: bigSize ? 88 : 44, height: bigSize ? 88 : 44)
                             .padding(bigSize ? 20 : 10)
-                            .rotation3DEffect(.degrees(180), axis: (x: 0.0, y: 1.0, z: 0.0))
                     }
             }
+            Spacer()
         }
         .padding(bigSize ? 20 : 10)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
