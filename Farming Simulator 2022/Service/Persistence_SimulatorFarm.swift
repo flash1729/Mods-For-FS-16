@@ -151,6 +151,7 @@ struct PersistenceController {
     }
     
     mutating func appendSkin(from skinObject: SkinsPattern) {
+        print("➕ Creating new skin entity")
         let skinEntity = Skins(context: container.viewContext)
         skinEntity.id = skinObject.id
         skinEntity.title = skinObject.title
@@ -161,15 +162,18 @@ struct PersistenceController {
         skinEntity.top = skinObject.top ?? false
         skinEntity.new = skinObject.new ?? true
         
-        if let imageData = skinEntity.imageData {
+        if let imageData = skinObject.imageData {
             skinEntity.imageData = imageData
         }
 
+        print("💾 Attempting to save skin: \(skinObject.title)")
         do {
             try container.viewContext.save()
+            print("✅ Successfully saved skin")
             skins.append(skinEntity)
         } catch {
-            //ToDO: error
+            print("❌ Error saving skin: \(error)")
+            print("   Details: \(error.localizedDescription)")
         }
     }
     
@@ -312,10 +316,17 @@ struct PersistenceController {
     //
     
     mutating func addSkins_SimulatorFarm(_ skinsInput: [SkinsPattern]) {
-        for skin in skinsInput {
+        print("🚀 Starting to add \(skinsInput.count) skins to Core Data")
+        
+        for (index, skin) in skinsInput.enumerated() {
+            print("📝 Processing skin \(index + 1) of \(skinsInput.count)")
+            print("   - Title: \(skin.title)")
+            print("   - ID: \(skin.id)")
             appendSkin(from: skin)
         }
+        
         saveAll_SimulatorFarm()
+        print("✅ Finished adding skins to Core Data")
     }
     
     mutating func addMods_SimulatorFarm(_ mods: [ModPattern]) {

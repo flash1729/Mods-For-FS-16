@@ -62,15 +62,32 @@ class ModViewModel: ObservableObject {
         }
     }
     
-     func fetchModsFromCoreData() {
+//     func fetchModsFromCoreData() {
+//        let viewContext = PersistenceController.shared.container.viewContext
+//        let fetchRequest: NSFetchRequest<Mod> = Mod.fetchRequest()
+//        do {
+//            let fetchedMods = try viewContext.fetch(fetchRequest)
+//                mods = fetchedMods.map { modEntity in
+//                    return ModPattern(from: modEntity)
+//                }
+//            
+//        } catch {
+//            print("Error fetching mods: \(error)")
+//        }
+//    }
+    
+    func fetchModsFromCoreData() {
+        print("Starting mods fetch...")
         let viewContext = PersistenceController.shared.container.viewContext
         let fetchRequest: NSFetchRequest<Mod> = Mod.fetchRequest()
+        
         do {
             let fetchedMods = try viewContext.fetch(fetchRequest)
-                mods = fetchedMods.map { modEntity in
-                    return ModPattern(from: modEntity)
-                }
-            
+            print("Fetched \(fetchedMods.count) mods from Core Data")
+            mods = fetchedMods.map { modEntity in
+                return ModPattern(from: modEntity)
+            }
+//            pressingfilterMods() // Add this line to ensure filtered data is updated
         } catch {
             print("Error fetching mods: \(error)")
         }

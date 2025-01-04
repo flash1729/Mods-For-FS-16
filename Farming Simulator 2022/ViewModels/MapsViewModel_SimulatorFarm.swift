@@ -103,7 +103,7 @@ class MapsViewModel_SimulatorFarm: ObservableObject {
             if let updatedMap = notification.object as? MapPattern {
                 if let index = self.maps.firstIndex(where: { $0.id == updatedMap.id }) {
                     self.maps[index] = updatedMap
-//                    self.pressingfilterMaps()
+                    self.pressingfilterMaps()
                     self.generateFavoriteMaps()
                 }
             }

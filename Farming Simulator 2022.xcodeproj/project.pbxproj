@@ -184,9 +184,9 @@
 		72F3819B2ADD3DDA005549F1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				72926CC62ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift */,
 				7285F6562AE5DD56005C8E8E /* FarmModel_SimulatorFarm.swift */,
 				72B7BB6D2AE7DC7C00086D7C /* MapsModel_SimulatorFarm.swift */,
+				72926CC62ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift */,
 				2363B9EB2CA99D08000111BA /* SkinsModel.swift */,
 				236133342CAD331F009B49C3 /* BodyEditorModel.swift */,
 			);

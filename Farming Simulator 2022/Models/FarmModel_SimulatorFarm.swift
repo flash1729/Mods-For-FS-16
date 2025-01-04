@@ -13,7 +13,7 @@ struct BeforeFarmData: Codable {
     let zq9I1B1Fcy: FarmData
 
     enum CodingKeys: String, CodingKey {
-        case zq9I1B1Fcy = "zq9i1b1fcy"
+        case zq9I1B1Fcy = "2lxj_"
     }
 }
 
@@ -21,7 +21,7 @@ struct FarmData: Codable {
     let the8F8Nad4: [String: FarmModel]
 
     enum CodingKeys: String, CodingKey {
-        case the8F8Nad4 = "8f-8nad4"
+        case the8F8Nad4 = "-yx"
     }
 }
 
@@ -39,10 +39,10 @@ struct FarmModel: Codable, Equatable {
     
     enum MyCodingKeysWallpaper: String, CodingKey {
         case id
-        case image = "azt78at7"
-        case title
-        case description
-        case file
+        case image = "61oybujz"
+        case title = "p5gg"
+        case description = "eu12sq"
+        case file = "pedr1h4w98"
         case isFavorited
         case imageData
         case top = "isPopular"

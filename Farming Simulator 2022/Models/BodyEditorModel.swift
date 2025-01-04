@@ -11,7 +11,7 @@ struct BeforoBodyEditorModel: Codable {
     let allObjects: BodyEditorModel
 
     enum CodingKeys: String, CodingKey {
-        case allObjects = "clr_90we"
+        case allObjects = "kvbdel2p"
     }
 }
 
@@ -25,8 +25,8 @@ struct BodyEditorModel: Codable {
 
     enum CodingKeys: String, CodingKey {
         case top = "Top"
-        case pants = "Trousers"
-        case accessories = "Accessories"
+        case pants = "Pants"
+        case accessories = "Headdress"
         case body = "Body"
         case shoes = "Shoes"
         case hair = "Hair"
@@ -44,12 +44,12 @@ struct BodyEditorPattern: Codable, Equatable {
     
     enum MyCodingKeysBodyEditor: String, CodingKey {
         case id
-        case smallImage = "-9vf"
+        case smallImage = "8mhw22_3"
         case isTop = "isTop"
-        case bigImage = "eyi6v"
-        case position = "u4z"
+        case bigImage = "sffmi93jiv"
+        case position = "d18iebnm"
         case isNew = "lastAdded"
-        case genderType = "k5p0wsdrg"
+        case genderType = "3n9v1akn"
     }
     
     init(from decoder: Decoder) throws {

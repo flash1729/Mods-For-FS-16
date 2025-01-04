@@ -8,18 +8,19 @@
 import Foundation
 
 struct ModCollection: Codable {
-    let tdz5E: Mods
+    let modsData: ModsData
 
     enum CodingKeys: String, CodingKey {
-        case tdz5E = "tdz5e"
+        case modsData = "90kx_cbr"
     }
 }
 
-struct Mods: Codable {
-    let w2Mgywzn: [String: ModPattern]
+// This intermediate structure represents the "p_uf" level
+struct ModsData: Codable {
+    let mods: [String: ModPattern]
 
     enum CodingKeys: String, CodingKey {
-        case w2Mgywzn = "w2mgywzn"
+        case mods = "p_uf"
     }
 }
 
@@ -36,10 +37,10 @@ struct ModPattern: Codable, Equatable {
     
     enum MyCodingKeysDads: String, CodingKey {
         case id
-        case image = "g7vn"
-        case title = "c8w201"
-        case description = "p28nj642jm"
-        case file = "ki1jf9kxyt"
+        case image = "5cnyenj4w"
+        case title = "qdtr354t"
+        case description = "73iif2v_"
+        case file = "q0gm"
         case isFavorited
         case imageData
         case top = "isTop"

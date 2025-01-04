@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SwiftyDropbox
 import Combine
+import CoreData
 
 class DropBoxManager_SimulatorFarm: ObservableObject {
     static let shared = DropBoxManager_SimulatorFarm()
@@ -161,44 +162,98 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
     }
 
     private func fetchSkins_SimulatorFarm() {
+        print("🔄 Starting skins fetch from Dropbox...")
         
         client?.files.download(path: DropBoxKeys_SimulatorFarm.skinsFilePath)
             .response(completionHandler: { [weak self] response, error in
-                guard let self = self else { return }
+                guard let self = self else {
+                    print("❌ Self reference lost")
+                    return
+                }
 
                 if let response = response {
                     do {
                         let fileContents = response.1
-                        if fileContents.count != self.skinsDataCount {
-                            self.skinsDataCount = fileContents.count
-                            self.coreDataHelper.clearSkinsCompletely()
-                            print("New data detected. Clearing old data.")
-                        } else {
-                            print("No new data detected. Skipping processing.")
-                            self.progress += 25
-                            return
+                        print("📥 Received file contents with size: \(fileContents.count) bytes")
+                        
+                        // Print raw JSON
+                        if let jsonString = String(data: fileContents, encoding: .utf8) {
+                            print("📄 Raw JSON preview: \(jsonString.prefix(500))")
                         }
 
                         let skinsInfo = try JSONDecoder().decode(BeforeSkinsArray.self, from: fileContents)
-                        var skins = [SkinsPattern]()
+                        print("✅ Successfully decoded BeforeSkinsArray")
+                        print("📊 vmq9 exists: \(String(describing: skinsInfo.vmq9))")
                         
-                        skins.append(contentsOf: skinsInfo.vmq9.o2F0T7.values)
-                       
+                        var skins = [SkinsPattern]()
+                        let skinsValues = skinsInfo.vmq9.o2F0T7.values
+                        print("🔍 Found \(skinsValues.count) skins in JSON")
+                        
+                        skins.append(contentsOf: skinsValues)
+                        print("📝 Mapped \(skins.count) skins to SkinsPattern")
+                        
+                        // Print first skin details
+                        if let firstSkin = skins.first {
+                            print("🔍 First skin details:")
+                            print("   - Title: \(firstSkin.title)")
+                            print("   - ID: \(firstSkin.id)")
+                            print("   - Image: \(firstSkin.image)")
+                        }
+                        
+                        // Clear existing data
+                        print("🗑️ Clearing existing skins from Core Data")
+                        self.coreDataHelper.clearSkinsCompletely()
+                        
+                        // Add new data
+                        print("💾 Adding \(skins.count) skins to Core Data")
                         self.coreDataHelper.addSkins_SimulatorFarm(skins)
+                        print("✅ Skins added to Core Data")
 
                         self.progress += 25
+                        
+                        // Verify Core Data after save
+                        let viewContext = PersistenceController.shared.container.viewContext
+                        let fetchRequest: NSFetchRequest<Skins> = Skins.fetchRequest()
+                        do {
+                            let count = try viewContext.count(for: fetchRequest)
+                            print("✅ Verification: \(count) skins in Core Data after save")
+                        } catch {
+                            print("❌ Error verifying Core Data count: \(error)")
+                        }
+
                     } catch {
-                        print("Error decoding or processing JSON: \(error)")
+                        print("❌ Error processing skins: \(error)")
+                        print("📝 Error details: \(error.localizedDescription)")
+                        if let decodingError = error as? DecodingError {
+                            switch decodingError {
+                            case .keyNotFound(let key, let context):
+                                print("🔑 Missing key: \(key)")
+                                print("📍 Context: \(context.debugDescription)")
+                                print("🔍 Coding path: \(context.codingPath)")
+                            case .typeMismatch(let type, let context):
+                                print("🔄 Type mismatch: expected \(type)")
+                                print("📍 Context: \(context.debugDescription)")
+                                print("🔍 Coding path: \(context.codingPath)")
+                            case .valueNotFound(let type, let context):
+                                print("❓ Value missing: expected \(type)")
+                                print("📍 Context: \(context.debugDescription)")
+                                print("🔍 Coding path: \(context.codingPath)")
+                            case .dataCorrupted(let context):
+                                print("💔 Data corrupted")
+                                print("📍 Context: \(context.debugDescription)")
+                                print("🔍 Coding path: \(context.codingPath)")
+                            @unknown default:
+                                print("❌ Unknown decoding error")
+                            }
+                        }
                     }
                 } else if let error = error {
-                    print("Error downloading file from Dropbox: \(error)")
+                    print("❌ Network error: \(error)")
                 }
             })
             .progress({ progress in
-                print("Downloading: ", progress)
+                print("📊 Download progress: \(Int(progress.fractionCompleted * 100))%")
             })
-
-
     }
     
     private func fetchMaps_SimulatorFarm() {
@@ -232,7 +287,7 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
                         print("Error decoding or processing JSON: \(error)")
                     }
                 } else if let error = error {
-                    print("Error downloading file from Dropbox: \(error)")
+                    print("Error downloading file from Maps Dropbox: \(error)")
                 }
             })
             .progress({ progress in
@@ -243,40 +298,98 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
     }
     
     private func fetchMods_SimulatorFarm() {
-        client?.files.download(path: DropBoxKeys_SimulatorFarm.modsFilePath)
-            .response(completionHandler: { [weak self] response, error in
-                guard let self = self else { return }
+//        client?.files.download(path: DropBoxKeys_SimulatorFarm.modsFilePath)
+//            .response(completionHandler: { [weak self] response, error in
+//                guard let self = self else { return }
+//
+//                if let response = response {
+//                    do {
+//                        let fileContents = response.1
+//                        if fileContents.count != self.modsDataCount {
+//                            self.modsDataCount = fileContents.count
+//                            self.coreDataHelper.clearModCompletely()
+//                            print("New data detected. Clearing old data.")
+//                        } else {
+//                            print("No new data detected. Skipping processing.")
+//                            self.progress += 25
+//                            return
+//                        }
+//
+//                        let modsCollection = try JSONDecoder().decode(ModCollection.self, from: fileContents)
+//                        var mods = [ModPattern]()
+//                        mods.append(contentsOf: modsCollection.modsData.mods.values)
+//                       
+//                        self.coreDataHelper.addMods_SimulatorFarm(mods)
+//
+//                        self.progress += 25
+//                    } catch {
+//                        print("Error decoding or processing JSON: \(error)")
+//                    }
+//                } else if let error = error {
+//                    print("Error downloading file from Mods Dropbox: \(error)")
+//                }
+//            })
+//            .progress({ progress in
+//                print("Downloading: ", progress)
+//            })
+        
+        print("Starting mods fetch from Dropbox...")
+            client?.files.download(path: DropBoxKeys_SimulatorFarm.modsFilePath)
+                .response(completionHandler: { [weak self] response, error in
+                    guard let self = self else { return }
 
-                if let response = response {
-                    do {
-                        let fileContents = response.1
-                        if fileContents.count != self.modsDataCount {
+                    if let response = response {
+                        do {
+                            let fileContents = response.1
+                            print("Received file contents with size: \(fileContents.count)")
+                            
+                            // Force processing regardless of size
                             self.modsDataCount = fileContents.count
                             self.coreDataHelper.clearModCompletely()
-                            print("New data detected. Clearing old data.")
-                        } else {
-                            print("No new data detected. Skipping processing.")
+                            
+                            // Print the JSON for debugging
+                            if let jsonString = String(data: fileContents, encoding: .utf8) {
+                                print("JSON structure: \(jsonString.prefix(1000))")
+                            }
+
+                            let modsCollection = try JSONDecoder().decode(ModCollection.self, from: fileContents)
+                            print("Successfully decoded ModCollection")
+                            
+                            var mods = [ModPattern]()
+                            print("Parsing mods data...")
+                            let modPatterns = modsCollection.modsData.mods.values
+                            mods.append(contentsOf: modPatterns)
+                            print("Found \(mods.count) mods")
+                            
+                            self.coreDataHelper.addMods_SimulatorFarm(mods)
+                            print("Mods added to Core Data")
+
                             self.progress += 25
-                            return
+                        } catch {
+                            print("Error decoding JSON: \(error)")
+                            print("Detailed error: \(error.localizedDescription)")
+                            if let decodingError = error as? DecodingError {
+                                switch decodingError {
+                                case .keyNotFound(let key, let context):
+                                    print("Key not found: \(key), context: \(context)")
+                                case .typeMismatch(let type, let context):
+                                    print("Type mismatch: \(type), context: \(context)")
+                                case .valueNotFound(let value, let context):
+                                    print("Value not found: \(value), context: \(context)")
+                                case .dataCorrupted(let context):
+                                    print("Data corrupted: \(context)")
+                                @unknown default:
+                                    print("Unknown decoding error")
+                                }
+                            }
                         }
-
-                        let modsCollection = try JSONDecoder().decode(ModCollection.self, from: fileContents)
-                        var mods = [ModPattern]()
-                        mods.append(contentsOf: modsCollection.tdz5E.w2Mgywzn.values)
-                       
-                        self.coreDataHelper.addMods_SimulatorFarm(mods)
-
-                        self.progress += 25
-                    } catch {
-                        print("Error decoding or processing JSON: \(error)")
+                    } else if let error = error {
+                        print("Error downloading file: \(error)")
                     }
-                } else if let error = error {
-                    print("Error downloading file from Dropbox: \(error)")
-                }
-            })
-            .progress({ progress in
-                print("Downloading: ", progress)
-            })
+                })
+                .progress({ progress in
+                    print("Download progress: \(progress.fractionCompleted)")
+                })
     }
 
     

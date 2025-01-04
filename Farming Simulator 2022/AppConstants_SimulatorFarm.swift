@@ -13,31 +13,36 @@ struct DropBoxKeys_SimulatorFarm {
     static let token = "czHFetFkAxAAAAAAAAAEYi9LbxJIX7NRHst4nQgZL8A"
     static let apiLink = "https://api.dropboxapi.com/oauth2/token"
     
+    //drop settings
+    static let oldappkey = "kp0lre46ylg5l9s"
+    static let oldappSecret = "ka1s56uwhnqy0j4"
+    static let oldrefresh_token = "V5M7YQUXEHkAAAAAAAAAAfuoc_FUyHQFfngZvo8oi5yn1cO59ldgwJ4ZGeRhoZRA"
+    
     //New drop settings
-    static let appkey = "kp0lre46ylg5l9s"
-    static let appSecret = "ka1s56uwhnqy0j4"
-    static let refresh_token = "V5M7YQUXEHkAAAAAAAAAAfuoc_FUyHQFfngZvo8oi5yn1cO59ldgwJ4ZGeRhoZRA"
+    static let appkey = "hvfm6nqohkw6vgb"
+    static let appSecret = "8pdous5y9mdqyed"
+    static let refresh_token = "nupcnxBm3a8AAAAAAAAAAcTBgEylYTVGKveyNqU_6L9cUOQtmc3eIPYu79UYfzCX"
     
     //path to json file
-    static let modsFilePath = "/content/66d83705a064e/content.json"
-    static let mapsFilePath = "/content/66d83705ad3fa/content.json"
-    static let farmsFilePath = "/content/66d83705b42fe/content.json"
-    static let skinsFilePath = "/content/66d83705b0fa0/content.json"
+    static let modsFilePath = "/content/6765534fa8c5a/content.json"//new
+    static let mapsFilePath = "/content/67655354dd024/content.json" //new
+    static let farmsFilePath = "/content/67655355b739c/content.json" //new
+    static let skinsFilePath = "/content/67655850cdeb9/content.json"
     static let nicknameFilePath = "/content/????????/content.json"
-    static let bodyEditorFilePath = "/content/6710c045dae81/content.json"
+    static let bodyEditorFilePath = "/content/6765534fb64c5/content.json"
     
     //path to download image from folder
-    static let modsImagePartPath = "content/66d83705a064e/"
-    static let mapsImagePartPath = "content/66d83705ad3fa/"
-    static let farmsImagePartPath = "content/66d83705b42fe/"
-    static let skinsImagePartPath = "content/66d83705b0fa0/"
-    static let bodyEditorImagePartPath = "content/6710c045dae81/"
+    static let modsImagePartPath = "content/6765534fa8c5a/"//new
+    static let mapsImagePartPath = "content/67655354dd024/" //new
+    static let farmsImagePartPath = "content/67655355b739c/" //new
+    static let skinsImagePartPath = "content/67655850cdeb9/"
+    static let bodyEditorImagePartPath = "content/6765534fb64c5/"
     
     //path to download file from folder
-    static let modsFilePartPath = "/content/66d83705a064e/"
-    static let mapsFilePartPath = "/content/66d83705ad3fa/"
-    static let farmsFilePartPath = ""
-    static let skinFilePartPath = "/content/66d83705b0fa0/"
+    static let modsFilePartPath = "/content/6765534fa8c5a/" //new
+    static let mapsFilePartPath = "/content/67655354dd024/" //new
+    static let farmsFilePartPath = "/content/67655355b739c/" //new
+    static let skinFilePartPath = "/content/67655850cdeb9/"
     
     //
     static let refreshTokenName = "refresh_token"

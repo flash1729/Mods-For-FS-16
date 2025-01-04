@@ -60,17 +60,34 @@ class SkinsViewModel: ObservableObject {
         }
     }
     
-     func fetchSkinsFromCoreData() {
+    func fetchSkinsFromCoreData() {
+        print("Starting skins fetch from Core Data...")
+        
         let viewContext = PersistenceController.shared.container.viewContext
         let fetchRequest: NSFetchRequest<Skins> = Skins.fetchRequest()
+        
         do {
             let fetchedSkins = try viewContext.fetch(fetchRequest)
-                skins = fetchedSkins.map { skinEntity in
-                    return SkinsPattern(from: skinEntity)
-                }
+            print("Successfully fetched skins. Count: \(fetchedSkins.count)")
+            
+            if fetchedSkins.isEmpty {
+                print("Warning: No skins found in Core Data")
+            } else {
+                print("First skin title: \(fetchedSkins.first?.title ?? "no title")")
+            }
+            
+            skins = fetchedSkins.map { skinEntity in
+                print("Processing skin: ID=\(skinEntity.id ?? "no id"), Title=\(skinEntity.title ?? "no title")")
+                return SkinsPattern(from: skinEntity)
+            }
+            
+            print("Mapping complete. Final skins array count: \(skins.count)")
+            pressingfilterSkin() // Ensure filtered data is updated
+            print("Filtered skins count: \(filteredSkins.count)")
             
         } catch {
-            print("Error fetching mods: \(error)")
+            print("Error fetching skins: \(error)")
+            print("Detailed error description: \(error.localizedDescription)")
         }
     }
     

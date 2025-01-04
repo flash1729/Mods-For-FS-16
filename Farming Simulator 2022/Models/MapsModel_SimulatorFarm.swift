@@ -11,7 +11,7 @@ struct BeforeMapInfo: Codable {
     let ryiz0Alp: MapInfo
 
     enum CodingKeys: String, CodingKey {
-        case ryiz0Alp = "ryiz0alp"
+        case ryiz0Alp = "5t3"
     }
 }
 
@@ -19,7 +19,7 @@ struct MapInfo: Codable {
     let ovlcz2U1Cy: [String: MapPattern]
 
     enum CodingKeys: String, CodingKey {
-        case ovlcz2U1Cy = "ovlcz2u1cy"
+        case ovlcz2U1Cy = "f9_hdggyu"
     }
 }
 
@@ -36,10 +36,10 @@ struct MapPattern: Codable, Equatable {
     
     enum MyCodingKeys: String, CodingKey {
         case id
-        case image = "la-1kakhah"
-        case title = "_kl-"
-        case description = "a1nqe45e"
-        case file = "l097"
+        case image = "fbpmouc4as"
+        case title = "ejnhv"
+        case description = "j-dmd"
+        case file = "gnx"
         case isFavorited
         case imageData
         case top = "isPopular"

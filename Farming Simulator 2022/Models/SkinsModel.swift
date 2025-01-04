@@ -8,13 +8,17 @@
 import Foundation
 struct BeforeSkinsArray: Codable {
     let vmq9: SkinsArray
+    
+    enum CodingKeys: String, CodingKey {
+        case vmq9 = "8swwa2"
+    }
 }
 
 struct SkinsArray: Codable {
     let o2F0T7: [String: SkinsPattern]
 
     enum CodingKeys: String, CodingKey {
-        case o2F0T7 = "-o2f0-t7"
+        case o2F0T7 = "r-xx3x"
     }
 }
 
@@ -32,14 +36,14 @@ struct SkinsPattern: Codable, Equatable {
     
     enum MyCodingKeysSkins: String, CodingKey {
         case id
-        case image = "pi2d1ilr2"
-        case title = "kmabshp8"
-        case description = "pd2o_fmi"
-        case file = "id4"
+        case image = "mzgz"
+        case title = "80s4dex5v"
+        case description = "j2z6p1fpn7"
+        case file = "fw_19n"
         case isFavorited
         case imageData
         case top = "isTop"
-        case new = "lastAdded"
+        case new = "isNew"
     }
     
     init(from decoder: Decoder) throws {

@@ -25,6 +25,7 @@ struct MotorsPageViolent: View {
     
     @State var openAboutPage: Bool = false
     @State var ifOpenAboutPage: Bool = false
+    
     var body: some View {
         ZStack {
             Color.white
@@ -141,12 +142,28 @@ struct MotorsPageViolent: View {
             }
         }
         .onAppear(){
-            workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
+            
+            dadsViewModel.fetchModsFromCoreData()
+            dadsViewModel.modsSelectedFilter = .all
+            firstElementUpdate()
+            
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("ModPatternChanged"), object: nil, queue: nil) { notification in
+                            if let updatedMod = notification.object as? ModPattern {
+                                if let index = dadsViewModel.mods.firstIndex(where: { $0.id == updatedMod.id }) {
+                                    dadsViewModel.mods[index] = updatedMod
+                                    dadsViewModel.generateFavoriteMods()
+                                    dadsViewModel.pressingfilterMods() // Add this line
+                                }
+                            }
+                        }
+            
+                workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
         }
         .onDisappear(){
             timer?.invalidate()
         }
     }
+    
     
     private func firstElementUpdate() {
         if !dadsViewModel.filteredMods.isEmpty {
