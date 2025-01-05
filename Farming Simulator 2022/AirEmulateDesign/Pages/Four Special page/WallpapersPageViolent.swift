@@ -166,44 +166,55 @@ struct WallpapersPageViolent: View {
             choosedItem = farmViewModel.filteredFarms.first
             choosedImageName = "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(choosedItem?.image ?? "")"
             choosedLikeState = choosedItem?.isFavorited ?? false
+            print("Updating selected item - Title: \(choosedItem?.title ?? "no title"), Description: \(choosedItem?.description ?? "no description")")
             updateId = UUID()
+        } else {
+            print("No farms available to display")
         }
     }
     
     private var bodyMiddleSection: some View {
-        
-        PreviewItemFromRemote(imageData: choosedItem?.imageData, imagePath: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(choosedItem?.image ?? "")", titleData: choosedItem?.title, previewText: choosedItem?.description, likeState: $choosedLikeState, tappedLikeButton: {bool in
-            choosedItem?.isFavorited = bool
-            if let idString = choosedItem?.id {
-                PersistenceController.shared.updateFavoriteFarms(with: idString)
-            }
-            let firstIndex = farmViewModel.farms.firstIndex(where: {$0.id == choosedItem?.id})
-            if let firstIndex {
-                farmViewModel.farms[firstIndex].isFavorited = bool
-                farmViewModel.generateFavoriteFarms()
-                if farmViewModel.farmsSelectedFilter == .favorite {
-                    farmViewModel.filteredFarms = farmViewModel.filterFavoriteFarms
-                    firstElementUpdate()
+        PreviewItemFromRemote(
+            imageData: choosedItem?.imageData,
+            imagePath: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(choosedItem?.image ?? "")",
+            titleData: choosedItem?.title ?? "Name",
+            previewText: choosedItem?.description ?? "Description unavailable",
+            likeState: $choosedLikeState,
+            tappedLikeButton: { bool in
+                choosedItem?.isFavorited = bool
+                if let idString = choosedItem?.id {
+                    PersistenceController.shared.updateFavoriteFarms(with: idString)
                 }
-                farmViewModel.pressingFilterFarms()
-                collectionUpdateId = UUID()
-            }
-        }, openDescriptionItem: {
-            if choosedItem?.imageData != nil {
-                ifOpenAboutPage = true
-                openAboutPage.toggle()
-            }
-        }, sendBackImageData: {sendData in
-            Task {
-                await MainActor.run {
-                    if let choosedItem {
-                        farmViewModel.addDataToImage(data: sendData, updatedItemModel: choosedItem)
-                        farmViewModel.updateFarmModel(updatedFarmModel: choosedItem)
-                        farmViewModel.fetchFarmsFromCoreData()
+                let firstIndex = farmViewModel.farms.firstIndex(where: {$0.id == choosedItem?.id})
+                if let firstIndex {
+                    farmViewModel.farms[firstIndex].isFavorited = bool
+                    farmViewModel.generateFavoriteFarms()
+                    if farmViewModel.farmsSelectedFilter == .favorite {
+                        farmViewModel.filteredFarms = farmViewModel.filterFavoriteFarms
+                        firstElementUpdate()
+                    }
+                    farmViewModel.pressingFilterFarms()
+                    collectionUpdateId = UUID()
+                }
+            },
+            openDescriptionItem: {
+                if choosedItem?.imageData != nil {
+                    ifOpenAboutPage = true
+                    openAboutPage.toggle()
+                }
+            },
+            sendBackImageData: { sendData in
+                Task {
+                    await MainActor.run {
+                        if let choosedItem {
+                            farmViewModel.addDataToImage(data: sendData, updatedItemModel: choosedItem)
+                            farmViewModel.updateFarmModel(updatedFarmModel: choosedItem)
+                            farmViewModel.fetchFarmsFromCoreData()
+                        }
                     }
                 }
             }
-        })
+        )
         .id(updateId)
     }
     

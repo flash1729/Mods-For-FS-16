@@ -78,4 +78,22 @@ struct BodyEditorPattern: Codable, Equatable {
 enum GenderCoreData: String, Codable {
     case boy = "Boy"
     case girl = "Girl"
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        
+        // Handle case-insensitive matching
+        switch stringValue.lowercased() {
+        case "boy":
+            self = .boy
+        case "girl":
+            self = .girl
+        default:
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Invalid gender value: \(stringValue). Expected 'Boy' or 'Girl'"
+            )
+        }
+    }
 }

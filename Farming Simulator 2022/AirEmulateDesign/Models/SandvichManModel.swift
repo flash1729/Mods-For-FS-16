@@ -12,6 +12,15 @@ enum GenderTypeModel: Int16, CaseIterable, Identifiable {
     case man
     case woman
     var id: GenderTypeModel { self }
+    
+    init(from genderCoreData: GenderCoreData) {
+            switch genderCoreData {
+            case .boy:
+                self = .man
+            case .girl:
+                self = .woman
+            }
+    }
 }
 
 struct SandvichItemType {

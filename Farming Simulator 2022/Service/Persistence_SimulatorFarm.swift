@@ -151,8 +151,8 @@ struct PersistenceController {
     }
     
     mutating func appendSkin(from skinObject: SkinsPattern) {
-        print("➕ Creating new skin entity")
         let skinEntity = Skins(context: container.viewContext)
+        
         skinEntity.id = skinObject.id
         skinEntity.title = skinObject.title
         skinEntity.skinsDescription = skinObject.description
@@ -161,19 +161,13 @@ struct PersistenceController {
         skinEntity.isFavorited = skinObject.isFavorited ?? false
         skinEntity.top = skinObject.top ?? false
         skinEntity.new = skinObject.new ?? true
+        skinEntity.imageData = skinObject.imageData
         
-        if let imageData = skinObject.imageData {
-            skinEntity.imageData = imageData
-        }
-
-        print("💾 Attempting to save skin: \(skinObject.title)")
         do {
             try container.viewContext.save()
-            print("✅ Successfully saved skin")
             skins.append(skinEntity)
         } catch {
-            print("❌ Error saving skin: \(error)")
-            print("   Details: \(error.localizedDescription)")
+            print("Error saving skin: \(error.localizedDescription)")
         }
     }
     
@@ -319,9 +313,6 @@ struct PersistenceController {
         print("🚀 Starting to add \(skinsInput.count) skins to Core Data")
         
         for (index, skin) in skinsInput.enumerated() {
-            print("📝 Processing skin \(index + 1) of \(skinsInput.count)")
-            print("   - Title: \(skin.title)")
-            print("   - ID: \(skin.id)")
             appendSkin(from: skin)
         }
         

@@ -77,7 +77,6 @@ class SkinsViewModel: ObservableObject {
             }
             
             skins = fetchedSkins.map { skinEntity in
-                print("Processing skin: ID=\(skinEntity.id ?? "no id"), Title=\(skinEntity.title ?? "no title")")
                 return SkinsPattern(from: skinEntity)
             }
             
