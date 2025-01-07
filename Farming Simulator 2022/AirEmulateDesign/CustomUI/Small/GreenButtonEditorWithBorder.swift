@@ -13,7 +13,7 @@ struct GreenButtonEditorWithBorder: View {
     var infinityWidth: Bool = false
     
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
-    
+    var isExpanded: Bool = false
 
     private let cornerRadius: CGFloat = 8
     private let horizontalPadding: CGFloat = 24
@@ -36,7 +36,8 @@ struct GreenButtonEditorWithBorder: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: iconSize)
-                    .rotationEffect(.degrees(-90))
+                    .rotationEffect(.degrees(isExpanded ? 90 : -90)) // Modify this
+                    .animation(.spring(), value: isExpanded)
             }
             .frame(height: bigSize ? 56 : 37)
             .padding(.horizontal, horizontalPadding)

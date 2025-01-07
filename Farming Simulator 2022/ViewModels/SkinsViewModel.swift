@@ -99,8 +99,11 @@ class SkinsViewModel: ObservableObject {
     
     func addDataToImage(data: Data, updatedItemModel: SkinsPattern) {
         if let index = skins.firstIndex(where: { $0.id == updatedItemModel.id }) {
-            skins[index].imageData = data
-            NotificationCenter.default.post(name: NSNotification.Name("SkinPatternChanged"), object: self)
+            if skins[index].imageData != data {
+                skins[index].imageData = data
+                PersistenceController.shared.updateSkinImage(id: updatedItemModel.id, imageData: data)
+                NotificationCenter.default.post(name: NSNotification.Name("SkinPatternChanged"), object: self)
+            }
         }
     }
 

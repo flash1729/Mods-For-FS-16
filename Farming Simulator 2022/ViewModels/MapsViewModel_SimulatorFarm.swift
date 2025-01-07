@@ -92,8 +92,11 @@ class MapsViewModel_SimulatorFarm: ObservableObject {
     
     func addDataToImage(data: Data, updatedItemModel: MapPattern) {
         if let index = maps.firstIndex(where: { $0.id == updatedItemModel.id }) {
-            maps[index].imageData = data
-            NotificationCenter.default.post(name: NSNotification.Name("MapPatternChanged"), object: self)
+            if maps[index].imageData != data {
+                maps[index].imageData = data
+                PersistenceController.shared.updateMapImage(id: updatedItemModel.id, imageData: data)
+                NotificationCenter.default.post(name: NSNotification.Name("MapPatternChanged"), object: self)
+            }
         }
     }
     

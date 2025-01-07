@@ -296,38 +296,80 @@ class LoadingPreviewVMCyan: ObservableObject {
     private var timer: Timer?
     let imageSaveToCoreDate: ImageLoader = ImageLoader()
     
+//    func addAllElementToCoreData(allData: FetchedResults<BodyElement>, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext) async {
+//        guard !allData.isEmpty else {
+//            progress = 100
+//            return
+//        }
+//        
+//        isLoading = true
+//        allDataCount = allData.count
+//        let batchSize = 5 // Process 5 images at a time
+//        
+//        for batch in stride(from: 0, to: allData.count, by: batchSize) {
+//            let endIndex = min(batch + batchSize, allData.count)
+//            let currentBatch = Array(allData[batch..<endIndex])
+//            
+//            await withTaskGroup(of: Void.self) { group in
+//                for item in currentBatch {
+//                    group.addTask {
+//                        await self.processElement(item, dropBoxManager: dropBoxManager, viewContext: viewContext)
+//                    }
+//                }
+//            }
+//            
+//            // Update progress after each batch
+//            DispatchQueue.main.async {
+//                self.counter += currentBatch.count
+//                self.updateProgress()
+//            }
+//        }
+//        
+//        DispatchQueue.main.async {
+//            self.isLoading = false
+//            self.progress = 100
+//        }
+//    }
+    
     func addAllElementToCoreData(allData: FetchedResults<BodyElement>, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext) async {
-        guard !allData.isEmpty else {
-            progress = 100
-            return
-        }
-        
-        isLoading = true
-        allDataCount = allData.count
-        let batchSize = 5 // Process 5 images at a time
-        
-        for batch in stride(from: 0, to: allData.count, by: batchSize) {
-            let endIndex = min(batch + batchSize, allData.count)
-            let currentBatch = Array(allData[batch..<endIndex])
+            guard !allData.isEmpty else {
+                await MainActor.run {
+                    progress = 100
+                }
+                return
+            }
             
-            await withTaskGroup(of: Void.self) { group in
-                for item in currentBatch {
-                    group.addTask {
-                        await self.processElement(item, dropBoxManager: dropBoxManager, viewContext: viewContext)
+            // Dispatch UI update to main thread
+            await MainActor.run {
+                isLoading = true
+            }
+            
+            allDataCount = allData.count
+            let batchSize = 5
+            
+            for batch in stride(from: 0, to: allData.count, by: batchSize) {
+                let endIndex = min(batch + batchSize, allData.count)
+                let currentBatch = Array(allData[batch..<endIndex])
+                
+                await withTaskGroup(of: Void.self) { group in
+                    for item in currentBatch {
+                        group.addTask {
+                            await self.processElement(item, dropBoxManager: dropBoxManager, viewContext: viewContext)
+                        }
                     }
+                }
+                
+                // Update progress on main thread
+                await MainActor.run {
+                    self.counter += currentBatch.count
+                    self.updateProgress()
                 }
             }
             
-            // Update progress after each batch
-            DispatchQueue.main.async {
-                self.counter += currentBatch.count
-                self.updateProgress()
-            }
-        }
-        
-        DispatchQueue.main.async {
-            self.isLoading = false
-            self.progress = 100
+            // Final updates on main thread
+            await MainActor.run {
+                self.isLoading = false
+                self.progress = 100
         }
     }
     

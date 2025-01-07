@@ -108,64 +108,6 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
             }
     }
     
-//    private func fetchBodyEditor_SimulatorFarm() {
-//        client?.files.download(path: DropBoxKeys_SimulatorFarm.bodyEditorFilePath)
-//            .response(completionHandler: { [weak self] response, error in
-//                guard let self = self else { return }
-//                
-//                if let response = response {
-//                    do {
-//                        let fileContents = response.1
-//                        
-//                        // Force processing regardless of size
-//                        self.bodyEditorDataCount = fileContents.count
-//                        self.coreDataHelper.clearBodyPartCompletely()
-//                        
-//                        if fileContents.count != self.bodyEditorDataCount {
-//                            self.bodyEditorDataCount = fileContents.count
-//                            self.coreDataHelper.clearBodyPartCompletely()
-//                            print("New data detected. Clearing old data.")
-//                        } else {
-//                            print("No new editor data detected. Skipping processing.")
-//                            self.progress += 25
-//                            return
-//                        }
-//                        
-//                        let itemInfo = try JSONDecoder().decode(BeforoBodyEditorModel.self, from: fileContents)
-//                        
-//                        var topElement = [BodyEditorPattern]()
-//                        topElement.append(contentsOf: itemInfo.allObjects.top.values)
-//                        var pantsElement = [BodyEditorPattern]()
-//                        pantsElement.append(contentsOf: itemInfo.allObjects.pants.values)
-//                        var accessoriesElement = [BodyEditorPattern]()
-//                        accessoriesElement.append(contentsOf: itemInfo.allObjects.accessories.values)
-//                        var bodyElement = [BodyEditorPattern]()
-//                        bodyElement.append(contentsOf: itemInfo.allObjects.body.values)
-//                        var shoesElement = [BodyEditorPattern]()
-//                        shoesElement.append(contentsOf: itemInfo.allObjects.shoes.values)
-//                        var hairElement = [BodyEditorPattern]()
-//                        hairElement.append(contentsOf: itemInfo.allObjects.hair.values)
-//                        
-//                        coreDataHelper.addBodyElements(topElement, type: .top)
-//                        coreDataHelper.addBodyElements(accessoriesElement, type: .accessories)
-//                        coreDataHelper.addBodyElements(bodyElement, type: .body)
-//                        coreDataHelper.addBodyElements(hairElement, type: .hair)
-//                        coreDataHelper.addBodyElements(pantsElement, type: .trousers)
-//                        coreDataHelper.addBodyElements(shoesElement, type: .shoes)
-//                        
-//                        self.progress += 25
-//                    } catch {
-//                        print("Error decoding or processing JSON: \(error)")
-//                    }
-//                } else if let error = error {
-//                    print("Error downloading file from Dropbox: \(error)")
-//                }
-//            })
-//            .progress({ progress in
-//                print("Downloading: ", progress)
-//            })
-//    }
-    
     
     // this one is a bit good
 //    private func fetchBodyEditor_SimulatorFarm() {
@@ -279,194 +221,105 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
                 print("Downloading: ", progress)
             })
     }
-
-    
-   
-    
-//    private func fetchBodyEditor_SimulatorFarm() {
-//        print("🚀 Starting fetchBodyEditor_SimulatorFarm")
-//        print("📍 Using path: \(DropBoxKeys_SimulatorFarm.bodyEditorFilePath)")
-//        
-//        client?.files.download(path: DropBoxKeys_SimulatorFarm.bodyEditorFilePath)
-//            .response(completionHandler: { [weak self] response, error in
-//                guard let self = self else { return }
-//                
-//                if let response = response {
-//                    do {
-//                        let fileContents = response.1
-//                        print("📥 Received file contents with size: \(fileContents.count) bytes")
-//                        
-//                        // Force processing regardless of size
-//                        self.bodyEditorDataCount = fileContents.count
-//                        self.coreDataHelper.clearBodyPartCompletely()
-//                        print("🗑️ Cleared existing data. Processing new content...")
-//                        
-//                        let itemInfo = try JSONDecoder().decode(BeforoBodyEditorModel.self, from: fileContents)
-//                        print("✅ Successfully decoded BeforoBodyEditorModel")
-//                        
-//                        var topElement = [BodyEditorPattern]()
-//                        topElement.append(contentsOf: itemInfo.allObjects.top.values)
-//                        var pantsElement = [BodyEditorPattern]()
-//                        pantsElement.append(contentsOf: itemInfo.allObjects.pants.values)
-//                        var accessoriesElement = [BodyEditorPattern]()
-//                        accessoriesElement.append(contentsOf: itemInfo.allObjects.accessories.values)
-//                        var bodyElement = [BodyEditorPattern]()
-//                        bodyElement.append(contentsOf: itemInfo.allObjects.body.values)
-//                        var shoesElement = [BodyEditorPattern]()
-//                        shoesElement.append(contentsOf: itemInfo.allObjects.shoes.values)
-//                        var hairElement = [BodyEditorPattern]()
-//                        hairElement.append(contentsOf: itemInfo.allObjects.hair.values)
-//                        
-//                        print("📊 Processing elements:")
-//                        print("   - Top: \(topElement.count)")
-//                        print("   - Pants: \(pantsElement.count)")
-//                        print("   - Accessories: \(accessoriesElement.count)")
-//                        print("   - Body: \(bodyElement.count)")
-//                        print("   - Shoes: \(shoesElement.count)")
-//                        print("   - Hair: \(hairElement.count)")
-//                        
-//                        self.coreDataHelper.addBodyElements(topElement, type: .top)
-//                        self.coreDataHelper.addBodyElements(accessoriesElement, type: .accessories)
-//                        self.coreDataHelper.addBodyElements(bodyElement, type: .body)
-//                        self.coreDataHelper.addBodyElements(hairElement, type: .hair)
-//                        self.coreDataHelper.addBodyElements(pantsElement, type: .trousers)
-//                        self.coreDataHelper.addBodyElements(shoesElement, type: .shoes)
-//                        
-//                        print("✅ All elements saved to Core Data")
-//                        self.progress += 25
-//                        
-//                    } catch {
-//                        print("❌ Error processing body editor data: \(error)")
-//                        print("🔍 Error details: \(error.localizedDescription)")
-//                        if let decodingError = error as? DecodingError {
-//                            switch decodingError {
-//                            case .keyNotFound(let key, let context):
-//                                print("  - Missing key: \(key)")
-//                                print("  - Context: \(context.debugDescription)")
-//                            case .typeMismatch(let type, let context):
-//                                print("  - Type mismatch: expected \(type)")
-//                                print("  - Context: \(context.debugDescription)")
-//                            case .valueNotFound(let value, let context):
-//                                print("  - Value not found: expected \(value)")
-//                                print("  - Context: \(context.debugDescription)")
-//                            case .dataCorrupted(let context):
-//                                print("  - Data corrupted: \(context.debugDescription)")
-//                            @unknown default:
-//                                print("  - Unknown decoding error")
-//                            }
-//                        }
-//                    }
-//                } else if let error = error {
-//                    print("❌ Error downloading from Dropbox: \(error)")
-//                }
-//            })
-//            .progress({ progress in
-//                print("📊 Download progress: \(Int(progress.fractionCompleted * 100))%")
-//            })
-//    }
-    
-//    private func fetchBodyEditor_SimulatorFarm() {
-//        client?.files.download(path: DropBoxKeys_SimulatorFarm.bodyEditorFilePath)
-//            .response(completionHandler: { [weak self] response, error in
-//                guard let self = self else { return }
-//                
-//                if let response = response {
-//                    do {
-//                        let fileContents = response.1
-//                        
-//                        // Force processing on first run
-//                        if self.bodyEditorDataCount == 0 {
-//                            print("First run detected, processing data")
-//                            self.bodyEditorDataCount = fileContents.count
-//                            self.coreDataHelper.clearBodyPartCompletely()
-//                        } else if fileContents.count != self.bodyEditorDataCount {
-//                            self.bodyEditorDataCount = fileContents.count
-//                            self.coreDataHelper.clearBodyPartCompletely()
-//                            print("New data detected. Clearing old data.")
-//                        } else {
-//                            print("No new data detected. Skipping processing.")
-//                            self.progress += 25
-//                            return
-//                        }
-//                        
-//                        let itemInfo = try JSONDecoder().decode(BeforoBodyEditorModel.self, from: fileContents)
-//                        
-//                        var topElement = [BodyEditorPattern]()
-//                        topElement.append(contentsOf: itemInfo.allObjects.top.values)
-//                        var pantsElement = [BodyEditorPattern]()
-//                        pantsElement.append(contentsOf: itemInfo.allObjects.pants.values)
-//                        var accessoriesElement = [BodyEditorPattern]()
-//                        accessoriesElement.append(contentsOf: itemInfo.allObjects.accessories.values)
-//                        var bodyElement = [BodyEditorPattern]()
-//                        bodyElement.append(contentsOf: itemInfo.allObjects.body.values)
-//                        var shoesElement = [BodyEditorPattern]()
-//                        shoesElement.append(contentsOf: itemInfo.allObjects.shoes.values)
-//                        var hairElement = [BodyEditorPattern]()
-//                        hairElement.append(contentsOf: itemInfo.allObjects.hair.values)
-//                        
-//                        print("Processing elements - Top: \(topElement.count), Body: \(bodyElement.count)")
-//                        
-//                        coreDataHelper.addBodyElements(topElement, type: .top)
-//                        coreDataHelper.addBodyElements(accessoriesElement, type: .accessories)
-//                        coreDataHelper.addBodyElements(bodyElement, type: .body)
-//                        coreDataHelper.addBodyElements(hairElement, type: .hair)
-//                        coreDataHelper.addBodyElements(pantsElement, type: .trousers)
-//                        coreDataHelper.addBodyElements(shoesElement, type: .shoes)
-//                        
-//                        print("✅ All elements saved successfully")
-//                        self.progress += 25
-//                        
-//                    } catch {
-//                        print("Error decoding or processing JSON: \(error)")
-//                    }
-//                } else if let error = error {
-//                    print("Error downloading file from Dropbox: \(error)")
-//                }
-//            })
-//            .progress({ progress in
-//                print("Downloading: ", progress)
-//            })
-//    }
     
     
     private func fetchSkins_SimulatorFarm() {
-        print("Starting skins fetch...")
+        print("🔄 Starting skins fetch...")
+        
+        // First check the local cache timestamp
+        let lastUpdateTime = UserDefaults.standard.double(forKey: "LastSkinsUpdateTime")
+        let currentTime = Date().timeIntervalSince1970
+        let cacheTimeout = 3600.0 // 1 hour cache timeout
+        
+        if currentTime - lastUpdateTime < cacheTimeout {
+            print("📦 Using cached skins data")
+            self.progress += 25
+            return
+        }
         
         client?.files.download(path: DropBoxKeys_SimulatorFarm.skinsFilePath)
             .response(completionHandler: { [weak self] response, error in
-                guard let self = self else { return }
+                guard let self = self else {
+                    print("❌ Self reference lost")
+                    return
+                }
 
                 if let response = response {
                     do {
                         let fileContents = response.1
-                        print("Processing skins data: \(fileContents.count) bytes")
+                        print("📥 Received file contents with size: \(fileContents.count) bytes")
+                        
+                        // Check if data has changed by comparing content size
+                        if fileContents.count == self.skinsDataCount {
+                            print("✨ No new data detected. Using existing data.")
+                            self.progress += 25
+                            return
+                        }
+                        
+                        // Store new content size
+                        self.skinsDataCount = fileContents.count
                         
                         let skinsInfo = try JSONDecoder().decode(BeforeSkinsArray.self, from: fileContents)
+                        print("✅ Successfully decoded BeforeSkinsArray")
+                        
                         var skins = [SkinsPattern]()
                         skins.append(contentsOf: skinsInfo.vmq9.o2F0T7.values)
-                        print("Found \(skins.count) skins")
+                        print("📝 Found \(skins.count) skins")
                         
-                        self.coreDataHelper.clearSkinsCompletely()
-                        self.coreDataHelper.addSkins_SimulatorFarm(skins)
+                        // Update Core Data in background
+                        self.coreDataHelper.container.performBackgroundTask { context in
+                            self.coreDataHelper.clearSkinsCompletely()
+                            self.coreDataHelper.addSkins_SimulatorFarm(skins)
+                            
+                            // Update cache timestamp
+                            UserDefaults.standard.set(Date().timeIntervalSince1970,
+                                                    forKey: "LastSkinsUpdateTime")
+                        }
+                        
                         self.progress += 25
-                        
-                        // Quick verification
-                        let count = try self.coreDataHelper.container.viewContext.count(for: Skins.fetchRequest())
-                        print("Saved \(count) skins to Core Data")
 
-                    } catch let error as DecodingError {
-                        print("Skins decoding error: \(error.localizedDescription)")
                     } catch {
-                        print("Skins processing error: \(error.localizedDescription)")
+                        print("❌ Skins processing error: \(error.localizedDescription)")
                     }
                 } else if let error = error {
-                    print("Skins download error: \(error)")
+                    print("❌ Network error: \(error)")
                 }
             })
             .progress({ progress in
-                print("Download progress: \(Int(progress.fractionCompleted * 100))%")
+                print("📊 Download progress: \(Int(progress.fractionCompleted * 100))%")
             })
     }
+
+//    private func downloadAndProcessSkins(metadata: Files.FileMetadata) {
+//        client?.files.download(path: DropBoxKeys_SimulatorFarm.skinsFilePath)
+//            .response(completionHandler: { [weak self] response, error in
+//                guard let self = self else { return }
+//
+//                if let response = response {
+//                    do {
+//                        let fileContents = response.1
+//                        let skinsInfo = try JSONDecoder().decode(BeforeSkinsArray.self, from: fileContents)
+//                        var skins = [SkinsPattern]()
+//                        skins.append(contentsOf: skinsInfo.vmq9.o2F0T7.values)
+//                        
+//                        // Update Core Data in background
+//                        self.coreDataHelper.container.performBackgroundTask { context in
+//                            self.coreDataHelper.clearSkinsCompletely()
+//                            self.coreDataHelper.addSkins_SimulatorFarm(skins)
+//                            
+//                            // Save metadata
+//                            UserDefaults.standard.set(metadata.serverModified?.iso8601String,
+//                                                    forKey: "LastSkinsUpdate")
+//                        }
+//                        
+//                        self.progress += 25
+//
+//                    } catch {
+//                        print("Skins processing error: \(error.localizedDescription)")
+//                    }
+//                }
+//            })
+//    }
     
     private func fetchMaps_SimulatorFarm() {
         
@@ -575,15 +428,19 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
                 if let response = response {
                     do {
                         let fileContents = response.1
-                        if fileContents.count != self.farmsDataCount {
-                            self.farmsDataCount = fileContents.count
-                            self.coreDataHelper.clearFarmCompletely()
-                            print("New data detected. Clearing old data.")
-                        } else {
-                            print("No new data detected. Skipping processing.")
-                            self.progress += 25
-                            return
-                        }
+                        
+                        self.farmsDataCount = fileContents.count
+                        self.coreDataHelper.clearFarmCompletely()
+                        
+//                        if fileContents.count != self.farmsDataCount {
+//                            self.farmsDataCount = fileContents.count
+//                            self.coreDataHelper.clearFarmCompletely()
+//                            print("New data detected. Clearing old data.")
+//                        } else {
+//                            print("No new data detected. Skipping processing.")
+//                            self.progress += 25
+//                            return
+//                        }
 
                         let farmData = try JSONDecoder().decode(BeforeFarmData.self, from: fileContents)
                         var farms = [FarmModel]()

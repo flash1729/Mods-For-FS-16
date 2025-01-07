@@ -29,6 +29,9 @@ struct EditorConfigurator: View {
     @Binding var showInternetAlert: Bool
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
     @State var workInternetState: Bool = true
+    
+    @State private var menuConfig = MenuConfiguration.default
+    
     var body: some View {
         VStack {
            RoundedRectangle(cornerRadius: bigSize ? 20 : 12)
@@ -52,19 +55,39 @@ struct EditorConfigurator: View {
            
            parstOfChoosedElement
            
-           VStack {
-               GreenButtonEditorWithBorder(blueButtonTap: {
-                   withAnimation {
-                       tappedButton.toggle()
-                   }
-               }, titleButton: $choodedTitle, infinityWidth: true)
-               .paddingFlyBullet()
-               .padding(.top, bigSize ? 30 : 15)
-               .padding(.bottom, bigSize ? 50 : 25)
-           }
+            VStack {
+                ZStack(alignment: .top) {
+                    GreenButtonEditorWithBorder(
+                        blueButtonTap: {
+                            withAnimation() {
+                                if choosedPartModel == .body {
+                                    menuConfig.showGenderSubmenu.toggle()
+                                }
+                                menuConfig.isExpanded.toggle()
+                            }
+                        },
+                        titleButton: $choodedTitle,
+                        infinityWidth: true,
+                        isExpanded: menuConfig.isExpanded
+                    )
+                    
+                    if menuConfig.isExpanded {
+                        EditorDropdownMenu(
+                            menuConfig: $menuConfig,
+                            onSelection: { item in
+                                handleMenuSelection(item)
+                            }
+                        )
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
+                }
+                .paddingFlyBullet()
+                .padding(.top, bigSize ? 30 : 15)
+                .padding(.bottom, bigSize ? 50 : 25)
+            }
            .frame(maxWidth: .infinity)
            .background(
-               ColorTurboGear.colorPicker(.green)
+            ColorTurboGear.colorPicker((.green))
                    .cornerRadius(20, corners: [.topLeft, .topRight])
                    .edgesIgnoringSafeArea(.bottom)
            )
@@ -86,7 +109,16 @@ struct EditorConfigurator: View {
                 changeIndex = viewMotel.changeIndexInElementScroll(choosedPartModel: choosedPartModel, genderType: genderType, allData: allElementData)
             }
         }
+        .onTapGesture {
+            withAnimation() {
+                menuConfig.isExpanded = false
+                menuConfig.showGenderSubmenu = false
+            }
+        }
         .onAppear(){
+            
+            menuConfig = MenuConfiguration.default
+            menuConfig.currentGender = genderType
             workInternetState = networkManager.checkInternetConnectivity_SimulatorFarm()
             workInternetState ? (showInternetAlert = false) : (showInternetAlert = true)
             viewMotel.tempManPeople = nil
@@ -114,6 +146,28 @@ struct EditorConfigurator: View {
                 scrollProxy?.scrollTo(changeIndex, anchor: .center)
             }
         })
+    }
+    
+    private func handleMenuSelection(_ item: EditorMenuItem) {
+        switch item {
+        case .gender(let type):
+            genderType = type
+            menuConfig.currentGender = type
+            choodedTitle = type == .man ? "Man" : "Woman"
+            menuConfig.showGenderSubmenu = false
+            
+        case .option(let type):
+            if type == .body {
+                menuConfig.showGenderSubmenu = true
+                return
+            }
+            choosedPartModel = type
+            choodedTitle = type.stringValue().capitalized
+        }
+        
+        withAnimation() {
+            menuConfig.isExpanded = false
+        }
     }
     
     private func startConfigurateItem() async {

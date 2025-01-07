@@ -82,8 +82,11 @@ class FarmsViewModel: ObservableObject {
     
     func addDataToImage(data: Data, updatedItemModel: FarmModel) {
         if let index = farms.firstIndex(where: { $0.id == updatedItemModel.id }) {
-            farms[index].imageData = data
-            NotificationCenter.default.post(name: NSNotification.Name("FarmModelChanged"), object: self)
+            if farms[index].imageData != data {
+                farms[index].imageData = data
+                PersistenceController.shared.updateFarmImage(id: updatedItemModel.id, imageData: data)
+                NotificationCenter.default.post(name: NSNotification.Name("FarmModelChanged"), object: self)
+            }
         }
     }
 

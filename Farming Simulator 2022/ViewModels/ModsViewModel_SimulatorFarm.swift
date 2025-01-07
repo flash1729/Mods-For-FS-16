@@ -102,8 +102,11 @@ class ModViewModel: ObservableObject {
     
     func addDataToImage(data: Data, updatedItemModel: ModPattern) {
         if let index = mods.firstIndex(where: { $0.id == updatedItemModel.id }) {
-            mods[index].imageData = data
-            NotificationCenter.default.post(name: NSNotification.Name("ModPatternChanged"), object: self)
+            if mods[index].imageData != data {
+                mods[index].imageData = data
+                PersistenceController.shared.updateModImage(id: updatedItemModel.id, imageData: data)
+                NotificationCenter.default.post(name: NSNotification.Name("ModPatternChanged"), object: self)
+            }
         }
     }
 

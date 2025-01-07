@@ -340,6 +340,53 @@ struct PersistenceController {
         saveAll_SimulatorFarm()
     }
     
+    // For Skins
+       func updateSkinImage(id: String, imageData: Data) {
+           container.performBackgroundTask { context in
+               let fetchRequest: NSFetchRequest<Skins> = Skins.fetchRequest()
+               fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+               if let skin = try? context.fetch(fetchRequest).first {
+                   skin.imageData = imageData
+                   try? context.save()
+               }
+           }
+       }
+    
+    func updateModImage(id: String, imageData: Data) {
+            container.performBackgroundTask { context in
+                let fetchRequest: NSFetchRequest<Mod> = Mod.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+                if let mod = try? context.fetch(fetchRequest).first {
+                    mod.imageData = imageData
+                    try? context.save()
+                }
+            }
+        }
+    
+    // For Maps
+        func updateMapImage(id: String, imageData: Data) {
+            container.performBackgroundTask { context in
+                let fetchRequest: NSFetchRequest<Map> = Map.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+                if let map = try? context.fetch(fetchRequest).first {
+                    map.imageData = imageData
+                    try? context.save()
+                }
+            }
+        }
+        
+        // For Farms
+        func updateFarmImage(id: String, imageData: Data) {
+            container.performBackgroundTask { context in
+                let fetchRequest: NSFetchRequest<Farm> = Farm.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+                if let farm = try? context.fetch(fetchRequest).first {
+                    farm.imageData = imageData
+                    try? context.save()
+                }
+            }
+        }
+    
     func updateSkins(with url: String, and data: Data) {
         if let imageEntity = skins.first(where: {$0.image == url.replacingOccurrences(of: DropBoxKeys_SimulatorFarm.skinsImagePartPath, with: "")}) {
             imageEntity.imageData = data
@@ -422,4 +469,42 @@ struct PersistenceController {
         }
     }
 }
+
+//extension PersistenceController {
+//    // Update body editor images
+//    func updateBodyEditorImage(id: UUID, editImage: Data?, previewImage: Data?) {
+//        container.performBackgroundTask { context in
+//            let fetchRequest: NSFetchRequest<BodyElement> = BodyElement.fetchRequest()
+//            fetchRequest.predicate = NSPredicate(format: "idElement == %@", id as CVarArg)
+//            
+//            if let element = try? context.fetch(fetchRequest).first {
+//                if let editImage = editImage, element.editroImage != editImage {
+//                    element.editroImage = editImage
+//                }
+//                if let previewImage = previewImage, element.previewImage != previewImage {
+//                    element.previewImage = previewImage
+//                }
+//                try? context.save()
+//            }
+//        }
+//    }
+//    
+//    // Update full avatar image
+//    func updateFullAvatarImage(id: UUID, fullImage: Data?, smallPreview: Data?) {
+//        container.performBackgroundTask { context in
+//            let fetchRequest: NSFetchRequest<BodyEditor> = BodyEditor.fetchRequest()
+//            fetchRequest.predicate = NSPredicate(format: "idPeople == %@", id as CVarArg)
+//            
+//            if let avatar = try? context.fetch(fetchRequest).first {
+//                if let fullImage = fullImage, avatar.fullImage != fullImage {
+//                    avatar.fullImage = fullImage
+//                }
+//                if let smallPreview = smallPreview, avatar.smallPreviewImage != smallPreview {
+//                    avatar.smallPreviewImage = smallPreview
+//                }
+//                try? context.save()
+//            }
+//        }
+//    }
+//}
 

@@ -21,32 +21,36 @@ struct LoadingLoaderCustomElement: View {
     private let unfilliedOpacity: Double = 0.3 // Updated opacity for unfilled capsules
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            // Loading text showing current progress
-            Text("Loading, \(progressTimer)%")
-                .font(.system(size: 16, weight: .medium))
-                .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
-                .frame(maxWidth: .infinity, alignment: .center)
+        ZStack{
+            Color.white.ignoresSafeArea()
             
-            // Progress capsules
-            HStack(spacing: 8) {
-                ForEach(0..<numberOfCapsules, id: \.self) { index in
-                    Capsule()
-                        .fill(ColorTurboGear.colorPicker(.darkGreen))
-                        .opacity(shouldFillCapsule(at: index) ? 1.0 : unfilliedOpacity)
-                        .frame(width: capsuleWidth, height: capsuleHeight)
+            VStack(alignment: .leading, spacing: 12) {
+                // Loading text showing current progress
+                Text("Loading, \(progressTimer)%")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                
+                // Progress capsules
+                HStack(spacing: 8) {
+                    ForEach(0..<numberOfCapsules, id: \.self) { index in
+                        Capsule()
+                            .fill(ColorTurboGear.colorPicker(.darkGreen))
+                            .opacity(shouldFillCapsule(at: index) ? 1.0 : unfilliedOpacity)
+                            .frame(width: capsuleWidth, height: capsuleHeight)
+                    }
                 }
             }
-        }
-        .padding(containerPadding)
-        .frame(maxWidth: bigSize ? 600 : 343)
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: capsuleRadius))
-        .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 4)
-        .onChange(of: progressTimer) { newValue in
-            let progress = Double(progressTimer)
-            let filledCapsules = Int((progress / 100.0) * Double(numberOfCapsules))
-            countOfRectangle = min(filledCapsules, numberOfCapsules)
+            .padding(containerPadding)
+            .frame(maxWidth: bigSize ? 600 : 343)
+            .background(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: capsuleRadius))
+            .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 4)
+            .onChange(of: progressTimer) { newValue in
+                let progress = Double(progressTimer)
+                let filledCapsules = Int((progress / 100.0) * Double(numberOfCapsules))
+                countOfRectangle = min(filledCapsules, numberOfCapsules)
+            }
         }
     }
     
