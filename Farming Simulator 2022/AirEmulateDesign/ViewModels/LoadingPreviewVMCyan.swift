@@ -283,19 +283,19 @@ import CoreData
 //    }
 //}
 
-class LoadingPreviewVMCyan: ObservableObject {
-    @Published var progress: Int = 0
-    @Published var pauseType: Bool = false
-    @Published var loaderCount: Int = 0
-    @Published var countImageSaved: Int = 0
-    @Published var isLoading: Bool = false
-    private var loadingQueue = DispatchQueue(label: "com.app.imageLoading", qos: .userInitiated)
-    
-    var allDataCount = 0
-    var counter: Int = 0
-    private var timer: Timer?
-    let imageSaveToCoreDate: ImageLoader = ImageLoader()
-    
+//class LoadingPreviewVMCyan: ObservableObject {
+//    @Published var progress: Int = 0
+//    @Published var pauseType: Bool = false
+//    @Published var loaderCount: Int = 0
+//    @Published var countImageSaved: Int = 0
+//    @Published var isLoading: Bool = false
+//    private var loadingQueue = DispatchQueue(label: "com.app.imageLoading", qos: .userInitiated)
+//    
+//    var allDataCount = 0
+//    var counter: Int = 0
+//    private var timer: Timer?
+//    let imageSaveToCoreDate: ImageLoader = ImageLoader()
+//    
 //    func addAllElementToCoreData(allData: FetchedResults<BodyElement>, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext) async {
 //        guard !allData.isEmpty else {
 //            progress = 100
@@ -330,119 +330,215 @@ class LoadingPreviewVMCyan: ObservableObject {
 //            self.progress = 100
 //        }
 //    }
+//    
+////    func addAllElementToCoreData(allData: FetchedResults<BodyElement>, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext) async {
+////            guard !allData.isEmpty else {
+////                await MainActor.run {
+////                    progress = 100
+////                }
+////                return
+////            }
+////            
+////            // Dispatch UI update to main thread
+////            await MainActor.run {
+////                isLoading = true
+////            }
+////            
+////            allDataCount = allData.count
+////            let batchSize = 5
+////            
+////            for batch in stride(from: 0, to: allData.count, by: batchSize) {
+////                let endIndex = min(batch + batchSize, allData.count)
+////                let currentBatch = Array(allData[batch..<endIndex])
+////                
+////                await withTaskGroup(of: Void.self) { group in
+////                    for item in currentBatch {
+////                        group.addTask {
+////                            await self.processElement(item, dropBoxManager: dropBoxManager, viewContext: viewContext)
+////                        }
+////                    }
+////                }
+////                
+////                // Update progress on main thread
+////                await MainActor.run {
+////                    self.counter += currentBatch.count
+////                    self.updateProgress()
+////                }
+////            }
+////            
+////            // Final updates on main thread
+////            await MainActor.run {
+////                self.isLoading = false
+////                self.progress = 100
+////        }
+////    }
+//    
+//    private func processElement(_ element: BodyElement, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext) async {
+//        // Skip if already processed
+//        guard element.editroImage == nil || element.previewImage == nil else {
+//            DispatchQueue.main.async {
+//                self.loaderCount += 1
+//                self.updateProgress()
+//            }
+//            return
+//        }
+//        
+//        // Download images
+//        async let mainImage = downloadImage(url: element.editImageString ?? "", dropBoxManager: dropBoxManager)
+//        async let previewImage = downloadImage(url: element.previewImageString ?? "", dropBoxManager: dropBoxManager)
+//        
+//        guard let mainData = await mainImage,
+//              let previewData = await previewImage else {
+//            return
+//        }
+//        
+//        // Save to Core Data
+//        await MainActor.run {
+//            element.editroImage = mainData
+//            element.previewImage = previewData
+//            do {
+//                try viewContext.save()
+//                self.loaderCount += 1
+//                self.updateProgress()
+//            } catch {
+//                print("Error saving to Core Data: \(error)")
+//            }
+//        }
+//    }
+//    
+//    private func downloadImage(url: String, dropBoxManager: DropBoxManager_SimulatorFarm) async -> Data? {
+//        let fullUrl = "\(DropBoxKeys_SimulatorFarm.bodyEditorImagePartPath)\(url)"
+//        return await withCheckedContinuation { continuation in
+//            dropBoxManager.getData(from: fullUrl, isImage: true) { data in
+//                continuation.resume(returning: data)
+//            }
+//        }
+//    }
+//    
+//    func startLoadingPreviewKitchenToolUsage() {
+//            // Cancel any existing timer
+//            timer?.invalidate()
+//            
+//            timer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true) { [weak self] time in
+//                guard let self = self else {
+//                    time.invalidate()
+//                    return
+//                }
+//                
+//                if !self.pauseType {
+//                    if self.progress < 100 {
+//                        self.progress += 1
+//                    } else {
+//                        time.invalidate()
+//                    }
+//                }
+//            }
+//        }
+//        
+//        deinit {
+//            timer?.invalidate()
+//        }
+//    
+//    private func updateProgress() {
+//        let calculatedProgress = Int((Double(self.loaderCount) / Double(self.allDataCount)) * 100)
+//        if calculatedProgress > self.progress {
+//            self.progress = min(calculatedProgress, 99) // Keep at 99 until fully complete
+//        }
+//    }
+//}
+
+class LoadingPreviewVMCyan: ObservableObject {
+    @Published var progress: Int = 0
+    @Published var pauseType: Bool = false
+    private var timer: Timer?
+    let imageSaveToCoreDate: ImageLoader = ImageLoader()
+    @Published var loaderCount: Int = 0
+    @Published var countImageSaved: Int = 0
+    var allDataCount = 0
+    var counter: Int = 0
+}
+extension LoadingPreviewVMCyan {
+    func startLoadingPreviewKitchenToolUsage() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true) { [weak self] time in
+            guard let self = self else { return }
+            if self.pauseType == false {
+                if self.progress < 100 {
+                    self.progress += 1
+                } else {
+                    time.invalidate()
+                    self.progress = 0
+                }
+            }
+        }
+    }
     
     func addAllElementToCoreData(allData: FetchedResults<BodyElement>, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext) async {
-            guard !allData.isEmpty else {
-                await MainActor.run {
-                    progress = 100
+        if allData.isEmpty { return }
+        allDataCount = allData.count
+        await withTaskGroup(of: Void.self) { taskGroup in
+            var activeTasks = 0
+            let maxConcurrentTasks = 7
+
+            for item in allData {
+                counter += 1
+                if activeTasks >= maxConcurrentTasks {
+                    await taskGroup.next()
+                    activeTasks -= 1
+                    countDownloadedImages()
                 }
-                return
+                taskGroup.addTask {
+                    await self.downloadAndSaveImage(url: item.editImageString ?? "", urlPreview: item.previewImageString ?? "", dropBoxManager: dropBoxManager, viewContext: viewContext, element: item)
+                }
+                activeTasks += 1
             }
             
-            // Dispatch UI update to main thread
-            await MainActor.run {
-                isLoading = true
-            }
-            
-            allDataCount = allData.count
-            let batchSize = 5
-            
-            for batch in stride(from: 0, to: allData.count, by: batchSize) {
-                let endIndex = min(batch + batchSize, allData.count)
-                let currentBatch = Array(allData[batch..<endIndex])
-                
-                await withTaskGroup(of: Void.self) { group in
-                    for item in currentBatch {
-                        group.addTask {
-                            await self.processElement(item, dropBoxManager: dropBoxManager, viewContext: viewContext)
-                        }
-                    }
-                }
-                
-                // Update progress on main thread
-                await MainActor.run {
-                    self.counter += currentBatch.count
-                    self.updateProgress()
-                }
-            }
-            
-            // Final updates on main thread
-            await MainActor.run {
-                self.isLoading = false
-                self.progress = 100
+            await taskGroup.waitForAll()
         }
+        countDownloadedImages()
+        self.imageSaveToCoreDate.loadedCount = 0
     }
-    
-    private func processElement(_ element: BodyElement, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext) async {
-        // Skip if already processed
-        guard element.editroImage == nil || element.previewImage == nil else {
-            DispatchQueue.main.async {
-                self.loaderCount += 1
-                self.updateProgress()
-            }
+
+    func downloadAndSaveImage(url: String, urlPreview: String, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext, element: BodyElement) async {
+        if element.editroImage != nil && element.previewImage != nil {
+            self.imageSaveToCoreDate.loadedCount += 1
+            
             return
         }
-        
-        // Download images
-        async let mainImage = downloadImage(url: element.editImageString ?? "", dropBoxManager: dropBoxManager)
-        async let previewImage = downloadImage(url: element.previewImageString ?? "", dropBoxManager: dropBoxManager)
-        
-        guard let mainData = await mainImage,
-              let previewData = await previewImage else {
-            return
-        }
-        
-        // Save to Core Data
-        await MainActor.run {
-            element.editroImage = mainData
-            element.previewImage = previewData
-            do {
-                try viewContext.save()
-                self.loaderCount += 1
-                self.updateProgress()
-            } catch {
-                print("Error saving to Core Data: \(error)")
-            }
-        }
+        guard let data = await dropBoxDownloadImage(preview: false, url: url, dropBoxManager: dropBoxManager) else { return }
+        guard let dataPreview = await dropBoxDownloadImage(preview: true, url: urlPreview, dropBoxManager: dropBoxManager) else { return }
+        await saveImageToCoreData(data: data, preview: dataPreview, viewContext: viewContext, element: element)
     }
-    
-    private func downloadImage(url: String, dropBoxManager: DropBoxManager_SimulatorFarm) async -> Data? {
+
+    func dropBoxDownloadImage(preview: Bool, url: String, dropBoxManager: DropBoxManager_SimulatorFarm) async -> Data? {
         let fullUrl = "\(DropBoxKeys_SimulatorFarm.bodyEditorImagePartPath)\(url)"
+        
         return await withCheckedContinuation { continuation in
             dropBoxManager.getData(from: fullUrl, isImage: true) { data in
                 continuation.resume(returning: data)
             }
         }
     }
+
+    func saveImageToCoreData(data: Data, preview: Data, viewContext: NSManagedObjectContext, element: BodyElement) async {
+        imageSaveToCoreDate.loadImage(data, previewData: preview, context: viewContext, preview: true, element: element)
+        countDownloadedImages()
+    }
     
-    func startLoadingPreviewKitchenToolUsage() {
-            // Cancel any existing timer
-            timer?.invalidate()
-            
-            timer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true) { [weak self] time in
-                guard let self = self else {
-                    time.invalidate()
-                    return
+    func countDownloadedImages() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.loaderCount = self.imageSaveToCoreDate.loadedCount
+            let tempCalculate = Int(self.loaderCount * 100 / self.allDataCount)
+            if self.counter >= self.allDataCount {
+                self.progress = 100
+                self.counter = 0
+            } else if self.allDataCount > 0 && self.loaderCount < self.allDataCount {
+                if tempCalculate > self.progress && tempCalculate != self.progress {
+                    self.progress = tempCalculate
                 }
-                
-                if !self.pauseType {
-                    if self.progress < 100 {
-                        self.progress += 1
-                    } else {
-                        time.invalidate()
-                    }
-                }
+            } else {
+                self.progress = 100
             }
-        }
-        
-        deinit {
-            timer?.invalidate()
-        }
-    
-    private func updateProgress() {
-        let calculatedProgress = Int((Double(self.loaderCount) / Double(self.allDataCount)) * 100)
-        if calculatedProgress > self.progress {
-            self.progress = min(calculatedProgress, 99) // Keep at 99 until fully complete
         }
     }
 }
+
