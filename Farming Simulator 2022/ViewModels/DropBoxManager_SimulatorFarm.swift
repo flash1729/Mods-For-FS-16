@@ -164,7 +164,70 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
 //            })
 //    }
     
+    
+    //this one is perfect
+//    private func fetchBodyEditor_SimulatorFarm() {
+//        client?.files.download(path: DropBoxKeys_SimulatorFarm.bodyEditorFilePath)
+//            .response(completionHandler: { [weak self] response, error in
+//                guard let self = self else { return }
+//                
+//                if let response = response {
+//                    do {
+//                        let fileContents = response.1
+//                        
+//                        self.bodyEditorDataCount = fileContents.count
+//                        self.coreDataHelper.clearBodyPartCompletely()
+//                        
+//                        
+////                        if fileContents.count != self.bodyEditorDataCount {
+////                            self.bodyEditorDataCount = fileContents.count
+////                            self.coreDataHelper.clearBodyPartCompletely()
+////                            print("New data detected. Clearing old data.")
+////                        } else {
+////                            print("No new data detected. Skipping processing.")
+////                            self.progress += 25
+////                            return
+////                        }
+//                        
+//                        let itemInfo = try JSONDecoder().decode(BeforoBodyEditorModel.self, from: fileContents)
+//                        
+//                        var topElement = [BodyEditorPattern]()
+//                        topElement.append(contentsOf: itemInfo.allObjects.top.values)
+//                        var pantsElement = [BodyEditorPattern]()
+//                        pantsElement.append(contentsOf: itemInfo.allObjects.pants.values)
+//                        var accessoriesElement = [BodyEditorPattern]()
+//                        accessoriesElement.append(contentsOf: itemInfo.allObjects.accessories.values)
+//                        var bodyElement = [BodyEditorPattern]()
+//                        bodyElement.append(contentsOf: itemInfo.allObjects.body.values)
+//                        var shoesElement = [BodyEditorPattern]()
+//                        shoesElement.append(contentsOf: itemInfo.allObjects.shoes.values)
+//                        var hairElement = [BodyEditorPattern]()
+//                        hairElement.append(contentsOf: itemInfo.allObjects.hair.values)
+//                        
+//                        coreDataHelper.addBodyElements(topElement, type: .top)
+//                        coreDataHelper.addBodyElements(accessoriesElement, type: .accessories)
+//                        coreDataHelper.addBodyElements(bodyElement, type: .body)
+//                        coreDataHelper.addBodyElements(hairElement, type: .hair)
+//                        coreDataHelper.addBodyElements(pantsElement, type: .trousers)
+//                        coreDataHelper.addBodyElements(shoesElement, type: .shoes)
+//                        
+//                        self.progress += 25
+//                    } catch {
+//                        print("Error decoding or processing JSON: \(error)")
+//                    }
+//                } else if let error = error {
+//                    print("Error downloading file from Dropbox: \(error)")
+//                }
+//            })
+//            .progress({ progress in
+//                print("Downloading: ", progress)
+//            })
+//    }
+    
     private func fetchBodyEditor_SimulatorFarm() {
+        // Check existing data count from last time
+        let savedCount = UserDefaults.standard.integer(forKey: "bodyEditorDataCount")
+        
         client?.files.download(path: DropBoxKeys_SimulatorFarm.bodyEditorFilePath)
             .response(completionHandler: { [weak self] response, error in
                 guard let self = self else { return }
@@ -173,19 +236,17 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
                     do {
                         let fileContents = response.1
                         
-                        self.bodyEditorDataCount = fileContents.count
-                        self.coreDataHelper.clearBodyPartCompletely()
-                        
-                        
-//                        if fileContents.count != self.bodyEditorDataCount {
-//                            self.bodyEditorDataCount = fileContents.count
-//                            self.coreDataHelper.clearBodyPartCompletely()
-//                            print("New data detected. Clearing old data.")
-//                        } else {
-//                            print("No new data detected. Skipping processing.")
-//                            self.progress += 25
-//                            return
-//                        }
+                        // Compare new file size with saved count
+                        if fileContents.count != savedCount {
+                            self.bodyEditorDataCount = fileContents.count
+                            UserDefaults.standard.set(self.bodyEditorDataCount, forKey: "bodyEditorDataCount")
+                            self.coreDataHelper.clearBodyPartCompletely()
+                            print("New data detected. Clearing old data.")
+                        } else {
+                            print("No new data detected. Skipping processing.")
+                            self.progress += 25
+                            return
+                        }
                         
                         let itemInfo = try JSONDecoder().decode(BeforoBodyEditorModel.self, from: fileContents)
                         
@@ -221,7 +282,6 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
                 print("Downloading: ", progress)
             })
     }
-    
     
     private func fetchSkins_SimulatorFarm() {
         print("🔄 Starting skins fetch...")
