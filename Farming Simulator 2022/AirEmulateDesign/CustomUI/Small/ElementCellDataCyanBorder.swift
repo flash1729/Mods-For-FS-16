@@ -34,7 +34,7 @@ struct ElementCellDataCyanBorder: View {
                                 .scaledToFill()
                         } else {
                             ZStack {
-                                ColorTurboGear.colorPicker(.darkGray)
+                                Color.clear
                                 InfinityLoaderGreen()
                                     .frame(height: 55)
                             }
