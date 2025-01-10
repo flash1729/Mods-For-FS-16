@@ -87,32 +87,11 @@ struct RandomPreviewAvatar: View {
     
     private var buttonsSection: some View {
         VStack(spacing: bigSize ? 34 : 10) {
-            HStack {
-                customButtonRandomAvatar(title: "Edit", tapped: {
-                    choosedData = BodyEditor(context: viewContext)
-                    if let choosedData{
-                        choosedData.idPeople = UUID()
-                        viewMotel.updateWithoutSaveItemTCoreData(updateItem: choosedData, item: viewMotel.randomItem, genderType: genderType, randomType: true)
-                        showEditConfigurator.toggle()
-                    }
-                })
                 customButtonRandomAvatar(title: "History", border: true, tapped: {
                     DispatchQueue.main.async {
                         showHistory.toggle()
                     }
                 })
-            }
-            customButtonRandomAvatar(title: "Download", tapped: {
-                viewMotel.saveItemToCoreData(item: viewMotel.randomItem, viewContext: viewContext, genderType: genderType, randomType: true, saveComplete: {state in
-                    if state {
-                        saveStateIphone = .saveSuccesfulIconElement
-                        showSaveState = true
-                    } else {
-                        saveStateIphone = .saveFailedIconElement
-                        showSaveState = true
-                    }
-                })
-            })
         }
         .padding(.top, bigSize ? 20 : 0)
     }
@@ -124,7 +103,7 @@ struct RandomPreviewAvatar: View {
             Text(title)
                 .frame(height: bigSize ? 100 : 56)
                 .frame(maxWidth: .infinity)
-                .background( border ? ColorTurboGear.colorPicker(.grey) : ColorTurboGear.colorPicker(.green))
+                .background(ColorTurboGear.colorPicker(.green))
                 .overlay(content: {
                     ZStack {
                         if border {

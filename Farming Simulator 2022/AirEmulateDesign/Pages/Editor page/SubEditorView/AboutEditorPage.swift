@@ -17,12 +17,16 @@ struct AboutEditorPage: View {
     @State var showSaveState: Bool = false
     @State var deleteAlert: Bool = false
     
+    @State private var isEditing: Bool = false
+    
     @Binding var choosedData: BodyEditor?
     
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
     @State var workInternetState: Bool = true
     @State var timer: Timer?
     @State var showSaveAlert: Bool = false
+    
+    @State private var showEditor: Bool = false
     var body: some View {
         ZStack{
             bodySection
@@ -71,11 +75,20 @@ struct AboutEditorPage: View {
     private var bodySection: some View {
         ZStack {
             VStack(spacing: bigSize ? 20 : 10) {
-                NavPanelCyanEditors(titleName: "Editor", rightbuttonIconType: .constant(.editItem), leftbuttonIconType: .backChev, rigthButtonTapped: {
-                    viewMotel.updateData = true
-                    editTapped()
-                    dismiss()
-                })
+//                NavPanelCyanEditors(titleName: "Editor", rightbuttonIconType: .constant(.editItem), leftbuttonIconType: .backChev, rigthButtonTapped: {
+//                    viewMotel.updateData = true
+//                    editTapped()
+//                    dismiss()
+//                })
+                
+                EditorNavBar(
+                    isEditing: true,  // Always true in AboutEditorPage since we're in editing mode
+                    viewMotel: viewMotel,
+                    showSaveState: $showSaveState,  // Assuming you have this state variable
+                    saveStateType: $saveStateIphone   // Assuming you have this state variable
+                )
+                .padding(.bottom, bigSize ? 10 : 5)
+                
                 downloadSection
                     .paddingFlyBullet()
                 RoundedRectangle(cornerRadius: bigSize ? 20 : 12)
@@ -108,16 +121,17 @@ struct AboutEditorPage: View {
                     .paddingFlyBullet()
                 Spacer()
                 VStack {
-                   GreenButtonRounded(
-                       blueButtonTap: {
-                           showSaveAlert.toggle()
-                       },
-                       titleButton: "Save",
-                       infinityWidth: true
-                   )
-                   .paddingFlyBullet()
-                   .padding(.top, bigSize ? 30 : 15)
-                   .padding(.bottom, bigSize ? 50 : 25)
+                    GreenButtonEditorWithBorder(
+                                            blueButtonTap: {
+                                                showEditor = true
+                                                isEditing = true
+                                            },
+                                            titleButton: .constant("Create new +"),
+                                            infinityWidth: true
+                                        )
+                                        .paddingFlyBullet()
+                                        .padding(.top, bigSize ? 30 : 15)
+                                        .padding(.bottom, bigSize ? 50 : 25)
                 }
                 .frame(maxWidth: .infinity)
                 .background(
@@ -144,7 +158,7 @@ struct AboutEditorPage: View {
         }
     }
     
-    private var downloadSection: some View {
+    var downloadSection: some View {
         VStack {
             if showSaveState {
                 SaveStateCustomView(saveState: $saveStateIphone)

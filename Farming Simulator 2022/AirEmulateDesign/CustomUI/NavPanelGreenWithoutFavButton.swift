@@ -23,6 +23,7 @@ struct NavPanelGreenWithoutFavButton: View {
                 
                 Text(titleName)
                     .font(FontTurboGear.gilroyStyle(size: bigSize ? 34 : headerFontSize, type: .bold))
+                    .foregroundStyle(ColorTurboGear.colorPicker(.darkGreen))
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
                 

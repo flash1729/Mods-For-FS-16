@@ -189,75 +189,111 @@ struct CreateSelfAvatarAndEditPageViolent: View {
         }
     }
     
+//    private var collectionItmesView: some View {
+//        ZStack{
+//            
+//            VStack{
+//                if allData.isEmpty {
+//                    emptyViewText
+//                        .paddingFlyBullet()
+//                } else {
+//                    ScrollView(.vertical) {
+//                        LazyVGrid(columns: [GridItem(.flexible(), spacing: bigSize ? 30 : 10), GridItem(.flexible(), spacing: bigSize ? 30 : 10)], spacing: bigSize ? 30 : 10) {
+//                            ForEach(allData, id: \.idPeople) { item in
+//                                cellToCollection(image: item.smallPreviewImage, completionSave: {
+//                                    choosedData = item
+//                                    showSaveStateToGallery.toggle()
+//                                }, completionAbout: {
+//                                    choosedData = item
+//                                    openAboutItem.toggle()
+//                                })
+//                            }
+//                        }
+//                        .padding(.top, bigSize ? 30 : 10)
+//                    }
+//                    .paddingFlyBullet()
+//                }
+//                Spacer()
+//                VStack {
+//                   GreenButtonWithBorders(
+//                       title: "Create new +",
+//                       action: {
+//                           @FetchRequest(sortDescriptors: []) var allElementData: FetchedResults<BodyElement>
+//                           
+//                           // Set default male body
+//                           if let defaultBody = allElementData.first(where: {
+//                               $0.typeOfPart == EditorTypePartOfBody.body.rawValue &&
+//                               $0.genderType == GenderTypeModel.man.rawValue
+//                           }) {
+//                               let bodyItem = SandvichItemType(
+//                                   image: UIImage(data: defaultBody.editroImage ?? Data()),
+//                                   imageName: defaultBody.previewImageString,
+//                                   zindex: 0
+//                               )
+//                               viewMotel.sandvichPeople.body = bodyItem
+//                                   
+//                               // Generate initial preview
+//                               let _ = viewMotel.mergeImages(from: viewMotel.sandvichPeople.sendAllImages())
+//                           }
+//                           
+//                           // Reset editor state
+//                           viewMotel.tempManPeople = nil
+//                           viewMotel.tempWomanPeople = nil
+//                           viewMotel.updateData = false
+//                           viewMotel.sandvichPeople.allNil()
+//                           
+//                           // Open editor
+//                           openEditor = true
+//                           choosedPart = .body
+//                           genderType = .man
+//                       }
+//                   )
+//                   .paddingFlyBullet()
+//                   .padding(.top, bigSize ? 30 : 15)
+//                   .padding(.bottom, bigSize ? 50 : 25)
+//                }
+//                .frame(maxWidth: .infinity)
+//                .background(
+//                   ColorTurboGear.colorPicker(.green)
+//                       .cornerRadius(20, corners: [.topLeft, .topRight])
+//                       .edgesIgnoringSafeArea(.bottom)
+//                )
+//            }
+//        }
+//    }
+    
     private var collectionItmesView: some View {
         ZStack{
             
-            VStack{
-                if allData.isEmpty {
-                    emptyViewText
-                        .paddingFlyBullet()
-                } else {
-                    ScrollView(.vertical) {
-                        LazyVGrid(columns: [GridItem(.flexible(), spacing: bigSize ? 30 : 10), GridItem(.flexible(), spacing: bigSize ? 30 : 10)], spacing: bigSize ? 30 : 10) {
-                            ForEach(allData, id: \.idPeople) { item in
-                                cellToCollection(image: item.smallPreviewImage, completionSave: {
-                                    choosedData = item
-                                    showSaveStateToGallery.toggle()
-                                }, completionAbout: {
-                                    choosedData = item
-                                    openAboutItem.toggle()
-                                })
-                            }
-                        }
-                        .padding(.top, bigSize ? 30 : 10)
-                    }
+            if allData.isEmpty {
+                emptyViewText
                     .paddingFlyBullet()
+            } else {
+                ScrollView(.vertical) {
+                    LazyVGrid(columns: [GridItem(.flexible(), spacing: bigSize ? 30 : 10), GridItem(.flexible(), spacing: bigSize ? 30 : 10)], spacing: bigSize ? 30 : 10) {
+                        ForEach(allData, id: \.idPeople) { item in
+                            cellToCollection(image: item.smallPreviewImage, completionSave: {
+                                choosedData = item
+                                showSaveStateToGallery.toggle()
+//                                viewMotel.requestPhotoLibraryPermission { granted in
+//                                    if granted {
+//                                        choosedData = item
+//                                        if let imageData = choosedData?.fullImage, let result = UIImage(data: imageData) {
+//                                            UIImageWriteToSavedPhotosAlbum(result, self, nil, nil)
+//                                            showSaveState.toggle()
+//                                            choosedData = nil
+//                                        }
+//                                    }
+//                                }
+                            }, completionAbout: {
+                                choosedData = item
+                                openAboutItem.toggle()
+                            })
+                        }
+                    }
+                    .padding(.top, bigSize ? 30 : 10)
                 }
-                Spacer()
-                VStack {
-                   GreenButtonWithBorders(
-                       title: "Create new +",
-                       action: {
-                           @FetchRequest(sortDescriptors: []) var allElementData: FetchedResults<BodyElement>
-                           
-                           // Set default male body
-                           if let defaultBody = allElementData.first(where: {
-                               $0.typeOfPart == EditorTypePartOfBody.body.rawValue &&
-                               $0.genderType == GenderTypeModel.man.rawValue
-                           }) {
-                               let bodyItem = SandvichItemType(
-                                   image: UIImage(data: defaultBody.editroImage ?? Data()),
-                                   imageName: defaultBody.previewImageString,
-                                   zindex: 0
-                               )
-                               viewMotel.sandvichPeople.body = bodyItem
-                                   
-                               // Generate initial preview
-                               let _ = viewMotel.mergeImages(from: viewMotel.sandvichPeople.sendAllImages())
-                           }
-                           
-                           // Reset editor state
-                           viewMotel.tempManPeople = nil
-                           viewMotel.tempWomanPeople = nil
-                           viewMotel.updateData = false
-                           viewMotel.sandvichPeople.allNil()
-                           
-                           // Open editor
-                           openEditor = true
-                           choosedPart = .body
-                           genderType = .man
-                       }
-                   )
-                   .paddingFlyBullet()
-                   .padding(.top, bigSize ? 30 : 15)
-                   .padding(.bottom, bigSize ? 50 : 25)
-                }
-                .frame(maxWidth: .infinity)
-                .background(
-                   ColorTurboGear.colorPicker(.green)
-                       .cornerRadius(20, corners: [.topLeft, .topRight])
-                       .edgesIgnoringSafeArea(.bottom)
-                )
+                .paddingFlyBullet()
             }
         }
     }

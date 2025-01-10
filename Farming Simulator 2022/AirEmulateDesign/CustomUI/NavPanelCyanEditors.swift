@@ -45,16 +45,6 @@ struct NavPanelCyanEditors: View {
         .padding(.vertical, 20)
         .frame(maxWidth: .infinity)
         .frame(height: bigSize ? 137 : 128)
-        .background(
-            ZStack {
-                ColorTurboGear.colorPicker(.green)
-                Color.clear
-                    .contentShape(RoundedRectangle(cornerRadius: 12))
-                    .onTapGesture {
-                        UIApplication.shared.endEditing()
-                    }
-            }
-        )
         .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
         .onChange(of: rightbuttonIconType) { newValue in
             updateId = UUID()

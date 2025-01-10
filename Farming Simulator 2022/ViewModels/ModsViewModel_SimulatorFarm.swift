@@ -87,7 +87,7 @@ class ModViewModel: ObservableObject {
             mods = fetchedMods.map { modEntity in
                 return ModPattern(from: modEntity)
             }
-//            pressingfilterMods() // Add this line to ensure filtered data is updated
+            pressingfilterMods() // Add this line to ensure filtered data is updated
         } catch {
             print("Error fetching mods: \(error)")
         }

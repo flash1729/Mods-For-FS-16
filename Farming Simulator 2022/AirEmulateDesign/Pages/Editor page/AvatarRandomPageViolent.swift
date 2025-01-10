@@ -54,26 +54,63 @@ struct AvatarRandomPageViolent: View {
     
     private var bodySection: some View {
         ZStack {
+
             VStack(spacing: bigSize ? 31 : 10) {
-                NavPanelCyanEditors(titleName: "Avatar gen", rightbuttonIconType: $typeRightIconTypeNav, rigthButtonTapped: {
-                    if typeRightIconTypeNav == .createAvatarRandom {
-                        randomAvater()
-                        showPreview = true
-                    }
-                    if typeRightIconTypeNav == .saveNewAvavtar {
-                        showSaveAlert.toggle()
-                    }
-                })
+                // Replace NavPanelCyanEditors with NavPanelGreenWithoutFavButton
+                AvatarGenNavBar(
+                    isGenerating: showPreview,
+                    viewMotel: viewMotel,
+                    genderType: genderType,
+                    showEditConfigurator: $showEditConfigurator
+                )
                 .padding(.bottom, bigSize ? 10 : 5)
+                
+                // Main content area
                 if showPreview {
-                    RandomPreviewAvatar(viewMotel: viewMotel, choosedPart: $choosedPart, showPartBodyList: $showPartBodyList, showEditConfigurator: $showEditConfigurator, genderType: $genderType, choosedData: $choosedData, smallImagePeopleToSave: $viewMotel.smallImagePeopleToSave, showInternetAlert: $showInternetAlert)
+                    RandomPreviewAvatar(
+                        viewMotel: viewMotel,
+                        choosedPart: $choosedPart,
+                        showPartBodyList: $showPartBodyList,
+                        showEditConfigurator: $showEditConfigurator,
+                        genderType: $genderType,
+                        choosedData: $choosedData,
+                        smallImagePeopleToSave: $viewMotel.smallImagePeopleToSave,
+                        showInternetAlert: $showInternetAlert
+                    )
                 } else {
                     previewTextSection
                         .paddingFlyBullet()
                 }
+                
+//                Spacer() // Push content to top and button to bottom
+                
+                if !showEditConfigurator {
+                    VStack {
+                        GreenButtonWithBorders(
+                            title: "Generate new +",
+                            action: {
+                                randomAvater()
+                                
+                                if !showPreview {
+                                    showPreview = true
+                                } else if typeRightIconTypeNav == .saveNewAvavtar {
+                                    showSaveAlert.toggle()
+                                }
+                            }
+                        )
+                        .paddingFlyBullet()
+                        .padding(.top, bigSize ? 30 : 15)
+                        .padding(.bottom, bigSize ? 50 : 25)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        ColorTurboGear.colorPicker(.green)
+                            .cornerRadius(20, corners: [.topLeft, .topRight])
+                            .edgesIgnoringSafeArea(.bottom)
+                    )
+                }
             }
             .ignoresSafeArea(.all, edges: .top)
-            .frame(maxHeight: .infinity, alignment: .top)
             
             if showPartBodyList {
                 ZStack {
@@ -135,19 +172,13 @@ struct AvatarRandomPageViolent: View {
     
     private var previewTextSection: some View {
         VStack {
-            Image(IconTurboGear.generateNewAvatar)
-                .resizable()
-                .scaledToFit()
-                .frame(height: bigSize ? 172 : 70)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            
-            Text("Generate your new avatar")
+            Text("Press the button below to create a new avatar")
                 .multilineTextAlignment(.center)
-                .font(FontTurboGear.gilroyStyle(size: bigSize ? 28 : 22, type: .semibold))
-                .foregroundColor(.white)
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 28 : 14, type: .regular))
+                .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
         }
         .padding(.top, bigSize ? 199 : 44)
-        .frame(maxHeight: .infinity, alignment: .top)
+        .frame(maxHeight: .infinity, alignment: .center)
     }
     
     private func randomAvater() {
