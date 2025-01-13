@@ -171,7 +171,39 @@ struct PersistenceController {
         }
     }
     
+//    mutating func appendMods(from modObject: ModPattern) {
+//        let modsEntity = Mod(context: container.viewContext)
+//        modsEntity.id = modObject.id
+//        modsEntity.title = modObject.title
+//        modsEntity.modDescriptions = modObject.description
+//        modsEntity.image = modObject.image
+//        modsEntity.file = modObject.file
+//        modsEntity.isFavorited = modObject.isFavorited ?? false
+//        modsEntity.top = modObject.top ?? false
+//        modsEntity.new = modObject.new ?? true
+//        
+//        if let imageData = modObject.imageData {
+//            modsEntity.imageData = imageData
+//        }
+//
+//        do {
+//            try container.viewContext.save()
+//            mods.append(modsEntity)
+//        } catch {
+//            //ToDO: error
+//        }
+//    }
+    
     mutating func appendMods(from modObject: ModPattern) {
+        guard !modObject.id.isEmpty,
+              !modObject.title.isEmpty,
+              !modObject.description.isEmpty,
+              !modObject.image.isEmpty,
+              !modObject.file.isEmpty else {
+            print("Error: Required mod fields are nil or empty")
+            return
+        }
+        
         let modsEntity = Mod(context: container.viewContext)
         modsEntity.id = modObject.id
         modsEntity.title = modObject.title
@@ -190,10 +222,34 @@ struct PersistenceController {
             try container.viewContext.save()
             mods.append(modsEntity)
         } catch {
-            //ToDO: error
+            print("Error saving mod: \(error)")
+            container.viewContext.rollback()
         }
     }
 
+//    mutating func appendMaps(from mapObject: MapPattern) {
+//        let mapsEntity = Map(context: container.viewContext)
+//        mapsEntity.id = mapObject.id
+//        mapsEntity.title = mapObject.title
+//        mapsEntity.mapDescriptions = mapObject.description
+//        mapsEntity.image = mapObject.image
+//        mapsEntity.file = mapObject.file
+//        mapsEntity.isFavorited = mapObject.isFavorited ?? false
+//        mapsEntity.top = mapObject.top ?? false
+//        mapsEntity.new = mapObject.new ?? true
+//        
+//        if let imageData = mapObject.imageData {
+//            mapsEntity.imageData = imageData
+//        }
+//
+//        do {
+//            try container.viewContext.save()
+//            maps.append(mapsEntity)
+//        } catch {
+//           
+//        }
+//    }
+    
     mutating func appendMaps(from mapObject: MapPattern) {
         let mapsEntity = Map(context: container.viewContext)
         mapsEntity.id = mapObject.id
@@ -209,11 +265,12 @@ struct PersistenceController {
             mapsEntity.imageData = imageData
         }
 
+        maps.append(mapsEntity)
+        
         do {
             try container.viewContext.save()
-            maps.append(mapsEntity)
         } catch {
-           
+            print("Error saving map: \(error)")
         }
     }
     
@@ -327,12 +384,20 @@ struct PersistenceController {
         saveAll_SimulatorFarm()
     }
 
+//    mutating func addMaps_SimulatorFarm(_ maps: [MapPattern]) {
+//        for map in maps {
+//            appendMaps(from: map)
+//        }
+//        saveAll_SimulatorFarm()
+//    }
+    
     mutating func addMaps_SimulatorFarm(_ maps: [MapPattern]) {
-        for map in maps {
+        let validMaps = maps.filter { !$0.id.isEmpty }
+        for map in validMaps {
             appendMaps(from: map)
         }
-        saveAll_SimulatorFarm()
     }
+    
     mutating func addFarms_SimulatorFarm(_ farms: [FarmModel]) {
         for farm in farms {
             appendFarms(from: farm)
@@ -340,52 +405,52 @@ struct PersistenceController {
         saveAll_SimulatorFarm()
     }
     
-    // For Skins
-       func updateSkinImage(id: String, imageData: Data) {
-           container.performBackgroundTask { context in
-               let fetchRequest: NSFetchRequest<Skins> = Skins.fetchRequest()
-               fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-               if let skin = try? context.fetch(fetchRequest).first {
-                   skin.imageData = imageData
-                   try? context.save()
-               }
-           }
-       }
-    
-    func updateModImage(id: String, imageData: Data) {
-            container.performBackgroundTask { context in
-                let fetchRequest: NSFetchRequest<Mod> = Mod.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-                if let mod = try? context.fetch(fetchRequest).first {
-                    mod.imageData = imageData
-                    try? context.save()
-                }
-            }
-        }
-    
-    // For Maps
-        func updateMapImage(id: String, imageData: Data) {
-            container.performBackgroundTask { context in
-                let fetchRequest: NSFetchRequest<Map> = Map.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-                if let map = try? context.fetch(fetchRequest).first {
-                    map.imageData = imageData
-                    try? context.save()
-                }
-            }
-        }
-        
-        // For Farms
-        func updateFarmImage(id: String, imageData: Data) {
-            container.performBackgroundTask { context in
-                let fetchRequest: NSFetchRequest<Farm> = Farm.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-                if let farm = try? context.fetch(fetchRequest).first {
-                    farm.imageData = imageData
-                    try? context.save()
-                }
-            }
-        }
+//    // For Skins
+//       func updateSkinImage(id: String, imageData: Data) {
+//           container.performBackgroundTask { context in
+//               let fetchRequest: NSFetchRequest<Skins> = Skins.fetchRequest()
+//               fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+//               if let skin = try? context.fetch(fetchRequest).first {
+//                   skin.imageData = imageData
+//                   try? context.save()
+//               }
+//           }
+//       }
+//    
+//    func updateModImage(id: String, imageData: Data) {
+//            container.performBackgroundTask { context in
+//                let fetchRequest: NSFetchRequest<Mod> = Mod.fetchRequest()
+//                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+//                if let mod = try? context.fetch(fetchRequest).first {
+//                    mod.imageData = imageData
+//                    try? context.save()
+//                }
+//            }
+//        }
+//    
+//    // For Maps
+//        func updateMapImage(id: String, imageData: Data) {
+//            container.performBackgroundTask { context in
+//                let fetchRequest: NSFetchRequest<Map> = Map.fetchRequest()
+//                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+//                if let map = try? context.fetch(fetchRequest).first {
+//                    map.imageData = imageData
+//                    try? context.save()
+//                }
+//            }
+//        }
+//        
+//        // For Farms
+//        func updateFarmImage(id: String, imageData: Data) {
+//            container.performBackgroundTask { context in
+//                let fetchRequest: NSFetchRequest<Farm> = Farm.fetchRequest()
+//                fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+//                if let farm = try? context.fetch(fetchRequest).first {
+//                    farm.imageData = imageData
+//                    try? context.save()
+//                }
+//            }
+//        }
     
     func updateSkins(with url: String, and data: Data) {
         if let imageEntity = skins.first(where: {$0.image == url.replacingOccurrences(of: DropBoxKeys_SimulatorFarm.skinsImagePartPath, with: "")}) {
@@ -470,3 +535,83 @@ struct PersistenceController {
     }
 }
 
+extension PersistenceController {
+    // Centralized image update methods
+    func updateImageData(for entityType: String, id: String, imageData: Data) {
+        container.performBackgroundTask { context in
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityType)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            
+            if let entity = try? context.fetch(fetchRequest).first {
+                entity.setValue(imageData, forKey: "imageData")
+                try? context.save()
+            }
+        }
+    }
+    
+    // Wrapper methods for backward compatibility
+    func updateSkinImage(id: String, imageData: Data) {
+        updateImageData(for: "Skins", id: id, imageData: imageData)
+    }
+    
+    func updateModImage(id: String, imageData: Data) {
+        updateImageData(for: "Mod", id: id, imageData: imageData)
+    }
+    
+    func updateMapImage(id: String, imageData: Data) {
+        updateImageData(for: "Map", id: id, imageData: imageData)
+    }
+    
+    func updateFarmImage(id: String, imageData: Data) {
+        updateImageData(for: "Farm", id: id, imageData: imageData)
+    }
+}
+
+extension PersistenceController {
+    // Centralized save method with improved error handling
+    func performSave(in context: NSManagedObjectContext, completion: ((Error?) -> Void)? = nil) {
+        if context.hasChanges {
+            do {
+                try context.save()
+                completion?(nil)
+            } catch {
+                print("Error saving context: \(error)")
+                completion?(error)
+            }
+        }
+    }
+    
+    // Enhanced initialization
+    static func configureContainer(inMemory: Bool = false) -> NSPersistentContainer {
+        let container = NSPersistentContainer(name: "mods_farming_simulator22")
+        
+        if inMemory {
+            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        }
+        
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                print("Core Data failed to load: \(error.localizedDescription)")
+                fatalError("Unresolved Core Data error \(error)")
+            }
+        }
+        
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        
+        return container
+    }
+    
+    // Improved entity fetching
+    func fetchEntities<T: NSManagedObject>(_ type: T.Type, predicate: NSPredicate? = nil) -> [T] {
+        let request = NSFetchRequest<T>(entityName: String(describing: type))
+        request.predicate = predicate
+        
+        do {
+            return try container.viewContext.fetch(request)
+        } catch {
+            print("Error fetching \(type): \(error)")
+            return []
+        }
+    }
+}

@@ -171,8 +171,10 @@ struct AvatarGenNavBar: View {
     }
     
     private func handleEdit() {
-        showEditConfigurator = true
-    }
+            viewMotel.updateData = true
+            viewMotel.sandvichPeople = viewMotel.randomItem
+            showEditConfigurator = true
+        }
 }
 
 // MARK: - Preview Provider

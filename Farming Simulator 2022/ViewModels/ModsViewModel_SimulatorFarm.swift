@@ -62,36 +62,36 @@ class ModViewModel: ObservableObject {
         }
     }
     
-//     func fetchModsFromCoreData() {
-//        let viewContext = PersistenceController.shared.container.viewContext
-//        let fetchRequest: NSFetchRequest<Mod> = Mod.fetchRequest()
-//        do {
-//            let fetchedMods = try viewContext.fetch(fetchRequest)
-//                mods = fetchedMods.map { modEntity in
-//                    return ModPattern(from: modEntity)
-//                }
-//            
-//        } catch {
-//            print("Error fetching mods: \(error)")
-//        }
-//    }
-    
-    func fetchModsFromCoreData() {
-        print("Starting mods fetch...")
+     func fetchModsFromCoreData() {
         let viewContext = PersistenceController.shared.container.viewContext
         let fetchRequest: NSFetchRequest<Mod> = Mod.fetchRequest()
-        
         do {
             let fetchedMods = try viewContext.fetch(fetchRequest)
-            print("Fetched \(fetchedMods.count) mods from Core Data")
-            mods = fetchedMods.map { modEntity in
-                return ModPattern(from: modEntity)
-            }
-            pressingfilterMods() // Add this line to ensure filtered data is updated
+                mods = fetchedMods.map { modEntity in
+                    return ModPattern(from: modEntity)
+                }
+            
         } catch {
             print("Error fetching mods: \(error)")
         }
     }
+    
+//    func fetchModsFromCoreData() {
+//        print("Starting mods fetch...")
+//        let viewContext = PersistenceController.shared.container.viewContext
+//        let fetchRequest: NSFetchRequest<Mod> = Mod.fetchRequest()
+//        
+//        do {
+//            let fetchedMods = try viewContext.fetch(fetchRequest)
+//            print("Fetched \(fetchedMods.count) mods from Core Data")
+//            mods = fetchedMods.map { modEntity in
+//                return ModPattern(from: modEntity)
+//            }
+//            pressingfilterMods() // Add this line to ensure filtered data is updated
+//        } catch {
+//            print("Error fetching mods: \(error)")
+//        }
+//    }
     
     func updateModModel(updatedModModel: ModPattern) {
         if let index = mods.firstIndex(where: { $0.id == updatedModModel.id }) {

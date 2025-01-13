@@ -277,89 +277,127 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
 //
 //    }
     
+//    private func fetchMaps_SimulatorFarm() {
+//        print("🔄 Starting maps fetch from Dropbox...")
+//        
+//        client?.files.download(path: DropBoxKeys_SimulatorFarm.mapsFilePath)
+//            .response(completionHandler: { [weak self] response, error in
+//                guard let self = self else {
+//                    print("❌ Self reference lost")
+//                    return
+//                }
+//
+//                if let response = response {
+//                    do {
+//                        let fileContents = response.1
+//                        print("📥 Received file contents with size: \(fileContents.count) bytes")
+//                        
+//                        // Print raw JSON for debugging
+//                        if let jsonString = String(data: fileContents, encoding: .utf8) {
+//                            print("📄 Raw JSON preview: \(jsonString.prefix(500))")
+//                        }
+//
+//                        // Force clear maps if Core Data is empty
+//                        if self.coreDataHelper.getMaps_SimulatorFarm().isEmpty {
+//                            print("🗑️ Core Data empty - forcing complete refresh")
+//                            self.coreDataHelper.clearMapCompletely()
+//                        }
+//                        
+//                        // Decode and process maps
+//                        let mapInfo = try JSONDecoder().decode(BeforeMapInfo.self, from: fileContents)
+//                        var maps = [MapPattern]()
+//                        // Validate maps before adding
+//                        maps = mapInfo.ryiz0Alp.ovlcz2U1Cy.values.compactMap { map in
+//                            guard !map.id.isEmpty else { return nil }
+//                            return map
+//                        }
+//
+//                        // Update Core Data
+//                        self.coreDataHelper.container.performBackgroundTask { context in
+//                            print("💾 Adding maps to Core Data")
+//                            self.coreDataHelper.addMaps_SimulatorFarm(maps)
+//                            
+//                            do {
+//                                try context.save()
+//                                print("✅ Successfully saved maps to Core Data")
+//                                
+//                                // Update cache count on main thread
+//                                DispatchQueue.main.async {
+//                                    self.mapsDataCount = fileContents.count
+//                                }
+//                                
+//                            } catch {
+//                                print("❌ Core Data save error: \(error.localizedDescription)")
+//                            }
+//                        }
+//
+//                        self.progress += 25
+//                        print("✅ Maps fetch and processing complete")
+//
+//                    } catch {
+//                        print("❌ Error processing maps: \(error)")
+//                        print("📝 Error details: \(error.localizedDescription)")
+//                        if let decodingError = error as? DecodingError {
+//                            switch decodingError {
+//                            case .keyNotFound(let key, let context):
+//                                print("🔑 Missing key: \(key)")
+//                                print("📍 Context: \(context.debugDescription)")
+//                            case .typeMismatch(let type, let context):
+//                                print("🔄 Type mismatch: expected \(type)")
+//                                print("📍 Context: \(context.debugDescription)")
+//                            case .valueNotFound(let type, let context):
+//                                print("❓ Value missing: expected \(type)")
+//                                print("📍 Context: \(context.debugDescription)")
+//                            case .dataCorrupted(let context):
+//                                print("💔 Data corrupted")
+//                                print("📍 Context: \(context.debugDescription)")
+//                            @unknown default:
+//                                print("❌ Unknown decoding error")
+//                            }
+//                        }
+//                    }
+//                } else if let error = error {
+//                    print("❌ Network error: \(error)")
+//                }
+//            })
+//            .progress({ progress in
+//                print("📊 Download progress: \(Int(progress.fractionCompleted * 100))%")
+//            })
+//    }
+    
     private func fetchMaps_SimulatorFarm() {
-        print("🔄 Starting maps fetch from Dropbox...")
-        
-        client?.files.download(path: DropBoxKeys_SimulatorFarm.mapsFilePath)
-            .response(completionHandler: { [weak self] response, error in
-                guard let self = self else {
-                    print("❌ Self reference lost")
-                    return
-                }
+       client?.files.download(path: DropBoxKeys_SimulatorFarm.mapsFilePath)
+           .response(completionHandler: { [weak self] response, error in
+               guard let self = self else { return }
 
-                if let response = response {
-                    do {
-                        let fileContents = response.1
-                        print("📥 Received file contents with size: \(fileContents.count) bytes")
-                        
-                        // Print raw JSON for debugging
-                        if let jsonString = String(data: fileContents, encoding: .utf8) {
-                            print("📄 Raw JSON preview: \(jsonString.prefix(500))")
-                        }
+               if let response = response {
+                   do {
+                       let fileContents = response.1
+                       
+                       if fileContents.count != self.mapsDataCount || self.coreDataHelper.getMaps_SimulatorFarm().isEmpty {
+                           self.coreDataHelper.clearMapCompletely()
+                           self.mapsDataCount = fileContents.count
+                           
+                           let mapInfo = try JSONDecoder().decode(BeforeMapInfo.self, from: fileContents)
+                           let maps = Array(mapInfo.ryiz0Alp.ovlcz2U1Cy.values)
+                           
+                           self.coreDataHelper.addMaps_SimulatorFarm(maps)
+                       } else {
+                           print("Using existing maps data")
+                       }
+                       
+                       self.progress += 25
 
-                        // Force clear maps if Core Data is empty
-                        if self.coreDataHelper.getMaps_SimulatorFarm().isEmpty {
-                            print("🗑️ Core Data empty - forcing complete refresh")
-                            self.coreDataHelper.clearMapCompletely()
-                        }
-                        
-                        // Decode and process maps
-                        let mapInfo = try JSONDecoder().decode(BeforeMapInfo.self, from: fileContents)
-                        var maps = [MapPattern]()
-                        maps.append(contentsOf: mapInfo.ryiz0Alp.ovlcz2U1Cy.values)
-                        print("📝 Found \(maps.count) maps")
-
-                        // Update Core Data
-                        self.coreDataHelper.container.performBackgroundTask { context in
-                            print("💾 Adding maps to Core Data")
-                            self.coreDataHelper.addMaps_SimulatorFarm(maps)
-                            
-                            do {
-                                try context.save()
-                                print("✅ Successfully saved maps to Core Data")
-                                
-                                // Update cache count on main thread
-                                DispatchQueue.main.async {
-                                    self.mapsDataCount = fileContents.count
-                                }
-                                
-                            } catch {
-                                print("❌ Core Data save error: \(error.localizedDescription)")
-                            }
-                        }
-
-                        self.progress += 25
-                        print("✅ Maps fetch and processing complete")
-
-                    } catch {
-                        print("❌ Error processing maps: \(error)")
-                        print("📝 Error details: \(error.localizedDescription)")
-                        if let decodingError = error as? DecodingError {
-                            switch decodingError {
-                            case .keyNotFound(let key, let context):
-                                print("🔑 Missing key: \(key)")
-                                print("📍 Context: \(context.debugDescription)")
-                            case .typeMismatch(let type, let context):
-                                print("🔄 Type mismatch: expected \(type)")
-                                print("📍 Context: \(context.debugDescription)")
-                            case .valueNotFound(let type, let context):
-                                print("❓ Value missing: expected \(type)")
-                                print("📍 Context: \(context.debugDescription)")
-                            case .dataCorrupted(let context):
-                                print("💔 Data corrupted")
-                                print("📍 Context: \(context.debugDescription)")
-                            @unknown default:
-                                print("❌ Unknown decoding error")
-                            }
-                        }
-                    }
-                } else if let error = error {
-                    print("❌ Network error: \(error)")
-                }
-            })
-            .progress({ progress in
-                print("📊 Download progress: \(Int(progress.fractionCompleted * 100))%")
-            })
+                   } catch {
+                       print("Error processing maps: \(error)")
+                   }
+               } else if let error = error {
+                   print("Error downloading maps: \(error)")
+               }
+           })
+           .progress({ progress in
+               print("Download progress: \(Int(progress.fractionCompleted * 100))%")
+           })
     }
     
 //    private func fetchMods_SimulatorFarm() {
@@ -422,89 +460,89 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
 //            })
 //    }
     
-    private func fetchMods_SimulatorFarm() {
-        print("🔄 Starting mods fetch from Dropbox...")
-        
-        client?.files.download(path: DropBoxKeys_SimulatorFarm.modsFilePath)
-            .response(completionHandler: { [weak self] response, error in
-                guard let self = self else {
-                    print("❌ Self reference lost")
-                    return
-                }
-
-                if let response = response {
-                    do {
-                        let fileContents = response.1
-                        print("📥 Received file contents with size: \(fileContents.count) bytes")
-                        
-                        // Print raw JSON for debugging
-                        if let jsonString = String(data: fileContents, encoding: .utf8) {
-                            print("📄 Raw JSON preview: \(jsonString.prefix(500))")
-                        }
-
-                        // Force clear mods if Core Data is empty
-                        if self.coreDataHelper.getMods_SimulatorFarm().isEmpty {
-                            print("🗑️ Core Data empty - forcing complete refresh")
-                            self.coreDataHelper.clearModCompletely()
-                        }
-                        
-                        // Decode and process mods
-                        let modsCollection = try JSONDecoder().decode(ModCollection.self, from: fileContents)
-                        var mods = [ModPattern]()
-                        mods.append(contentsOf: modsCollection.modsData.mods.values)
-                        print("📝 Found \(mods.count) mods")
-
-                        // Update Core Data
-                        self.coreDataHelper.container.performBackgroundTask { context in
-                            print("💾 Adding mods to Core Data")
-                            self.coreDataHelper.addMods_SimulatorFarm(mods)
-                            
-                            do {
-                                try context.save()
-                                print("✅ Successfully saved mods to Core Data")
-                                
-                                DispatchQueue.main.async {
-                                    self.modsDataCount = fileContents.count
-                                }
-                                
-                            } catch {
-                                print("❌ Core Data save error: \(error.localizedDescription)")
-                            }
-                        }
-
-                        self.progress += 25
-                        print("✅ Mods fetch and processing complete")
-
-                    } catch {
-                        print("❌ Error processing mods: \(error)")
-                        print("📝 Error details: \(error.localizedDescription)")
-                        if let decodingError = error as? DecodingError {
-                            switch decodingError {
-                            case .keyNotFound(let key, let context):
-                                print("🔑 Missing key: \(key)")
-                                print("📍 Context: \(context.debugDescription)")
-                            case .typeMismatch(let type, let context):
-                                print("🔄 Type mismatch: expected \(type)")
-                                print("📍 Context: \(context.debugDescription)")
-                            case .valueNotFound(let type, let context):
-                                print("❓ Value missing: expected \(type)")
-                                print("📍 Context: \(context.debugDescription)")
-                            case .dataCorrupted(let context):
-                                print("💔 Data corrupted")
-                                print("📍 Context: \(context.debugDescription)")
-                            @unknown default:
-                                print("❌ Unknown decoding error")
-                            }
-                        }
-                    }
-                } else if let error = error {
-                    print("❌ Network error: \(error)")
-                }
-            })
-            .progress({ progress in
-                print("📊 Download progress: \(Int(progress.fractionCompleted * 100))%")
-            })
-    }
+//    private func fetchMods_SimulatorFarm() {
+//        print("🔄 Starting mods fetch from Dropbox...")
+//        
+//        client?.files.download(path: DropBoxKeys_SimulatorFarm.modsFilePath)
+//            .response(completionHandler: { [weak self] response, error in
+//                guard let self = self else {
+//                    print("❌ Self reference lost")
+//                    return
+//                }
+//
+//                if let response = response {
+//                    do {
+//                        let fileContents = response.1
+//                        print("📥 Received file contents with size: \(fileContents.count) bytes")
+//                        
+//                        // Print raw JSON for debugging
+//                        if let jsonString = String(data: fileContents, encoding: .utf8) {
+//                            print("📄 Raw JSON preview: \(jsonString.prefix(500))")
+//                        }
+//
+//                        // Force clear mods if Core Data is empty
+//                        if self.coreDataHelper.getMods_SimulatorFarm().isEmpty {
+//                            print("🗑️ Core Data empty - forcing complete refresh")
+//                            self.coreDataHelper.clearModCompletely()
+//                        }
+//                        
+//                        // Decode and process mods
+//                        let modsCollection = try JSONDecoder().decode(ModCollection.self, from: fileContents)
+//                        var mods = [ModPattern]()
+//                        mods.append(contentsOf: modsCollection.modsData.mods.values)
+//                        print("📝 Found \(mods.count) mods")
+//
+//                        // Update Core Data
+//                        self.coreDataHelper.container.performBackgroundTask { context in
+//                            print("💾 Adding mods to Core Data")
+//                            self.coreDataHelper.addMods_SimulatorFarm(mods)
+//                            
+//                            do {
+//                                try context.save()
+//                                print("✅ Successfully saved mods to Core Data")
+//                                
+//                                DispatchQueue.main.async {
+//                                    self.modsDataCount = fileContents.count
+//                                }
+//                                
+//                            } catch {
+//                                print("❌ Core Data save error: \(error.localizedDescription)")
+//                            }
+//                        }
+//
+//                        self.progress += 25
+//                        print("✅ Mods fetch and processing complete")
+//
+//                    } catch {
+//                        print("❌ Error processing mods: \(error)")
+//                        print("📝 Error details: \(error.localizedDescription)")
+//                        if let decodingError = error as? DecodingError {
+//                            switch decodingError {
+//                            case .keyNotFound(let key, let context):
+//                                print("🔑 Missing key: \(key)")
+//                                print("📍 Context: \(context.debugDescription)")
+//                            case .typeMismatch(let type, let context):
+//                                print("🔄 Type mismatch: expected \(type)")
+//                                print("📍 Context: \(context.debugDescription)")
+//                            case .valueNotFound(let type, let context):
+//                                print("❓ Value missing: expected \(type)")
+//                                print("📍 Context: \(context.debugDescription)")
+//                            case .dataCorrupted(let context):
+//                                print("💔 Data corrupted")
+//                                print("📍 Context: \(context.debugDescription)")
+//                            @unknown default:
+//                                print("❌ Unknown decoding error")
+//                            }
+//                        }
+//                    }
+//                } else if let error = error {
+//                    print("❌ Network error: \(error)")
+//                }
+//            })
+//            .progress({ progress in
+//                print("📊 Download progress: \(Int(progress.fractionCompleted * 100))%")
+//            })
+//    }
     
 //    private func fetchMods_SimulatorFarm() {
 //            client?.files.download(path: DropBoxKeys_SimulatorFarm.modsFilePath)
@@ -542,6 +580,43 @@ class DropBoxManager_SimulatorFarm: ObservableObject {
 //                    print("Downloading: ", progress)
 //                })
 //        }
+    
+    private func fetchMods_SimulatorFarm() {
+        client?.files.download(path: DropBoxKeys_SimulatorFarm.modsFilePath)
+            .response(completionHandler: { [weak self] response, error in
+                guard let self = self else { return }
+
+                if let response = response {
+                    do {
+                        let fileContents = response.1
+                        
+                        // Check if data needs updating or if Core Data is empty
+                        if fileContents.count != self.modsDataCount || self.coreDataHelper.getMods_SimulatorFarm().isEmpty {
+                            self.coreDataHelper.clearModCompletely()
+                            self.modsDataCount = fileContents.count
+                            
+                            let modsCollection = try JSONDecoder().decode(ModCollection.self, from: fileContents)
+                            var mods = [ModPattern]()
+                            mods.append(contentsOf: modsCollection.modsData.mods.values)
+                            
+                            self.coreDataHelper.addMods_SimulatorFarm(mods)
+                        } else {
+                            print("Using existing mods data")
+                        }
+                        
+                        self.progress += 25
+
+                    } catch {
+                        print("Error processing mods: \(error)")
+                    }
+                } else if let error = error {
+                    print("Error downloading mods: \(error)")
+                }
+            })
+            .progress({ progress in
+                print("Download progress: \(Int(progress.fractionCompleted * 100))%")
+            })
+    }
 
     
     private func fetchFarms_SimulatorFarm() {
