@@ -22,7 +22,7 @@ struct EditorDropdownButton: View {
     // Constants
     private let buttonHeight: CGFloat = 44
     private let menuSpacing: CGFloat = 8
-    private let cornerRadius: CGFloat = 16
+    private let cornerRadius: CGFloat = 8
     
     // Categories to display
     private let categories = [

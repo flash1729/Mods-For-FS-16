@@ -77,8 +77,9 @@ struct EditorConfigurator: View {
                         },
                         onTap: { }
                     )
-//                    .paddingFlyBullet()
-                    .background(ColorTurboGear.colorPicker(.green))
+                    .background(ColorTurboGear.colorPicker(.green)
+                                    .cornerRadius(20, corners: [.topLeft, .topRight])
+                                    )
                     .padding(.top, bigSize ? 30 : 15)
                     .padding(.bottom, bigSize ? 50 : 25)
                 }
@@ -89,18 +90,6 @@ struct EditorConfigurator: View {
                         .edgesIgnoringSafeArea(.bottom)
                 )
             }
-            
-//            EditorDropdownButton(
-//                isExpanded: $tappedButton,
-//                selectedTitle: $choodedTitle,
-//                selectedPart: $choosedPartModel,
-//                currentGender: $genderType,
-//                onTap: {
-//                    // Any additional tap handling if needed
-//                }
-//            )
-//            .paddingFlyBullet()
-//            .padding(.bottom, bigSize ? 50 : 10)
         }
         .ignoresSafeArea(.all, edges: .top)
         .onChange(of: choosedPartModel) { newValue in
