@@ -125,27 +125,50 @@ struct CreateSelfAvatarAndEditPageViolent: View {
             }
             .ignoresSafeArea(.all, edges: .top)
             .frame(maxHeight: .infinity, alignment: .top)
-            if showPartBodyList {
-                ZStack {
-                    Color.black.opacity(0.5)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            showPartBodyList.toggle()
-                        }
-                    AllEditorButtons(tappeedButton: $choosedPart, dismissLayer: $showPartBodyList, selectedGender: {type in
-                        switch type {
-                        case .man:
-                            genderType = .man
-                            viewMotel.changeGenderInButton.toggle()
-                        case .woman:
-                            genderType = .woman
-                            viewMotel.changeGenderInButton.toggle()
-                        }
-                    })
-                }
-                .transition(.opacity)
-                .zIndex(1)
-            }
+            
+//            if showPartBodyList {
+//                ZStack {
+//                    Color.black.opacity(0.5)
+//                        .ignoresSafeArea()
+//                        .onTapGesture {
+//                            showPartBodyList.toggle()
+//                        }
+//                    AllEditorButtons(tappeedButton: $choosedPart, dismissLayer: $showPartBodyList, selectedGender: {type in
+//                        switch type {
+//                        case .man:
+//                            genderType = .man
+//                            viewMotel.changeGenderInButton.toggle()
+//                        case .woman:
+//                            genderType = .woman
+//                            viewMotel.changeGenderInButton.toggle()
+//                        }
+//                    })
+//                }
+//                .transition(.opacity)
+//                .zIndex(1)
+//            }
+            
+//            if showPartBodyList {
+//                ZStack {
+//                    Color.black.opacity(0.5)
+//                        .ignoresSafeArea()
+//                        .onTapGesture {
+//                            showPartBodyList.toggle()
+//                        }
+//                    GenderSelector(dismissLayer: $showPartBodyList) { type in
+//                        switch type {
+//                        case .man:
+//                            genderType = .man
+//                            viewMotel.changeGenderInButton.toggle()
+//                        case .woman:
+//                            genderType = .woman
+//                            viewMotel.changeGenderInButton.toggle()
+//                        }
+//                    }
+//                }
+//                .transition(.opacity)
+//                .zIndex(1)
+//            }
             
             if showSaveAlert {
                 SaveEditorAlert(stateTapped: {state in

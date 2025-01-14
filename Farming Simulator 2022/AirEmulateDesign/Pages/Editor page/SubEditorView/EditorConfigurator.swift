@@ -30,38 +30,77 @@ struct EditorConfigurator: View {
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
     @State var workInternetState: Bool = true
     var body: some View {
-        VStack {
-            RoundedRectangle(cornerRadius: bigSize ? 20 : 12)
-                           .overlay {
-                               ZStack {
-                                   if let mergetImage = fullImagePeopleToSave {
-                                       Image(uiImage: mergetImage)
-                                           .resizable()
-                                           .scaledToFit()
-                                   } else {
-                                       InfinityLoaderGreen()
-                                           .frame(height: 55)
-                                   }
-                               }
-                           }
-                           .frame(width: 335, height: 335)
-                           .clipShape(RoundedRectangle(cornerRadius: 12))
-                           .padding(.top, bigSize ? 50 : 10)
-                           .paddingFlyBullet()
-            
-            nextAndPreviesButtons
-            
-            
-            parstOfChoosedElement
-            
-            
-            GreenButtonEditorWithBorder(blueButtonTap: {
-                withAnimation {
-                    tappedButton.toggle()
+        ZStack(alignment: .bottom) {
+            VStack {
+                RoundedRectangle(cornerRadius: bigSize ? 20 : 12)
+                    .overlay {
+                        ZStack {
+                            if let mergetImage = fullImagePeopleToSave {
+                                Image(uiImage: mergetImage)
+                                    .resizable()
+                                    .scaledToFit()
+                            } else {
+                                InfinityLoaderGreen()
+                                    .frame(height: 55)
+                            }
+                        }
+                    }
+                    .frame(width: 335, height: 335)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .padding(.top, bigSize ? 50 : 10)
+                    .paddingFlyBullet()
+                
+                nextAndPreviesButtons
+                
+                parstOfChoosedElement
+                
+                Spacer()
+                
+                VStack{
+                    EditorDropdownButton(
+                        isExpanded: $tappedButton,
+                        selectedTitle: $choodedTitle,
+                        selectedPart: $choosedPartModel,
+                        currentGender: $genderType,
+                        onGenderChange: { newGender in
+                            // Handle all resets here
+                            viewMotel.tempManPeople = nil
+                            viewMotel.tempWomanPeople = nil
+                            viewMotel.sandvichPeople.allNil()
+                            changeIndex = 0
+                            choosedPart = "0"
+                            
+                            // Start fresh configuration
+                            Task {
+                                await startConfigurateItem()
+                            }
+                        },
+                        onTap: { }
+                    )
+//                    .paddingFlyBullet()
+                    .background(ColorTurboGear.colorPicker(.green))
+                    .padding(.top, bigSize ? 30 : 15)
+                    .padding(.bottom, bigSize ? 50 : 25)
                 }
-            }, titleButton: $choodedTitle, infinityWidth: true)
-            .paddingFlyBullet()
-            .padding(.bottom, bigSize ? 50 : 10)
+                .frame(maxWidth: .infinity)
+                .background(
+                    ColorTurboGear.colorPicker(.green)
+                        .cornerRadius(20, corners: [.topLeft, .topRight])
+                        .edgesIgnoringSafeArea(.bottom)
+                )
+            }
+            
+//            EditorDropdownButton(
+//                isExpanded: $tappedButton,
+//                selectedTitle: $choodedTitle,
+//                selectedPart: $choosedPartModel,
+//                currentGender: $genderType,
+//                onTap: {
+//                    // Any additional tap handling if needed
+//                }
+//            )
+//            .paddingFlyBullet()
+//            .padding(.bottom, bigSize ? 50 : 10)
         }
         .ignoresSafeArea(.all, edges: .top)
         .onChange(of: choosedPartModel) { newValue in

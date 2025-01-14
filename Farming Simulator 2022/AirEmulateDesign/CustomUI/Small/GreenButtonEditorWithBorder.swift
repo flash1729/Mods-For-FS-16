@@ -14,7 +14,7 @@ struct GreenButtonEditorWithBorder: View {
     
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     var isExpanded: Bool = false
-
+    
     private let cornerRadius: CGFloat = 8
     private let horizontalPadding: CGFloat = 24
     private let verticalPadding: CGFloat = 8

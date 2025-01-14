@@ -15,10 +15,6 @@
 		7285F6572AE5DD56005C8E8E /* FarmModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7285F6562AE5DD56005C8E8E /* FarmModel_SimulatorFarm.swift */; };
 		7287AD112AF1315600657FD8 /* AppConstants_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7287ACF92AF1315400657FD8 /* AppConstants_SimulatorFarm.swift */; };
 		72926CC72ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72926CC62ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift */; };
-		729DA3C42AFE509E00D8190E /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 729DA3C32AFE509D00D8190E /* Montserrat-Bold.ttf */; };
-		729DA3C62AFE511E00D8190E /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 729DA3C52AFE511D00D8190E /* Montserrat-SemiBold.ttf */; };
-		729DA3C82AFE513C00D8190E /* Montserrat.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 729DA3C72AFE513C00D8190E /* Montserrat.ttf */; };
-		729DA3CA2AFE55F600D8190E /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 729DA3C92AFE55F600D8190E /* Montserrat-Medium.ttf */; };
 		72AD4A042AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A032AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift */; };
 		72AD4A062AEAA5CD00784D8A /* ModsViewModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A052AEAA5CC00784D8A /* ModsViewModel_SimulatorFarm.swift */; };
 		72AD4A0B2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A0A2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift */; };
@@ -61,10 +57,6 @@
 		7285F6562AE5DD56005C8E8E /* FarmModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		7287ACF92AF1315400657FD8 /* AppConstants_SimulatorFarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72926CC62ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsModel_SimulatorFarm.swift; sourceTree = "<group>"; };
-		729DA3C32AFE509D00D8190E /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
-		729DA3C52AFE511D00D8190E /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
-		729DA3C72AFE513C00D8190E /* Montserrat.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Montserrat.ttf; sourceTree = "<group>"; };
-		729DA3C92AFE55F600D8190E /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		72AD4A032AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72AD4A052AEAA5CC00784D8A /* ModsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72AD4A0A2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
@@ -122,10 +114,6 @@
 				EC52D6A62D1F297A003C1F2F /* Gilroy-Medium.ttf */,
 				EC52D6A72D1F297A003C1F2F /* Gilroy-Regular.ttf */,
 				EC52D6A82D1F297A003C1F2F /* Gilroy-SemiBold.ttf */,
-				729DA3C92AFE55F600D8190E /* Montserrat-Medium.ttf */,
-				729DA3C72AFE513C00D8190E /* Montserrat.ttf */,
-				729DA3C52AFE511D00D8190E /* Montserrat-SemiBold.ttf */,
-				729DA3C32AFE509D00D8190E /* Montserrat-Bold.ttf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -325,8 +313,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				72F381902ADD3D86005549F1 /* Preview Assets.xcassets in Resources */,
-				729DA3CA2AFE55F600D8190E /* Montserrat-Medium.ttf in Resources */,
-				729DA3C62AFE511E00D8190E /* Montserrat-SemiBold.ttf in Resources */,
 				EC52D6A92D1F297A003C1F2F /* Gilroy-Bold.ttf in Resources */,
 				EC52D6AA2D1F297A003C1F2F /* Gilroy-ExtraBold.ttf in Resources */,
 				EC52D6AB2D1F297A003C1F2F /* Gilroy-Regular.ttf in Resources */,
@@ -334,8 +320,6 @@
 				EC52D6AD2D1F297A003C1F2F /* Gilroy-Black.ttf in Resources */,
 				EC52D6AE2D1F297A003C1F2F /* Gilroy-Heavy.ttf in Resources */,
 				EC52D6AF2D1F297A003C1F2F /* Gilroy-Medium.ttf in Resources */,
-				729DA3C82AFE513C00D8190E /* Montserrat.ttf in Resources */,
-				729DA3C42AFE509E00D8190E /* Montserrat-Bold.ttf in Resources */,
 				72F3818D2ADD3D86005549F1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

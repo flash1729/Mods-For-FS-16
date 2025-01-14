@@ -142,3 +142,42 @@ struct AllEditorButtons: View {
         .transition(.opacity)
     }
 }
+
+struct GenderSelector: View {
+    enum GenderType {
+        case man
+        case woman
+    }
+    
+    @Binding var dismissLayer: Bool
+    @State var selectedGender: (GenderType) -> Void
+    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            ForEach([GenderType.man, .woman], id: \.self) { gender in
+                Button {
+                    selectedGender(gender)
+                    withAnimation {
+                        dismissLayer.toggle()
+                    }
+                } label: {
+                    Text(gender == .man ? "Man" : "Woman")
+                        .font(FontTurboGear.gilroyStyle(
+                            size: bigSize ? 22 : 16,
+                            type: .semibold
+                        ))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 16)
+                        .frame(height: 44)
+                        .background(ColorTurboGear.colorPicker(.darkGreen))
+                        .cornerRadius(8)
+                }
+            }
+        }
+        .padding(.horizontal)
+        .background(ColorTurboGear.colorPicker(.green))
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+}
