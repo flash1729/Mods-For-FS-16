@@ -266,10 +266,6 @@ struct CreateSelfAvatarAndEditPageViolent: View {
         }
     }
     
-    func rightButtonTapped() {
-       
-    }
-    
     private func cellToCollection(image: Data?, completionSave: @escaping () -> Void, completionAbout: @escaping () -> Void) -> some View {
         VStack(spacing: 12) {
             // Image Container

@@ -74,13 +74,9 @@ struct AboutEditorPage: View {
     
     private var bodySection: some View {
         ZStack {
+            Color.white.ignoresSafeArea()
+            
             VStack(spacing: bigSize ? 20 : 10) {
-//                NavPanelCyanEditors(titleName: "Editor", rightbuttonIconType: .constant(.editItem), leftbuttonIconType: .backChev, rigthButtonTapped: {
-//                    viewMotel.updateData = true
-//                    editTapped()
-//                    dismiss()
-//                })
-                
                 EditorNavBar(
                     isEditing: true,  // Always true in AboutEditorPage since we're in editing mode
                     viewMotel: viewMotel,
@@ -120,25 +116,26 @@ struct AboutEditorPage: View {
                     .padding(.top, bigSize ? 50 : 10)
                     .paddingFlyBullet()
                 Spacer()
+                
                 VStack {
-                    GreenButtonEditorWithBorder(
-                                            blueButtonTap: {
-                                                showEditor = true
-                                                isEditing = true
-                                            },
-                                            titleButton: .constant("Create new +"),
-                                            infinityWidth: true
-                                        )
-                                        .paddingFlyBullet()
-                                        .padding(.top, bigSize ? 30 : 15)
-                                        .padding(.bottom, bigSize ? 50 : 25)
-                }
-                .frame(maxWidth: .infinity)
-                .background(
-                   ColorTurboGear.colorPicker(.green)
-                       .cornerRadius(20, corners: [.topLeft, .topRight])
-                       .edgesIgnoringSafeArea(.bottom)
-                )
+                    GreenButtonWithBorders(
+                        title: "Create new +",
+                            action: {
+                                viewMotel.updateData = true
+                                editTapped()
+                                dismiss()
+                            }
+                        )
+                        .paddingFlyBullet()
+                        .padding(.top, bigSize ? 30 : 15)
+                        .padding(.bottom, bigSize ? 50 : 25)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        ColorTurboGear.colorPicker(.green)
+                            .cornerRadius(20, corners: [.topLeft, .topRight])
+                            .edgesIgnoringSafeArea(.bottom)
+                        )
             }
             .ignoresSafeArea(.all, edges: .top)
             
