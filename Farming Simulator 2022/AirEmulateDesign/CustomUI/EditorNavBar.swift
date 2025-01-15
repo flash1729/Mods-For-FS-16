@@ -45,13 +45,13 @@ struct EditorNavBar: View {
                         Image("backButtonGreen")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: bigSize ? 80 : buttonSize, height: bigSize ? 80 : buttonSize)
+                            .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                     }
                 }
                 
                 // Title
                 Text("Editor")
-                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 34 : 32, type: .bold))
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 32, type: .bold))
                     .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .lineLimit(1)
@@ -65,7 +65,7 @@ struct EditorNavBar: View {
                         Image("menuHam")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: bigSize ? 80 : buttonSize, height: bigSize ? 80 : buttonSize)
+                            .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                     }
                 } else {
                     // Download button when editing
@@ -76,6 +76,7 @@ struct EditorNavBar: View {
                                 Image("downloadButtonGreen")
                                     .resizable()
                                     .scaledToFit()
+                                    .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                             
                             case .downloading(let progress):
                                 ZStack {
@@ -105,11 +106,13 @@ struct EditorNavBar: View {
                                 Image("downCompleteIcon")
                                     .resizable()
                                     .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
+                                    .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                             
                             case .failure:
                                 Image("downFailIcon")
                                     .resizable()
                                     .foregroundColor(.red)
+                                    .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                             }
                         }
                         .frame(width: buttonSize, height: buttonSize)

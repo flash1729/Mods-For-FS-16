@@ -9,11 +9,12 @@ import SwiftUI
 
 struct NavButtonMiniIcon: View {
     let typeOfImage: IconTurboGear.TopNavIconTurbo
+    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     
     var body: some View {
         Image(typeOfImage.sendNameOfIcon())
             .resizable()
-            .frame(width: 44, height: 44)
+            .frame(width: bigSize ? 44 : 24, height: bigSize ? 44 : 24)
     }
 }
 

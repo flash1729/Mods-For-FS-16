@@ -84,6 +84,7 @@ struct AvatarGenNavBar: View {
                                     Image("downloadButtonGreen")
                                         .resizable()
                                         .scaledToFit()
+                                        .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                                 
                                 case .downloading(let progress):
                                     ZStack {
@@ -113,11 +114,13 @@ struct AvatarGenNavBar: View {
                                     Image("downCompleteIcon")
                                         .resizable()
                                         .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
+                                        .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                                 
                                 case .failure:
                                     Image("downFailIcon")
                                         .resizable()
                                         .foregroundColor(.red)
+                                        .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                                 }
                             }
                             .frame(width: buttonSize, height: buttonSize)
@@ -134,7 +137,7 @@ struct AvatarGenNavBar: View {
                             Image("editAvatar")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: buttonSize, height: buttonSize)
+                                .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                         }
                     }
                 }

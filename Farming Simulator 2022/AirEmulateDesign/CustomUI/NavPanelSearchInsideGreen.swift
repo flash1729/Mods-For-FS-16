@@ -33,7 +33,7 @@ struct NavPanelSearchInsideGreen: View {
                     // Header content
                     HStack(spacing: 12) {
                         Text("\(searchTypeElement.rawValue.capitalized)s")
-                            .font(FontTurboGear.gilroyStyle(size: 32, type: .bold))
+                            .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 32, type: .bold))
                             .foregroundStyle(ColorTurboGear.colorPicker(.green))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .lineLimit(1)
@@ -47,7 +47,7 @@ struct NavPanelSearchInsideGreen: View {
                                     .resizable()
                                     .scaledToFit()
                                     .foregroundStyle(ColorTurboGear.colorPicker(.green))
-                                    .frame(width: 44, height: 44)
+                                    .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                             }
                             
                             Button {
@@ -59,7 +59,7 @@ struct NavPanelSearchInsideGreen: View {
                                     .resizable()
                                     .scaledToFit()
                                     .foregroundStyle(ColorTurboGear.colorPicker(.green))
-                                    .frame(width: 44, height: 44)
+                                    .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                             }
                         }
                     }

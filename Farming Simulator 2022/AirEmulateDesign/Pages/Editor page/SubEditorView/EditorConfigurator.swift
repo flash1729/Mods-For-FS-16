@@ -45,8 +45,8 @@ struct EditorConfigurator: View {
                             }
                         }
                     }
-                    .frame(width: 335, height: 335)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .frame(width: bigSize ? 824 : 335, height: bigSize ? 640 : 335)
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
                     .padding(.top, bigSize ? 50 : 10)
                     .paddingFlyBullet()
                 

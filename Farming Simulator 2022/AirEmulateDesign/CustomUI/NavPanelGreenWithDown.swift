@@ -35,7 +35,7 @@ struct NavPanelGreenWithDown: View {
                 }
                 
                 Text(titleName)
-                    .font(FontTurboGear.gilroyStyle(size: 24, type: .bold))
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 24, type: .bold))
                     .foregroundStyle(ColorTurboGear.colorPicker(.green))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .lineLimit(1)

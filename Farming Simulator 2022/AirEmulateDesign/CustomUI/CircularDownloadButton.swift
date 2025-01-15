@@ -42,7 +42,7 @@ struct CircularDownloadButton: View {
                 case .initial:
                     Image("downloadButtonGreen")
                         .resizable()
-                        .frame(width: 44, height: 44)
+                        .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                 
                 case .downloading(let progress):
                     ZStack {
@@ -73,13 +73,13 @@ struct CircularDownloadButton: View {
                     Image("downCompleteIcon")
                         .resizable()
                         .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
-                        .frame(width: 44, height: 44)
+                        .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                 
                 case .failure:
                     Image("downFailIcon")
                         .resizable()
                         .foregroundColor(.red)
-                        .frame(width: 44, height: 44)
+                        .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                 }
             }
         }

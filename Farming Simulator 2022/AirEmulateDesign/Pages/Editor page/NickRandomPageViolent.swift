@@ -103,13 +103,13 @@ struct NickRandomPageViolent: View {
         VStack {
             if generatedNickname.isEmpty {
                 Text("Press the button below to create a new \n nickname")
-                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 30 : 25, type: .regular))
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 25, type: .regular))
                     .multilineTextAlignment(.center)
             } else {
                 Text("Your nickname:")
                 
                 Text(generatedNickname)
-                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 30 : 25, type: .bold))
+                    .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 25, type: .bold))
                     .transition(.opacity)
                     .multilineTextAlignment(.center)
                     .onTapGesture {

@@ -92,8 +92,28 @@ struct MenuListToApp: View {
         }
     }
     
+//    private var listOfButtons: some View {
+//        VStack(spacing: bigSize ? 16 : 12) {
+//            ForEach(IconTurboGear.MenuIconTurbo.allCases, id: \.self) { menuType in
+//                MenuButton(
+//                    iconType: menuType,
+//                    isSelected: menuType == itemTypeChoosed,
+//                    action: {
+//                        itemTypeChoosed = menuType
+//                        if menuType == .avaGen || menuType == .editor {
+//                            showDownloadView.toggle()
+//                        } else {
+//                            openPage.toggle()
+//                        }
+//                    }
+//                )
+//            }
+//        }
+//    }
+    
+    
     private var listOfButtons: some View {
-        VStack(spacing: bigSize ? 16 : 12) {
+        VStack(spacing: bigSize ? 16 : 12) { // Increased spacing for iPad
             ForEach(IconTurboGear.MenuIconTurbo.allCases, id: \.self) { menuType in
                 MenuButton(
                     iconType: menuType,
@@ -109,6 +129,7 @@ struct MenuListToApp: View {
                 )
             }
         }
+        .padding(.horizontal, 20)
     }
     
     private var allLinks: some View {
@@ -145,34 +166,6 @@ struct MenuListToApp: View {
     }
 }
 
-//// New Menu Button Component
-//struct MenuButton: View {
-//   let iconType: IconTurboGear.MenuIconTurbo //no need
-//   let isSelected: Bool
-//   let action: () -> Void
-//   
-//   var body: some View {
-//       Button(action: action) {
-//           Text(iconType.sendTitleOfItem())
-//               .font(FontTurboGear.gilroyStyle(size: 18, type: .bold))
-//               .foregroundColor(isSelected ? .white : ColorTurboGear.colorPicker(.darkGreen))
-//               .frame(maxWidth: .infinity)
-//               .padding(.vertical, 12)
-//               .padding(.horizontal, 24)
-//               .background(
-//                   RoundedRectangle(cornerRadius: 8)
-//                       .fill(isSelected ? ColorTurboGear.colorPicker(.darkGreen) : .white)
-//                       .overlay(
-//                           RoundedRectangle(cornerRadius: 8)
-//                               .stroke(Color(.sRGB, red: 143/255, green: 143/255, blue: 143/255, opacity: 0.25), lineWidth: 1)
-//                       )
-//                       .shadow(color: Color(.sRGB, red: 143/255, green: 143/255, blue: 143/255, opacity: 0.25), radius: 8, x: 0, y: 4)
-//               )
-//               .frame(height: 47)
-//       }
-//   }
-//}
-
 struct MenuButton: View {
     let iconType: IconTurboGear.MenuIconTurbo
     let isSelected: Bool
@@ -192,9 +185,8 @@ struct MenuButton: View {
             Text(iconType.sendTitleOfItem())
                 .font(FontTurboGear.gilroyStyle(size: fontSize, type: .bold))
                 .foregroundColor(isSelected ? .white : ColorTurboGear.colorPicker(.darkGreen))
-                .frame(maxWidth: .infinity,minHeight: 100)
-                .lineSpacing(lineHeight) // Adjust line height
-                .padding(.vertical, verticalPadding)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, bigSize ? 32 : 12)
                 .padding(.horizontal, horizontalPadding)
                 .frame(height: buttonHeight)
                 .background(
@@ -211,7 +203,7 @@ struct MenuButton: View {
                             y: 4
                         )
                 )
-                .frame(width: 824)
+                .frame(width: 824, height: bigSize ? 80 : 47)
         }
     }
 }

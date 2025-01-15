@@ -25,9 +25,9 @@ struct PreviewItemFromRemote: View {
             // Title at the top
             Text(titleData ?? "Name")
                 .frame(maxWidth: .infinity, alignment: .center)
-                .font(FontTurboGear.gilroyStyle(size: bigSize ? 32 : 24, type: .bold))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 24, type: .bold))
                 .foregroundStyle(ColorTurboGear.colorPicker(.darkGreen))
-                .padding(.bottom, bigSize ? 16 : 8)
+                .padding(.bottom, bigSize ? 24 : 8)
             
             // Image container with heart overlay
             Button {
@@ -66,11 +66,11 @@ struct PreviewItemFromRemote: View {
             // Description text
             Text(previewText ?? "Description unavailable")
                 .frame(maxWidth: .infinity, alignment: .center)
-                .font(FontTurboGear.gilroyStyle(size: bigSize ? 18 : 14, type: .regular))
+                .font(FontTurboGear.gilroyStyle(size: bigSize ? 24 : 14, type: .regular))
                 .foregroundStyle(ColorTurboGear.colorPicker(.darkGreen))
                 .lineLimit(3)
                 .multilineTextAlignment(.leading)
-                .padding(.top, bigSize ? 16 : 8)
+                .padding(.top, bigSize ? 24 : 8)
         }
     }
 }

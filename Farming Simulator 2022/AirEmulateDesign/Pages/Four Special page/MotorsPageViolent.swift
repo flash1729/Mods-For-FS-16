@@ -79,8 +79,10 @@ struct MotorsPageViolent: View {
                         VStack(spacing: bigSize ? 20 : 12) {
                             bodyMiddleSection
                                 .paddingFlyBullet()
-                                .frame(maxHeight: 465)
+                                .frame(maxWidth: 824, maxHeight: bigSize ? 730 : 465) // Increased height for iPad
                             bottomSection
+                                .frame(height: bigSize ? 200 : 110)
+                                .padding(.vertical, bigSize ? 30 : 10)
                         }
                         .ignoresSafeArea(.all)
                     }
