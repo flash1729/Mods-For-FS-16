@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditorConfigurator: View {
+struct AvatarEditorConfiguratorController: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var dropBoxManager: DropBoxManager_SimulatorFarm
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \BodyElement.idElement, ascending: false)])

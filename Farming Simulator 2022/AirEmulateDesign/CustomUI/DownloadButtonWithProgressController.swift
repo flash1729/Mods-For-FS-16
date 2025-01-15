@@ -14,7 +14,7 @@ enum DownloadState{
     case failure
 }
 
-struct CircularDownloadButton: View {
+struct DownloadButtonWithProgressController: View {
     // Core download properties
     @State private var downloadState: DownloadState = .initial
     @Binding var progressDownload: Double
@@ -397,28 +397,28 @@ struct CircularDownloadButton_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 20) {
             // Initial state
-            CircularDownloadButton(
+            DownloadButtonWithProgressController(
                 progressDownload: .constant(0),
                 linkDownloadItem: "sample/path",
                 clearItemName: "sample"
             )
             
             // Downloading state
-            CircularDownloadButton(
+            DownloadButtonWithProgressController(
                 progressDownload: .constant(0.45),
                 linkDownloadItem: "sample/path",
                 clearItemName: "sample"
             )
             
             // Success state
-            CircularDownloadButton(
+            DownloadButtonWithProgressController(
                 progressDownload: .constant(1),
                 linkDownloadItem: "sample/path",
                 clearItemName: "sample"
             )
             
             // Failure state
-            CircularDownloadButton(
+            DownloadButtonWithProgressController(
                 progressDownload: .constant(0),
                 linkDownloadItem: "sample/path",
                 clearItemName: "sample"

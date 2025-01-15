@@ -53,7 +53,7 @@ struct MapsPageViolent: View {
                    .navigationBarBackButtonHidden()
            }, label: {EmptyView()})
            VStack{
-               NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .maps, onCommit: {}, choosedFilter: {item in
+               NavigationPanelWithSearchController(searchText: $searchText, filterType: $filterType, searchTypeElement: .maps, onCommit: {}, choosedFilter: {item in
                    switch item {
                    case .filterAllItems:
                        mapsViewModel.mapsSelectedFilter = .all
@@ -156,7 +156,7 @@ struct MapsPageViolent: View {
     
     private var bodyMiddleSection: some View {
     
-        PreviewItemFromRemote(imageData: choosedItem?.imageData, imagePath: "\(DropBoxKeys_SimulatorFarm.mapsImagePartPath)\(choosedItem?.image ?? "")", titleData: choosedItem?.title, previewText: choosedItem?.description, likeState: $choosedLikeState, tappedLikeButton: {bool in
+        RemotePreviewItemController(imageData: choosedItem?.imageData, imagePath: "\(DropBoxKeys_SimulatorFarm.mapsImagePartPath)\(choosedItem?.image ?? "")", titleData: choosedItem?.title, previewText: choosedItem?.description, likeState: $choosedLikeState, tappedLikeButton: {bool in
             choosedItem?.isFavorited = bool
             if let idString = choosedItem?.id {
                 PersistenceController.shared.updateFavoriteMaps(with: idString)

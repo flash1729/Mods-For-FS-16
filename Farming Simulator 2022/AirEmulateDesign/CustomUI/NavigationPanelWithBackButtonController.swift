@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NavPanelGreenWithoutFavButton: View {
+struct NavigationPanelWithBackButtonController: View {
     @Environment(\.dismiss) var dismiss
     @State var titleName: String
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
@@ -51,5 +51,5 @@ struct NavPanelGreenWithoutFavButton: View {
 }
 
 #Preview {
-    NavPanelGreenWithoutFavButton(titleName: "Nickname gen")
+    NavigationPanelWithBackButtonController(titleName: "Nickname gen")
 }

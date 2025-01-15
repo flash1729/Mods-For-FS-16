@@ -111,7 +111,7 @@ struct CreateSelfAvatarAndEditPageViolent: View {
                     .paddingFlyBullet()
                 ZStack{
                     if openEditor {
-                        EditorConfigurator(viewMotel: viewMotel, tappedButton: $showPartBodyList, choosedPartModel: $choosedPart, genderType: $genderType, fullImagePeopleToSave: $viewMotel.fullImagePeopleToSave, choosedData: $choosedData, showInternetAlert: $showInternetAlert)
+                        AvatarEditorConfiguratorController(viewMotel: viewMotel, tappedButton: $showPartBodyList, choosedPartModel: $choosedPart, genderType: $genderType, fullImagePeopleToSave: $viewMotel.fullImagePeopleToSave, choosedData: $choosedData, showInternetAlert: $showInternetAlert)
                         
                     } else {
                         collectionItmesView

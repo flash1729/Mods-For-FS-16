@@ -30,13 +30,13 @@ struct RandomPreviewAvatar: View {
     var body: some View {
         ZStack {
             NavigationLink(isActive: $showHistory, destination: {
-                RandomHistoryPage(viewMotel: viewMotel, choosedToEditCompletion: {
+                AvatarHistoryPageController(viewMotel: viewMotel, choosedToEditCompletion: {
                     showEditConfigurator.toggle()
                 }, choosedData: $choosedData)
                     .navigationBarBackButtonHidden()
             }, label: {EmptyView()})
             if showEditConfigurator {
-                EditorConfigurator(viewMotel: viewMotel, tappedButton: $showPartBodyList, choosedPartModel: $choosedPart, genderType: $genderType, fullImagePeopleToSave: $viewMotel.fullImagePeopleToSave, choosedData: $choosedData, showInternetAlert: $showInternetAlert)
+                AvatarEditorConfiguratorController(viewMotel: viewMotel, tappedButton: $showPartBodyList, choosedPartModel: $choosedPart, genderType: $genderType, fullImagePeopleToSave: $viewMotel.fullImagePeopleToSave, choosedData: $choosedData, showInternetAlert: $showInternetAlert)
             } else {
                 previewSection
             }

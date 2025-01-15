@@ -49,7 +49,7 @@ struct NickRandomPageViolent: View {
                 .ignoresSafeArea()
 
             VStack(spacing: bigSize ? 31 : 10) {
-                NavPanelGreenWithoutFavButton(titleName: "Nickname gen")
+                NavigationPanelWithBackButtonController(titleName: "Nickname gen")
                     .padding(.bottom, bigSize ? 10 : 5)
                 
                 bodySection

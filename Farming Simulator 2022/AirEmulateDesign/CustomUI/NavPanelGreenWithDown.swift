@@ -48,7 +48,7 @@ struct NavPanelGreenWithDown: View {
                 
                 // Add CircularDownloadButton here
                 if linkDownloadItem != nil {
-                    CircularDownloadButton(
+                    DownloadButtonWithProgressController(
                         progressDownload: $progressDownload,
                         linkDownloadItem: linkDownloadItem,
                         clearItemName: clearItemName

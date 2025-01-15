@@ -77,7 +77,7 @@ struct LoadignPreviewPage: View {
                     Color.white.edgesIgnoringSafeArea(.all)
                     
                     // Using binding correctly for progress
-                    LoadingLoaderCustomElement(progressTimer: .init(
+                    LoadingIndicatorView(progressTimer: .init(
                         get: { crotel.progress },
                         set: { crotel.progress = $0 }
                     ))

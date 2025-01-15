@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PreviewItemFromRemote: View {
+struct RemotePreviewItemController: View {
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @EnvironmentObject var dropBoxManager: DropBoxManager_SimulatorFarm
     @ObservedObject var networkManager = NetworkManager_SimulatorFarm()
@@ -76,5 +76,5 @@ struct PreviewItemFromRemote: View {
 }
 
 #Preview {
-    PreviewItemFromRemote(imagePath: "", likeState: .constant(true), tappedLikeButton: {_ in}, openDescriptionItem: {}, sendBackImageData: {_ in})
+    RemotePreviewItemController(imagePath: "", likeState: .constant(true), tappedLikeButton: {_ in}, openDescriptionItem: {}, sendBackImageData: {_ in})
 }

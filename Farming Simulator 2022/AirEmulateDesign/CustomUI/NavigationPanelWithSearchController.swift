@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NavPanelSearchInsideGreen: View {
+struct NavigationPanelWithSearchController: View {
     @Environment(\.dismiss) var dismiss
     @Binding var searchText: String
     @Binding var filterType: IconTurboGear.FilterIconTurbo
@@ -79,5 +79,5 @@ struct NavPanelSearchInsideGreen: View {
 }
 
 #Preview {
-    NavPanelSearchInsideGreen(searchText: .constant(""), filterType: .constant(.filterAllItems), searchTypeElement: .plane, onCommit: {}, choosedFilter: {_ in})
+    NavigationPanelWithSearchController(searchText: .constant(""), filterType: .constant(.filterAllItems), searchTypeElement: .plane, onCommit: {}, choosedFilter: {_ in})
 }

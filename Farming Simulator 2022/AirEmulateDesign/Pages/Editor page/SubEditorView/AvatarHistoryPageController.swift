@@ -53,7 +53,7 @@ class PreviewHelpers {
     }
 }
 
-struct RandomHistoryPage: View {
+struct AvatarHistoryPageController: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \BodyEditor.date, ascending: false)],
                         predicate: NSPredicate(format: "randomKey == %@", NSNumber(value: true)))
@@ -315,7 +315,7 @@ struct RandomHistoryPage: View {
 
 #Preview("History Page") {
     NavigationView {
-        RandomHistoryPage(
+        AvatarHistoryPageController(
             viewMotel: EditorViewModel(),
             choosedToEditCompletion: {},
             choosedData: .constant(PreviewHelpers.createMockBodyEditor())
@@ -329,7 +329,7 @@ struct RandomHistoryPage: View {
 #Preview("History Cell") {
     VStack {
         // iPhone size
-        RandomHistoryPage.cellToCollection(
+        AvatarHistoryPageController.cellToCollection(
             item: PreviewHelpers.createMockBodyEditor(),
             choosedData: .constant(nil),
             deleteAlert: .constant(false),
@@ -339,7 +339,7 @@ struct RandomHistoryPage: View {
         .padding()
         
         // iPad size
-        RandomHistoryPage.cellToCollection(
+        AvatarHistoryPageController.cellToCollection(
             item: PreviewHelpers.createMockBodyEditor(),
             choosedData: .constant(nil),
             deleteAlert: .constant(false),

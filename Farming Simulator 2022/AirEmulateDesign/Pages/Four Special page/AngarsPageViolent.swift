@@ -60,7 +60,7 @@ struct AngarsPageViolent: View {
                 }, label: {EmptyView()})
                 
                 VStack {
-                    NavPanelSearchInsideGreen(
+                    NavigationPanelWithSearchController(
                         searchText: $searchText,
                         filterType: $filterType,
                         searchTypeElement: .farm,  // This should probably be .angars when available
@@ -165,7 +165,7 @@ struct AngarsPageViolent: View {
     }
     
     private var bodyMiddleSection: some View {
-        PreviewItemFromRemote(imageData: choosedItem?.imageData, imagePath: "\(DropBoxKeys_SimulatorFarm.skinsImagePartPath)\(choosedItem?.image ?? "")", titleData: choosedItem?.title, previewText: choosedItem?.description, likeState: $choosedLikeState, tappedLikeButton: {bool in
+        RemotePreviewItemController(imageData: choosedItem?.imageData, imagePath: "\(DropBoxKeys_SimulatorFarm.skinsImagePartPath)\(choosedItem?.image ?? "")", titleData: choosedItem?.title, previewText: choosedItem?.description, likeState: $choosedLikeState, tappedLikeButton: {bool in
             choosedItem?.isFavorited = bool
             if let idString = choosedItem?.id {
                 PersistenceController.shared.updateFavoriteSkins(with: idString)

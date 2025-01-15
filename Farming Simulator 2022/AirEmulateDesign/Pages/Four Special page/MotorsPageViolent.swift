@@ -53,7 +53,7 @@ struct MotorsPageViolent: View {
                     .navigationBarBackButtonHidden()
             }, label: {EmptyView()})
             VStack{
-                NavPanelSearchInsideGreen(searchText: $searchText, filterType: $filterType, searchTypeElement: .dads, onCommit: {}, choosedFilter: {item in
+                NavigationPanelWithSearchController(searchText: $searchText, filterType: $filterType, searchTypeElement: .dads, onCommit: {}, choosedFilter: {item in
                     switch item {
                     case .filterAllItems:
                         dadsViewModel.modsSelectedFilter = .all
@@ -177,7 +177,7 @@ struct MotorsPageViolent: View {
     }
     
     private var bodyMiddleSection: some View {
-        PreviewItemFromRemote(imageData: choosedItem?.imageData, imagePath: "\(DropBoxKeys_SimulatorFarm.modsImagePartPath)\(choosedItem?.image ?? "")", titleData: choosedItem?.title, previewText: choosedItem?.description, likeState: $choosedLikeState, tappedLikeButton: {bool in
+        RemotePreviewItemController(imageData: choosedItem?.imageData, imagePath: "\(DropBoxKeys_SimulatorFarm.modsImagePartPath)\(choosedItem?.image ?? "")", titleData: choosedItem?.title, previewText: choosedItem?.description, likeState: $choosedLikeState, tappedLikeButton: {bool in
             choosedItem?.isFavorited = bool
             if let idString = choosedItem?.id {
                 PersistenceController.shared.updateFavoriteMods(with: idString)

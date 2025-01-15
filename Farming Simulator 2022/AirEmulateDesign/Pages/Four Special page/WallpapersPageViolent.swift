@@ -61,7 +61,7 @@ struct WallpapersPageViolent: View {
                 }, label: {EmptyView()})
 
                 VStack {
-                    NavPanelSearchInsideGreen(
+                    NavigationPanelWithSearchController(
                         searchText: $searchText,
                         filterType: $filterType,
                         searchTypeElement: .plane,
@@ -176,7 +176,7 @@ struct WallpapersPageViolent: View {
     }
     
     private var bodyMiddleSection: some View {
-        PreviewItemFromRemote(
+        RemotePreviewItemController(
             imageData: choosedItem?.imageData,
             imagePath: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(choosedItem?.image ?? "")",
             titleData: choosedItem?.title ?? "Name",

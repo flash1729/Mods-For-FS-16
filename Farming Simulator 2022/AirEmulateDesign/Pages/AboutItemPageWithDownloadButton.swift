@@ -106,7 +106,7 @@ struct AboutItemPageWithDownloadButton: View {
                     .paddingFlyBullet()
                 
                 // Main content using PreviewItemFromRemote
-                PreviewItemFromRemote(
+                RemotePreviewItemController(
                     imageData: imageData,
                     imagePath: "",  // Empty since we already have the image data
                     titleData: titleItemName,

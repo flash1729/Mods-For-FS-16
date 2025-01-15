@@ -52,7 +52,7 @@ struct MenuListToApp: View {
                 
                 // Loading View
                 if showDownloadView {
-                    LoadingLoaderCustomElement(progressTimer: $crotel.progress)
+                    LoadingIndicatorView(progressTimer: $crotel.progress)
                         .frame(maxHeight: .infinity, alignment: .center)
                         .onAppear {
                             crotel.progress = 0
