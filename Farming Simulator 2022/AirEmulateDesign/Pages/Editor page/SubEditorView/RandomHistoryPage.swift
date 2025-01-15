@@ -198,10 +198,6 @@ struct RandomHistoryPage: View {
         }
     }
     
-    // Example usage:
-    // CustomGreenButton(action: { }, title: "Upload", size: .large)
-    // CustomGreenButton(action: { }, title: "Edit", size: .small)
-    
     static func cellToCollection(
         item: BodyEditor,
         choosedData: Binding<BodyEditor?>,

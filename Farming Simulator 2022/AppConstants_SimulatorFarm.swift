@@ -41,7 +41,7 @@ struct DropBoxKeys_SimulatorFarm {
     //path to download file from folder
     static let modsFilePartPath = "/content/6765534fa8c5a/" //new
     static let mapsFilePartPath = "/content/67655354dd024/" //new
-    static let farmsFilePartPath = "/content/67655355b739c/" //new
+    static let farmsFilePartPath = "content/67655355b739c/" //new
     static let skinFilePartPath = "/content/67655850cdeb9/"
     
     //

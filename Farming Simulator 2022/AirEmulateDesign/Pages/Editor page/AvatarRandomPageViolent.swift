@@ -61,7 +61,8 @@ struct AvatarRandomPageViolent: View {
                     isGenerating: showPreview,
                     viewMotel: viewMotel,
                     genderType: genderType,
-                    showEditConfigurator: $showEditConfigurator
+                    showEditConfigurator: $showEditConfigurator,
+                    choosedData: $choosedData
                 )
                 .padding(.bottom, bigSize ? 10 : 5)
                 

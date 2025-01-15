@@ -19,6 +19,8 @@ struct AvatarGenNavBar: View {
     var viewMotel: EditorViewModel
     var genderType: GenderTypeModel
     @Binding var showEditConfigurator: Bool
+    @Binding var choosedData: BodyEditor?
+    
     @State private var downloadState: DownloadState = .initial
     @State private var showSaveState: Bool = false
     @State private var saveStateType: IconTurboGear.SaveStateIconTurbo = .saveSuccesfulIconElement
@@ -173,34 +175,70 @@ struct AvatarGenNavBar: View {
         }
     }
     
+//    private func handleEdit() {
+//            viewMotel.updateData = true
+//            viewMotel.sandvichPeople = viewMotel.randomItem
+//            showEditConfigurator = true
+//        }
+    
     private func handleEdit() {
+            let tempEditor = BodyEditor(context: viewContext)
+            viewMotel.updateWithoutSaveItemTCoreData(
+                updateItem: tempEditor,
+                item: viewMotel.randomItem,
+                genderType: genderType,
+                randomType: true
+            )
+            
+            choosedData = tempEditor
             viewMotel.updateData = true
             viewMotel.sandvichPeople = viewMotel.randomItem
             showEditConfigurator = true
         }
+    
+//    private func handleEdit() {
+//            // Create temporary BodyEditor in viewContext
+//            let tempEditor = BodyEditor(context: viewContext)
+//            
+//            // Update temp editor with current random configuration
+//            viewMotel.updateWithoutSaveItemTCoreData(updateItem: tempEditor,
+//                                                    item: viewMotel.randomItem,
+//                                                    genderType: genderType,
+//                                                    randomType: true)
+//            
+//            // Set as current data
+//            viewMotel.updateData = true
+//            viewMotel.sandvichPeople = viewMotel.randomItem
+//            
+//            // Update images
+//            let _ = viewMotel.mergeImages(from: viewMotel.randomItem.sendAllImages())
+//            
+//            // Show configurator
+//            showEditConfigurator = true
+//        }
 }
 
-// MARK: - Preview Provider
-struct AvatarGenNavBar_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            // Before generating
-            AvatarGenNavBar(
-                isGenerating: false,
-                viewMotel: EditorViewModel(),
-                genderType: .man,
-                showEditConfigurator: .constant(false)
-            )
-            .previewDisplayName("Before Generating")
-            
-            // After generating
-            AvatarGenNavBar(
-                isGenerating: true,
-                viewMotel: EditorViewModel(),
-                genderType: .man,
-                showEditConfigurator: .constant(false)
-            )
-            .previewDisplayName("After Generating")
-        }
-    }
-}
+//// MARK: - Preview Provider
+//struct AvatarGenNavBar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            // Before generating
+//            AvatarGenNavBar(
+//                isGenerating: false,
+//                viewMotel: EditorViewModel(),
+//                genderType: .man,
+//                showEditConfigurator: .constant(false)
+//            )
+//            .previewDisplayName("Before Generating")
+//            
+//            // After generating
+//            AvatarGenNavBar(
+//                isGenerating: true,
+//                viewMotel: EditorViewModel(),
+//                genderType: .man,
+//                showEditConfigurator: .constant(false)
+//            )
+//            .previewDisplayName("After Generating")
+//        }
+//    }
+//}

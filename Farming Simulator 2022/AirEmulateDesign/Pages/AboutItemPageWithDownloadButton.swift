@@ -111,7 +111,7 @@ struct AboutItemPageWithDownloadButton: View {
                     imagePath: "",  // Empty since we already have the image data
                     titleData: titleItemName,
                     previewText: textItem,
-                    likeState: .constant(favoriteState),
+                    likeState: $favoriteState,  // Use $ to create a mutable binding
                     tappedLikeButton: idItemToLike,
                     openDescriptionItem: {},  // Empty since we're already in detail view
                     sendBackImageData: { _ in }  // Empty since we already have image data

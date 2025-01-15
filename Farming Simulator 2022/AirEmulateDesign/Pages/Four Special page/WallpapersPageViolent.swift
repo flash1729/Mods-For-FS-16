@@ -35,7 +35,7 @@ struct WallpapersPageViolent: View {
                         titleItemName: choosedItem?.title ?? "",
                         favoriteState: choosedItem?.isFavorited ?? false,
                         imageData: choosedItem?.imageData,
-                        linkDownloadItem: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(choosedItem?.file ?? "")",
+                        linkDownloadItem: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(choosedItem?.file ?? "")/download",
                         textItem: choosedItem?.description ?? "",
                         idItemToLike: { bool in
                             if let choosedItem {

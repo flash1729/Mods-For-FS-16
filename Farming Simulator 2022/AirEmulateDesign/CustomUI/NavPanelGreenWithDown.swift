@@ -33,7 +33,8 @@ struct NavPanelGreenWithDown: View {
                 } label: {
                     Image("backButtonGreen")
                         .resizable()
-                        .frame(width: bigSize ? 44 : 24, height: bigSize ? 44 : 24)
+                        .scaledToFit()
+                        .frame(width: bigSize ? 80 : 44, height: bigSize ? 80 : 44)
                 }
                 
                 Text(titleName)
