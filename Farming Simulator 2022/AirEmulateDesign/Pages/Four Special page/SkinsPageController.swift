@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SkinsPageController: View {
-    @ObservedObject private var skinsViewModel = SkinsViewModel()
+    @ObservedObject private var skinsViewModel = SkinsViewModelController()
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State var searchText: String = ""
     @State var filterType: IconTurboGear.FilterIconTurbo = .filterAllItems

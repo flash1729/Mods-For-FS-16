@@ -9,15 +9,15 @@
 /* Begin PBXBuildFile section */
 		236133352CAD331F009B49C3 /* BodyEditorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236133342CAD331F009B49C3 /* BodyEditorModel.swift */; };
 		2363B9EC2CA99D08000111BA /* SkinsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363B9EB2CA99D08000111BA /* SkinsModel.swift */; };
-		2363B9EE2CA9A2E1000111BA /* SkinsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363B9ED2CA9A2E1000111BA /* SkinsViewModel.swift */; };
+		2363B9EE2CA9A2E1000111BA /* SkinsViewModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363B9ED2CA9A2E1000111BA /* SkinsViewModelController.swift */; };
 		720ED1DB2AF279E300FEA01C /* Persistence_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720ED1DA2AF279E300FEA01C /* Persistence_SimulatorFarm.swift */; };
 		7285F64B2ADF2FD4005C8E8E /* FilterType_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7285F64A2ADF2FD4005C8E8E /* FilterType_SimulatorFarm.swift */; };
 		7285F6572AE5DD56005C8E8E /* FarmModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7285F6562AE5DD56005C8E8E /* FarmModel_SimulatorFarm.swift */; };
 		7287AD112AF1315600657FD8 /* AppConstants_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7287ACF92AF1315400657FD8 /* AppConstants_SimulatorFarm.swift */; };
 		72926CC72ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72926CC62ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift */; };
-		72AD4A042AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A032AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift */; };
-		72AD4A062AEAA5CD00784D8A /* ModsViewModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A052AEAA5CC00784D8A /* ModsViewModel_SimulatorFarm.swift */; };
-		72AD4A0B2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A0A2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift */; };
+		72AD4A042AEA714E00784D8A /* WallpaperViewModelController_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A032AEA714E00784D8A /* WallpaperViewModelController_SimulatorFarm.swift */; };
+		72AD4A062AEAA5CD00784D8A /* ModsViewModelController_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A052AEAA5CC00784D8A /* ModsViewModelController_SimulatorFarm.swift */; };
+		72AD4A0B2AEABCEB00784D8A /* MapsViewModelController_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A0A2AEABCEB00784D8A /* MapsViewModelController_SimulatorFarm.swift */; };
 		72AD4A102AEBDCB300784D8A /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 72AD4A0F2AEBDCB300784D8A /* SwiftyDropbox */; };
 		72AD4A122AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A112AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift */; };
 		72B7BB6E2AE7DC7C00086D7C /* MapsModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B7BB6D2AE7DC7C00086D7C /* MapsModel_SimulatorFarm.swift */; };
@@ -25,7 +25,7 @@
 		72F3818D2ADD3D86005549F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72F3818C2ADD3D86005549F1 /* Assets.xcassets */; };
 		72F381902ADD3D86005549F1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72F3818F2ADD3D86005549F1 /* Preview Assets.xcassets */; };
 		72F381952ADD3D86005549F1 /* mods_farming_simulator22.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 72F381932ADD3D86005549F1 /* mods_farming_simulator22.xcdatamodeld */; };
-		72FC3A202AFD051B00046985 /* NetworkManager_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FC3A1F2AFD051B00046985 /* NetworkManager_SimulatorFarm.swift */; };
+		72FC3A202AFD051B00046985 /* NetworkManagerModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FC3A1F2AFD051B00046985 /* NetworkManagerModel_SimulatorFarm.swift */; };
 		EC52D6A92D1F297A003C1F2F /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A32D1F297A003C1F2F /* Gilroy-Bold.ttf */; };
 		EC52D6AA2D1F297A003C1F2F /* Gilroy-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A42D1F297A003C1F2F /* Gilroy-ExtraBold.ttf */; };
 		EC52D6AB2D1F297A003C1F2F /* Gilroy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC52D6A72D1F297A003C1F2F /* Gilroy-Regular.ttf */; };
@@ -51,15 +51,15 @@
 /* Begin PBXFileReference section */
 		236133342CAD331F009B49C3 /* BodyEditorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyEditorModel.swift; sourceTree = "<group>"; };
 		2363B9EB2CA99D08000111BA /* SkinsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinsModel.swift; sourceTree = "<group>"; };
-		2363B9ED2CA9A2E1000111BA /* SkinsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinsViewModel.swift; sourceTree = "<group>"; };
+		2363B9ED2CA9A2E1000111BA /* SkinsViewModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinsViewModelController.swift; sourceTree = "<group>"; };
 		720ED1DA2AF279E300FEA01C /* Persistence_SimulatorFarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence_SimulatorFarm.swift; sourceTree = "<group>"; };
 		7285F64A2ADF2FD4005C8E8E /* FilterType_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType_SimulatorFarm.swift; sourceTree = "<group>"; };
 		7285F6562AE5DD56005C8E8E /* FarmModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		7287ACF92AF1315400657FD8 /* AppConstants_SimulatorFarm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72926CC62ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsModel_SimulatorFarm.swift; sourceTree = "<group>"; };
-		72AD4A032AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
-		72AD4A052AEAA5CC00784D8A /* ModsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
-		72AD4A0A2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
+		72AD4A032AEA714E00784D8A /* WallpaperViewModelController_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpaperViewModelController_SimulatorFarm.swift; sourceTree = "<group>"; };
+		72AD4A052AEAA5CC00784D8A /* ModsViewModelController_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsViewModelController_SimulatorFarm.swift; sourceTree = "<group>"; };
+		72AD4A0A2AEABCEB00784D8A /* MapsViewModelController_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewModelController_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72AD4A112AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropBoxManagerModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72B113362AF44672005B803C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		72B7BB6D2AE7DC7C00086D7C /* MapsModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsModel_SimulatorFarm.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		72F3818C2ADD3D86005549F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72F3818F2ADD3D86005549F1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		72F381942ADD3D86005549F1 /* mods_farming_simulator22.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mods_farming_simulator22.xcdatamodel; sourceTree = "<group>"; };
-		72FC3A1F2AFD051B00046985 /* NetworkManager_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager_SimulatorFarm.swift; sourceTree = "<group>"; };
+		72FC3A1F2AFD051B00046985 /* NetworkManagerModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		EC52D6A22D1F297A003C1F2F /* Gilroy-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Black.ttf"; sourceTree = "<group>"; };
 		EC52D6A32D1F297A003C1F2F /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
 		EC52D6A42D1F297A003C1F2F /* Gilroy-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				7285F64A2ADF2FD4005C8E8E /* FilterType_SimulatorFarm.swift */,
-				72FC3A1F2AFD051B00046985 /* NetworkManager_SimulatorFarm.swift */,
+				72FC3A1F2AFD051B00046985 /* NetworkManagerModel_SimulatorFarm.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -184,11 +184,11 @@
 		72F3819D2ADD3DF2005549F1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				72AD4A032AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift */,
-				72AD4A052AEAA5CC00784D8A /* ModsViewModel_SimulatorFarm.swift */,
-				72AD4A0A2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift */,
+				72AD4A032AEA714E00784D8A /* WallpaperViewModelController_SimulatorFarm.swift */,
+				72AD4A052AEAA5CC00784D8A /* ModsViewModelController_SimulatorFarm.swift */,
+				72AD4A0A2AEABCEB00784D8A /* MapsViewModelController_SimulatorFarm.swift */,
 				72AD4A112AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift */,
-				2363B9ED2CA9A2E1000111BA /* SkinsViewModel.swift */,
+				2363B9ED2CA9A2E1000111BA /* SkinsViewModelController.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -332,21 +332,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				72B7BB6E2AE7DC7C00086D7C /* MapsModel_SimulatorFarm.swift in Sources */,
-				72FC3A202AFD051B00046985 /* NetworkManager_SimulatorFarm.swift in Sources */,
+				72FC3A202AFD051B00046985 /* NetworkManagerModel_SimulatorFarm.swift in Sources */,
 				236133352CAD331F009B49C3 /* BodyEditorModel.swift in Sources */,
 				7285F6572AE5DD56005C8E8E /* FarmModel_SimulatorFarm.swift in Sources */,
 				72926CC72ADD5EEB00F4B4E3 /* ModsModel_SimulatorFarm.swift in Sources */,
 				2363B9EC2CA99D08000111BA /* SkinsModel.swift in Sources */,
 				7285F64B2ADF2FD4005C8E8E /* FilterType_SimulatorFarm.swift in Sources */,
-				72AD4A062AEAA5CD00784D8A /* ModsViewModel_SimulatorFarm.swift in Sources */,
-				72AD4A0B2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift in Sources */,
+				72AD4A062AEAA5CD00784D8A /* ModsViewModelController_SimulatorFarm.swift in Sources */,
+				72AD4A0B2AEABCEB00784D8A /* MapsViewModelController_SimulatorFarm.swift in Sources */,
 				7287AD112AF1315600657FD8 /* AppConstants_SimulatorFarm.swift in Sources */,
-				72AD4A042AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift in Sources */,
+				72AD4A042AEA714E00784D8A /* WallpaperViewModelController_SimulatorFarm.swift in Sources */,
 				72F381952ADD3D86005549F1 /* mods_farming_simulator22.xcdatamodeld in Sources */,
 				72AD4A122AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift in Sources */,
 				72F381892ADD3D80005549F1 /* FarmingSimulatorApp.swift in Sources */,
 				720ED1DB2AF279E300FEA01C /* Persistence_SimulatorFarm.swift in Sources */,
-				2363B9EE2CA9A2E1000111BA /* SkinsViewModel.swift in Sources */,
+				2363B9EE2CA9A2E1000111BA /* SkinsViewModelController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

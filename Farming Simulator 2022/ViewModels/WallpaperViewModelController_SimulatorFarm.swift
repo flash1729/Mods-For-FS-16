@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class FarmsViewModel: ObservableObject {
+class WallpaperViewModelController_SimulatorFarm: ObservableObject {
     @Published var farms: [FarmModel] = []
     @Published var searchText = ""
     @Published var filteredFarms: [FarmModel] = []

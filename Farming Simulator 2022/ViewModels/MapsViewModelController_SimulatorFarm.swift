@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class MapsViewModel_SimulatorFarm: ObservableObject {
+class MapsViewModelController_SimulatorFarm: ObservableObject {
     @Published var maps: [MapPattern] = []
     @Published var searchText = ""
     @Published var filteredMaps: [MapPattern] = []

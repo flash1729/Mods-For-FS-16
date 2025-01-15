@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MapsPageController: View {
-   @ObservedObject private var mapsViewModel = MapsViewModel_SimulatorFarm()
+   @ObservedObject private var mapsViewModel = MapsViewModelController_SimulatorFarm()
    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
    @State var searchText: String = ""
    @State var filterType: IconTurboGear.FilterIconTurbo = .filterAllItems

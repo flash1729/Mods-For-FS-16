@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ModsPageController: View {
-    @ObservedObject private var dadsViewModel = ModViewModel()
+    @ObservedObject private var dadsViewModel = ModsViewModelController_SimulatorFarm()
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State var searchText: String = ""
     @State var filterType: IconTurboGear.FilterIconTurbo = .filterAllItems

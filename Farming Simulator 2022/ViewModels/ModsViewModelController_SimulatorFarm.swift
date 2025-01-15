@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class ModViewModel: ObservableObject {
+class ModsViewModelController_SimulatorFarm: ObservableObject {
     @Published var mods: [ModPattern] = []
     @Published var searchText = ""
     @Published var filteredMods: [ModPattern] = []

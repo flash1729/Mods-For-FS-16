@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class SkinsViewModel: ObservableObject {
+class SkinsViewModelController: ObservableObject {
     @Published var skins: [SkinsPattern] = []
     @Published var searchText = ""
     @Published var filteredSkins: [SkinsPattern] = []

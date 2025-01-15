@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WallpapersPageController: View {
-    @ObservedObject private var farmViewModel = FarmsViewModel()
+    @ObservedObject private var farmViewModel = WallpaperViewModelController_SimulatorFarm()
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State var searchText: String = ""
     @State var filterType: IconTurboGear.FilterIconTurbo = .filterAllItems
