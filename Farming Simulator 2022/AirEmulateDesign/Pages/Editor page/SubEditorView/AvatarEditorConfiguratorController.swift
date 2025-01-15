@@ -240,7 +240,7 @@ struct AvatarEditorConfiguratorController: View {
             ScrollView(.horizontal) {
                 LazyHStack {
                     if choosedPartModel != .body {
-                        ElementCellForEditor(imageName: "", choosedImageName: $choosedPart, tappedOnImage: {
+                        EditorItemCellView(imageName: "", choosedImageName: $choosedPart, tappedOnImage: {
                             changeIndex = -1
                             setImageToSandvich(type: $choosedPartModel, removeImage: true)
                         }, sendBackImageData: {_ in
@@ -249,7 +249,7 @@ struct AvatarEditorConfiguratorController: View {
                     }
                     
                     ForEach(Array(filterElements(type: $choosedPartModel, genderType: $genderType).enumerated()), id: \.element.id) { index, item in
-                        ElementCellForEditor(imageName: item.previewImageString ?? "", choosedImageName: $choosedPart, tappedOnImage: {
+                        EditorItemCellView(imageName: item.previewImageString ?? "", choosedImageName: $choosedPart, tappedOnImage: {
                             changeIndex = index
                         }, imageData: item.previewImage, sendBackImageData: {data in
                             item.previewImage = data

@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct MenuListToApp: View {
+struct MainMenuController: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \BodyElement.idElement, ascending: false)])
         private var allData: FetchedResults<BodyElement>
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
-    @ObservedObject var crotel: LoadingPreviewVMCyan = LoadingPreviewVMCyan()
+    @ObservedObject var crotel: LoadingPreviewVMGreen = LoadingPreviewVMGreen()
     @State var itemTypeChoosed: IconTurboGear.MenuIconTurbo?
     @State var openPage: Bool = false
     

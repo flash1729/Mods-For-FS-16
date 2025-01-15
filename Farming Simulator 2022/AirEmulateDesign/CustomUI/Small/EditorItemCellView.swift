@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ElementCellForEditor: View {
+struct EditorItemCellView: View {
     @EnvironmentObject var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     @State private var isInternetAvailable = true
     @ObservedObject var networkManager = NetworkManager_SimulatorFarm()

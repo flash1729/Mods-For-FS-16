@@ -121,7 +121,7 @@ struct AvatarPreviewController: View {
     private var downloadSection: some View {
         VStack {
             if showSaveState {
-                SaveStateCustomView(saveState: $saveStateIphone)
+                SaveConfirmationAlertView(saveState: $saveStateIphone)
                     .onAppear(){
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                             self.showSaveState = false

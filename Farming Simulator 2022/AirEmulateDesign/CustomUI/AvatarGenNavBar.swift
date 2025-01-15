@@ -34,7 +34,7 @@ struct AvatarGenNavBar: View {
         VStack(spacing: 0) {
             // Save state overlay
             if showSaveState {
-                SaveStateCustomView(saveState: $saveStateType)
+                SaveConfirmationAlertView(saveState: $saveStateType)
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                             self.showSaveState = false

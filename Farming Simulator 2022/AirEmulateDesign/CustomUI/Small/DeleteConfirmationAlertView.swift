@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DeleteItemAlert: View {
+struct DeleteConfirmationAlertView: View {
     @State var stateTapped: (Bool) -> Void
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     
@@ -65,5 +65,5 @@ struct DeleteItemAlert: View {
 }
 
 #Preview {
-    DeleteItemAlert { _ in }
+    DeleteConfirmationAlertView { _ in }
 }

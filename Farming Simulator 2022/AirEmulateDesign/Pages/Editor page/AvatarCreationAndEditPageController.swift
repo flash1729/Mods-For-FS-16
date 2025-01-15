@@ -189,7 +189,7 @@ struct AvatarCreationAndEditPageController: View {
     private var downloadSection: some View {
         VStack {
             if showSaveState {
-                SaveStateCustomView(saveState: $saveStateType)
+                SaveConfirmationAlertView(saveState: $saveStateType)
                     .onAppear(){
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                             self.showSaveState = false

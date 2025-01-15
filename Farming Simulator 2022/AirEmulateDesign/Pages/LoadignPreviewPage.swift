@@ -60,7 +60,7 @@ import SwiftUI
 
 struct LoadignPreviewPage: View {
     // Changed to @StateObject for proper lifecycle management
-    @StateObject private var crotel = LoadingPreviewVMCyan()
+    @StateObject private var crotel = LoadingPreviewVMGreen()
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
     @State private var workInternetState: Bool = true
     @State private var openMenuPage: Bool = false
@@ -71,7 +71,7 @@ struct LoadignPreviewPage: View {
     var body: some View {
         ZStack {
             if openMenuPage {
-                MenuListToApp()
+                MainMenuController()
             } else {
                 ZStack {
                     Color.white.edgesIgnoringSafeArea(.all)

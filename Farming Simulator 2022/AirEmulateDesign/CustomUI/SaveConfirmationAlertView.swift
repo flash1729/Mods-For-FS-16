@@ -1,3 +1,4 @@
+
 //
 //  SaveStateIphone.swift
 //  Farming Simulator 2022
@@ -7,12 +8,12 @@
 
 import SwiftUI
 
-struct SaveStateCustomView: View {
+struct SaveConfirmationAlertView: View {
     @Binding var saveState: IconTurboGear.SaveStateIconTurbo
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     var body: some View {
         RoundedRectangle(cornerRadius: 16)
-            .fill(ColorTurboGear.colorPicker(.darkGray))
+            .fill(ColorTurboGear.colorPicker(.grey))
             .frame(height: 90)
             .overlay {
                 HStack(spacing: 16) {
@@ -31,5 +32,5 @@ struct SaveStateCustomView: View {
 }
 
 #Preview {
-    SaveStateCustomView(saveState: .constant(.saveFailedIconElement))
+    SaveConfirmationAlertView(saveState: .constant(.saveFailedIconElement))
 }

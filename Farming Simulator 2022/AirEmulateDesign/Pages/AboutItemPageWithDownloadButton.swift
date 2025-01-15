@@ -199,7 +199,7 @@ struct AboutItemPageWithDownloadButton: View {
     private var downloadSection: some View {
         VStack {
             if showSaveState {
-                SaveStateCustomView(saveState: $saveState)
+                SaveConfirmationAlertView(saveState: $saveState)
                     .onAppear(){
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                             self.showSaveState = false

@@ -447,7 +447,7 @@ import CoreData
 //    }
 //}
 
-class LoadingPreviewVMCyan: ObservableObject {
+class LoadingPreviewVMGreen: ObservableObject {
     @Published var progress: Int = 0
     @Published var pauseType: Bool = false
     private var timer: Timer?
@@ -457,7 +457,8 @@ class LoadingPreviewVMCyan: ObservableObject {
     var allDataCount = 0
     var counter: Int = 0
 }
-extension LoadingPreviewVMCyan {
+
+extension LoadingPreviewVMGreen {
     func startLoadingPreviewKitchenToolUsage() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true) { [weak self] time in
             guard let self = self else { return }
