@@ -205,7 +205,7 @@ struct SkinsPageController: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: bigSize ? 20 : 10) {
                     ForEach(skinsViewModel.filteredSkins, id: \.id) { item in
-                        ElementCellDataCyanBorder(imageName: "\(DropBoxKeys_SimulatorFarm.skinsImagePartPath)\(item.image)", choosedImageName: $choosedImageName, tappedOnImage: {
+                        ElementCellDataGreenBorder(imageName: "\(DropBoxKeys_SimulatorFarm.skinsImagePartPath)\(item.image)", choosedImageName: $choosedImageName, tappedOnImage: {
                             choosedImageName = "\(DropBoxKeys_SimulatorFarm.skinsImagePartPath)\(item.image)"
                             choosedLikeState = item.isFavorited ?? false
                             let firstItem = skinsViewModel.skins.first(where: {$0.id == item.id})

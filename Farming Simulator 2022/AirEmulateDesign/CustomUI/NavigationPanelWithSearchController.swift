@@ -11,7 +11,7 @@ struct NavigationPanelWithSearchController: View {
     @Environment(\.dismiss) var dismiss
     @Binding var searchText: String
     @Binding var filterType: IconTurboGear.FilterIconTurbo
-    @State var searchTypeElement: SearchPanelWhiteGray.SearchType
+    @State var searchTypeElement: SearchPanelView.SearchType
     @State var onCommit: () -> Void
     @State var choosedFilter: (IconTurboGear.FilterIconTurbo) -> Void
     @State var showSearchPanel: Bool = false
@@ -23,7 +23,7 @@ struct NavigationPanelWithSearchController: View {
             Group {
                 if showSearchPanel {
                     // Search Panel that replaces the header
-                    SearchPanelWhiteGray(
+                    SearchPanelView(
                         searchTypeElement: searchTypeElement,
                         searchText: $searchText, showSearchPanel: $showSearchPanel,
                         onCommit: onCommit

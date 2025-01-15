@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FavoritHeartButtonCyan: View {
+struct FavoriteButtonView: View {
     @Binding var stateFavoritHeart: Bool
     @State var onTapButton: (Bool) -> Void
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
@@ -26,5 +26,5 @@ struct FavoritHeartButtonCyan: View {
 }
 
 #Preview {
-    FavoritHeartButtonCyan(stateFavoritHeart: .constant(true), onTapButton: {_ in})
+    FavoriteButtonView(stateFavoritHeart: .constant(true), onTapButton: {_ in})
 }

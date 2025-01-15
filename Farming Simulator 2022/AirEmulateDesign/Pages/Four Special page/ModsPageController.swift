@@ -217,7 +217,7 @@ struct ModsPageController: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: bigSize ? 20 : 10) {
                     ForEach(dadsViewModel.filteredMods, id: \.id) { item in
-                        ElementCellDataCyanBorder(imageName: "\(DropBoxKeys_SimulatorFarm.modsImagePartPath)\(item.image)", choosedImageName: $choosedImageName, tappedOnImage: {
+                        ElementCellDataGreenBorder(imageName: "\(DropBoxKeys_SimulatorFarm.modsImagePartPath)\(item.image)", choosedImageName: $choosedImageName, tappedOnImage: {
                             choosedImageName = "\(DropBoxKeys_SimulatorFarm.modsImagePartPath)\(item.image)"
                             choosedLikeState = item.isFavorited ?? false
                             let firstItem = dadsViewModel.mods.first(where: {$0.id == item.id})

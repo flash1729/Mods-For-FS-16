@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SearchPanelWhiteGray: View {
+struct SearchPanelView: View {
     enum SearchType: String {
         case dads = "mod"
         case maps = "map"
@@ -96,7 +96,7 @@ struct SearchPanelWhiteGray_Previews: PreviewProvider {
             Color.gray.opacity(0.1)
                 .ignoresSafeArea()
             
-            SearchPanelWhiteGray(
+            SearchPanelView(
                 searchTypeElement: .dads,
                 searchText: .constant(""),
                 showSearchPanel: .constant(true),

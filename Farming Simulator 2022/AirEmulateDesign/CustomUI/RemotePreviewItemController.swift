@@ -54,7 +54,7 @@ struct RemotePreviewItemController: View {
                         .clipShape(RoundedRectangle(cornerRadius: bigSize ? 24 : 16))
                     
                     // Heart button overlay
-                    FavoritHeartButtonCyan(
+                    FavoriteButtonView(
                         stateFavoritHeart: $likeState,
                         onTapButton: tappedLikeButton
                     )

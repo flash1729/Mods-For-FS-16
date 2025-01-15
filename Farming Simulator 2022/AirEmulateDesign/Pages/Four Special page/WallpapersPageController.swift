@@ -225,7 +225,7 @@ struct WallpapersPageController: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: bigSize ? 20 : 10) {
                     ForEach(farmViewModel.filteredFarms, id: \.id) { item in
-                        ElementCellDataCyanBorder(imageName: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(item.image)", choosedImageName: $choosedImageName, tappedOnImage: {
+                        ElementCellDataGreenBorder(imageName: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(item.image)", choosedImageName: $choosedImageName, tappedOnImage: {
                             choosedImageName = "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(item.image)"
                             choosedLikeState = item.isFavorited ?? false
                             let firstItem = farmViewModel.farms.first(where: {$0.id == item.id})

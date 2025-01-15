@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FilterIconInNav: View {
+struct FilterButtonInNavigationView: View {
     @State var iconType: IconTurboGear.FilterIconTurbo
     @Binding var choosedIconType: IconTurboGear.FilterIconTurbo
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
@@ -31,6 +31,7 @@ struct FilterIconInNav: View {
             .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
+
 #Preview {
-    FilterIconInNav(iconType: .filterAllItems, choosedIconType: .constant(.filterAllItems))
+    FilterButtonInNavigationView(iconType: .filterAllItems, choosedIconType: .constant(.filterAllItems))
 }

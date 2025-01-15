@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ElementCellDataCyanBorder: View {
+struct ElementCellDataGreenBorder: View {
     @EnvironmentObject var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     @State private var isInternetAvailable = true
     @ObservedObject var networkManager = NetworkManager_SimulatorFarm()
@@ -81,5 +81,5 @@ struct ElementCellDataCyanBorder: View {
 }
 
 #Preview {
-    ElementCellDataCyanBorder(imageName: IconTurboGear.mediumRareBackToPhone, choosedImageName: .constant(IconTurboGear.mediumRareBackToPhone), tappedOnImage: {}, sendBackImageData: {_ in})
+    ElementCellDataGreenBorder(imageName: IconTurboGear.mediumRareBackToPhone, choosedImageName: .constant(IconTurboGear.mediumRareBackToPhone), tappedOnImage: {}, sendBackImageData: {_ in})
 }
