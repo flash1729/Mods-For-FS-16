@@ -27,7 +27,7 @@ struct DownloadButtonWithProgressController: View {
     
     // Environment objects
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
-    @EnvironmentObject private var dropBoxManager: DropBoxManager_SimulatorFarm
+    @EnvironmentObject private var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     
     // Constants
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
@@ -426,7 +426,7 @@ struct CircularDownloadButton_Previews: PreviewProvider {
         }
         .padding()
         .environmentObject(NetworkManager_SimulatorFarm())
-        .environmentObject(DropBoxManager_SimulatorFarm.shared)
+        .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
     }
 }
 

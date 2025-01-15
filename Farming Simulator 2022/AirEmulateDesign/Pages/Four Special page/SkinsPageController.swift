@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AngarsPageViolent: View {
+struct SkinsPageController: View {
     @ObservedObject private var skinsViewModel = SkinsViewModel()
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State var searchText: String = ""
@@ -266,9 +266,9 @@ struct AngarsPageViolent: View {
 struct AngarsPageViolent_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AngarsPageViolent()
+            SkinsPageController()
                 .environmentObject(NetworkManager_SimulatorFarm())
-                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
                 .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
         .navigationViewStyle(StackNavigationViewStyle())

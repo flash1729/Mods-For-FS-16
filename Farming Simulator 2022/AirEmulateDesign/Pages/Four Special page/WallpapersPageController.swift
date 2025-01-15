@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WallpapersPageViolent: View {
+struct WallpapersPageController: View {
     @ObservedObject private var farmViewModel = FarmsViewModel()
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State var searchText: String = ""
@@ -288,10 +288,10 @@ struct WallpapersPageViolent_Previews: PreviewProvider {
     static var previews: some View {
         // Create a preview container with required dependencies
         NavigationView {
-            WallpapersPageViolent()
+            WallpapersPageController()
                 // Inject required environment objects
                 .environmentObject(NetworkManager_SimulatorFarm())
-                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
                 // Set up Core Data environment
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         }
@@ -306,9 +306,9 @@ struct WallpapersPageViolent_Previews: PreviewProvider {
         
         // Add an iPad preview as well
         NavigationView {
-            WallpapersPageViolent()
+            WallpapersPageController()
                 .environmentObject(NetworkManager_SimulatorFarm())
-                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         }
         .navigationViewStyle(StackNavigationViewStyle())

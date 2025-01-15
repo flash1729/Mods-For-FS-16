@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct NickRandomPageViolent: View {
+struct NicknameGeneratorPageController: View {
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @AppStorage("generatedNickname") var generatedNickname: String = ""
     @State var copiedText: Bool = false
@@ -143,9 +143,9 @@ struct NickRandomPageViolent: View {
 struct NickRandomPageViolent_Previews: PreviewProvider {
     static var previews: some View {
         // Creating a preview with required environment objects
-        NickRandomPageViolent()
+        NicknameGeneratorPageController()
             .environmentObject(NetworkManager_SimulatorFarm()) // Network manager is required
-            .environmentObject(DropBoxManager_SimulatorFarm.shared) // DropBox manager if needed
+            .environmentObject(DropBoxManagerModel_SimulatorFarm.shared) // DropBox manager if needed
             .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext) // CoreData context if needed
     }
 }

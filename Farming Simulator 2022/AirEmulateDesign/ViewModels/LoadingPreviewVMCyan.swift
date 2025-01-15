@@ -472,7 +472,7 @@ extension LoadingPreviewVMCyan {
         }
     }
     
-    func addAllElementToCoreData(allData: FetchedResults<BodyElement>, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext) async {
+    func addAllElementToCoreData(allData: FetchedResults<BodyElement>, dropBoxManager: DropBoxManagerModel_SimulatorFarm, viewContext: NSManagedObjectContext) async {
         if allData.isEmpty { return }
         allDataCount = allData.count
         await withTaskGroup(of: Void.self) { taskGroup in
@@ -498,7 +498,7 @@ extension LoadingPreviewVMCyan {
         self.imageSaveToCoreDate.loadedCount = 0
     }
 
-    func downloadAndSaveImage(url: String, urlPreview: String, dropBoxManager: DropBoxManager_SimulatorFarm, viewContext: NSManagedObjectContext, element: BodyElement) async {
+    func downloadAndSaveImage(url: String, urlPreview: String, dropBoxManager: DropBoxManagerModel_SimulatorFarm, viewContext: NSManagedObjectContext, element: BodyElement) async {
         if element.editroImage != nil && element.previewImage != nil {
             self.imageSaveToCoreDate.loadedCount += 1
             
@@ -509,7 +509,7 @@ extension LoadingPreviewVMCyan {
         await saveImageToCoreData(data: data, preview: dataPreview, viewContext: viewContext, element: element)
     }
 
-    func dropBoxDownloadImage(preview: Bool, url: String, dropBoxManager: DropBoxManager_SimulatorFarm) async -> Data? {
+    func dropBoxDownloadImage(preview: Bool, url: String, dropBoxManager: DropBoxManagerModel_SimulatorFarm) async -> Data? {
         let fullUrl = "\(DropBoxKeys_SimulatorFarm.bodyEditorImagePartPath)\(url)"
         
         return await withCheckedContinuation { continuation in

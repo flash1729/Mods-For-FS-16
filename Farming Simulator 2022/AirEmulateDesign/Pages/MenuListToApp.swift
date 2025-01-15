@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuListToApp: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var dropBoxManager: DropBoxManager_SimulatorFarm
+    @EnvironmentObject var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \BodyElement.idElement, ascending: false)])
         private var allData: FetchedResults<BodyElement>
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
@@ -118,28 +118,28 @@ struct MenuListToApp: View {
             NavigationLink(isActive: $openPage, destination: {
                 switch itemTypeChoosed {
                 case .dads:
-                    MotorsPageViolent()
+                    ModsPageController()
                         .navigationBarBackButtonHidden()
                 case .maps:
-                    MapsPageViolent()
+                    MapsPageController()
                         .navigationBarBackButtonHidden()
                 case .plane:
-                    WallpapersPageViolent()
+                    WallpapersPageController()
                         .navigationBarBackButtonHidden()
                 case .angar:
-                    AngarsPageViolent()
+                    SkinsPageController()
                         .navigationBarBackButtonHidden()
                 case .nickGen:
-                    NickRandomPageViolent()
+                    NicknameGeneratorPageController()
                         .navigationBarBackButtonHidden()
                 case .avaGen:
-                    AvatarRandomPageViolent(viewMotel: viewMotel)
+                    AvatarGeneratorPageController(viewMotel: viewMotel)
                         .navigationBarBackButtonHidden()
                 case .editor:
-                    CreateSelfAvatarAndEditPageViolent(viewMotel: viewMotel)
+                    AvatarCreationAndEditPageController(viewMotel: viewMotel)
                         .navigationBarBackButtonHidden()
                 case nil:
-                    MotorsPageViolent()
+                    ModsPageController()
                         .navigationBarBackButtonHidden()
                 }
             }, label: { EmptyView() })

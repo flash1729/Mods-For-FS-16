@@ -322,7 +322,7 @@ struct AvatarHistoryPageController: View {
         )
         .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         .environmentObject(NetworkManager_SimulatorFarm())
-        .environmentObject(DropBoxManager_SimulatorFarm.shared)
+        .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
     }
 }
 

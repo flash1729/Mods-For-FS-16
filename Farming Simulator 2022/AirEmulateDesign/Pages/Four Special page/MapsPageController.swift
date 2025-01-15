@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MapsPageViolent: View {
+struct MapsPageController: View {
    @ObservedObject private var mapsViewModel = MapsViewModel_SimulatorFarm()
    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
    @State var searchText: String = ""
@@ -258,9 +258,9 @@ struct MapsPageViolent: View {
 struct MapsPageViolent_Previews: PreviewProvider {
    static var previews: some View {
        NavigationView {
-           MapsPageViolent()
+           MapsPageController()
                .environmentObject(NetworkManager_SimulatorFarm())
-               .environmentObject(DropBoxManager_SimulatorFarm.shared)
+               .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
        }
        .navigationViewStyle(StackNavigationViewStyle())

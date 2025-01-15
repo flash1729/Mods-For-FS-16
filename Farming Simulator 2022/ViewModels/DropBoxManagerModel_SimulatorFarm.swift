@@ -11,8 +11,8 @@ import SwiftyDropbox
 import Combine
 import CoreData
 
-class DropBoxManager_SimulatorFarm: ObservableObject {
-    static let shared = DropBoxManager_SimulatorFarm()
+class DropBoxManagerModel_SimulatorFarm: ObservableObject {
+    static let shared = DropBoxManagerModel_SimulatorFarm()
     
     private var coreDataHelper = PersistenceController.shared
     private var client: DropboxClient?

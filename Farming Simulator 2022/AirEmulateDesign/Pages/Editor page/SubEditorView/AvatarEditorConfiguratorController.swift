@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AvatarEditorConfiguratorController: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var dropBoxManager: DropBoxManager_SimulatorFarm
+    @EnvironmentObject var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \BodyElement.idElement, ascending: false)])
         private var allElementData: FetchedResults<BodyElement>
     @ObservedObject var viewMotel: EditorViewModel

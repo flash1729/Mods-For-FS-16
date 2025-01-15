@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MotorsPageViolent: View {
+struct ModsPageController: View {
     @ObservedObject private var dadsViewModel = ModViewModel()
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
     @State var searchText: String = ""
@@ -278,9 +278,9 @@ struct MotorsPageViolent: View {
 struct MotorsPageViolent_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            MotorsPageViolent()
+            ModsPageController()
                 .environmentObject(NetworkManager_SimulatorFarm())
-                .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
                 .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
         .navigationViewStyle(StackNavigationViewStyle())

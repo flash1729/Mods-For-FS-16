@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RandomPreviewAvatar: View {
+struct AvatarPreviewController: View {
     @Environment(\.managedObjectContext) private var viewContext
     @ObservedObject var viewMotel: EditorViewModel
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad

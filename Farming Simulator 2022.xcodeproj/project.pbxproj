@@ -19,7 +19,7 @@
 		72AD4A062AEAA5CD00784D8A /* ModsViewModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A052AEAA5CC00784D8A /* ModsViewModel_SimulatorFarm.swift */; };
 		72AD4A0B2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A0A2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift */; };
 		72AD4A102AEBDCB300784D8A /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 72AD4A0F2AEBDCB300784D8A /* SwiftyDropbox */; };
-		72AD4A122AEFB88100784D8A /* DropBoxManager_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A112AEFB88100784D8A /* DropBoxManager_SimulatorFarm.swift */; };
+		72AD4A122AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AD4A112AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift */; };
 		72B7BB6E2AE7DC7C00086D7C /* MapsModel_SimulatorFarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B7BB6D2AE7DC7C00086D7C /* MapsModel_SimulatorFarm.swift */; };
 		72F381892ADD3D80005549F1 /* FarmingSimulatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F381882ADD3D80005549F1 /* FarmingSimulatorApp.swift */; };
 		72F3818D2ADD3D86005549F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72F3818C2ADD3D86005549F1 /* Assets.xcassets */; };
@@ -60,7 +60,7 @@
 		72AD4A032AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72AD4A052AEAA5CC00784D8A /* ModsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72AD4A0A2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewModel_SimulatorFarm.swift; sourceTree = "<group>"; };
-		72AD4A112AEFB88100784D8A /* DropBoxManager_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropBoxManager_SimulatorFarm.swift; sourceTree = "<group>"; };
+		72AD4A112AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropBoxManagerModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72B113362AF44672005B803C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		72B7BB6D2AE7DC7C00086D7C /* MapsModel_SimulatorFarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsModel_SimulatorFarm.swift; sourceTree = "<group>"; };
 		72DC45172AF1345000669060 /* Farming Simulator 2022.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Farming Simulator 2022.entitlements"; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 				72AD4A032AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift */,
 				72AD4A052AEAA5CC00784D8A /* ModsViewModel_SimulatorFarm.swift */,
 				72AD4A0A2AEABCEB00784D8A /* MapsViewModel_SimulatorFarm.swift */,
-				72AD4A112AEFB88100784D8A /* DropBoxManager_SimulatorFarm.swift */,
+				72AD4A112AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift */,
 				2363B9ED2CA9A2E1000111BA /* SkinsViewModel.swift */,
 			);
 			path = ViewModels;
@@ -343,7 +343,7 @@
 				7287AD112AF1315600657FD8 /* AppConstants_SimulatorFarm.swift in Sources */,
 				72AD4A042AEA714E00784D8A /* FarmsViewModel_SimulatorFarm.swift in Sources */,
 				72F381952ADD3D86005549F1 /* mods_farming_simulator22.xcdatamodeld in Sources */,
-				72AD4A122AEFB88100784D8A /* DropBoxManager_SimulatorFarm.swift in Sources */,
+				72AD4A122AEFB88100784D8A /* DropBoxManagerModel_SimulatorFarm.swift in Sources */,
 				72F381892ADD3D80005549F1 /* FarmingSimulatorApp.swift in Sources */,
 				720ED1DB2AF279E300FEA01C /* Persistence_SimulatorFarm.swift in Sources */,
 				2363B9EE2CA9A2E1000111BA /* SkinsViewModel.swift in Sources */,

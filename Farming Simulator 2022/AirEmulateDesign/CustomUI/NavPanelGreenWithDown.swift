@@ -23,7 +23,7 @@ struct NavPanelGreenWithDown: View {
     
     // Environment objects needed for download functionality
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
-    @EnvironmentObject private var dropBoxManager: DropBoxManager_SimulatorFarm
+    @EnvironmentObject private var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     
     var body: some View {
         VStack {
@@ -76,5 +76,5 @@ struct NavPanelGreenWithDown: View {
         clearItemName: "sample"           // Add sample clear name
     )
     .environmentObject(NetworkManager_SimulatorFarm())        // Provide required environment objects
-    .environmentObject(DropBoxManager_SimulatorFarm.shared)   // for the preview
+    .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)   // for the preview
 }

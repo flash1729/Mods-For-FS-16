@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RemotePreviewItemController: View {
     let bigSize = UIDevice.current.userInterfaceIdiom == .pad
-    @EnvironmentObject var dropBoxManager: DropBoxManager_SimulatorFarm
+    @EnvironmentObject var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     @ObservedObject var networkManager = NetworkManager_SimulatorFarm()
     @State var imageData: Data? = nil
     @State var imagePath: String

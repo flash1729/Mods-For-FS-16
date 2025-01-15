@@ -12,7 +12,7 @@ import AVFoundation
 struct FarmingSimulatorApp: App {
     let persistenceController = PersistenceController.shared
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    let dropBox = DropBoxManager_SimulatorFarm.shared
+    let dropBox = DropBoxManagerModel_SimulatorFarm.shared
     @StateObject private var networkManager = NetworkManager_SimulatorFarm()
     
     init() {

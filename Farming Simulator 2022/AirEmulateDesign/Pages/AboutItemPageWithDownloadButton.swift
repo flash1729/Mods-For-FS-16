@@ -30,7 +30,7 @@ struct AboutItemPageWithDownloadButton: View {
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
     @State var timer: Timer?
     
-    @EnvironmentObject var dropBoxManager: DropBoxManager_SimulatorFarm
+    @EnvironmentObject var dropBoxManager: DropBoxManagerModel_SimulatorFarm
     @State var isLoading: Bool = false
     @State var isFileDownloaded: Bool = false
     
@@ -337,7 +337,7 @@ struct AboutItemPageWithDownloadButton_Previews: PreviewProvider {
             .previewDisplayName("With Image")
         }
         .environmentObject(NetworkManager_SimulatorFarm())
-        .environmentObject(DropBoxManager_SimulatorFarm.shared)
+        .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
     }
 }
 #endif

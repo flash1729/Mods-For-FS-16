@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AvatarRandomPageViolent: View {
+struct AvatarGeneratorPageController: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \BodyElement.idElement, ascending: false)])
         private var allElementData: FetchedResults<BodyElement>
@@ -68,7 +68,7 @@ struct AvatarRandomPageViolent: View {
                 
                 // Main content area
                 if showPreview {
-                    RandomPreviewAvatar(
+                    AvatarPreviewController(
                         viewMotel: viewMotel,
                         choosedPart: $choosedPart,
                         showPartBodyList: $showPartBodyList,
@@ -216,10 +216,10 @@ struct AvatarRandomPageViolent_Previews: PreviewProvider {
         Group {
             // iPhone Preview
             NavigationView {
-                AvatarRandomPageViolent(viewMotel: EditorViewModel())
+                AvatarGeneratorPageController(viewMotel: EditorViewModel())
                     // Inject required environment objects
                     .environmentObject(NetworkManager_SimulatorFarm())
-                    .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                    .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
                     // Set up Core Data environment
                     .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
             }
@@ -230,9 +230,9 @@ struct AvatarRandomPageViolent_Previews: PreviewProvider {
             
             // iPad Preview
             NavigationView {
-                AvatarRandomPageViolent(viewMotel: EditorViewModel())
+                AvatarGeneratorPageController(viewMotel: EditorViewModel())
                     .environmentObject(NetworkManager_SimulatorFarm())
-                    .environmentObject(DropBoxManager_SimulatorFarm.shared)
+                    .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)
                     .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
             }
             .navigationViewStyle(StackNavigationViewStyle())

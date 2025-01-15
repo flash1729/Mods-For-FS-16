@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CreateSelfAvatarAndEditPageViolent: View {
+struct AvatarCreationAndEditPageController: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \BodyEditor.date, ascending: false)],
                         predicate: NSPredicate(format: "randomKey == %@", NSNumber(value: false)))
