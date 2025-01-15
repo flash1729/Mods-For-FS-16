@@ -31,7 +31,9 @@ struct NavPanelGreenWithDown: View {
                 Button {
                     dismiss()
                 } label: {
-                    NavButtonMiniIcon(typeOfImage: IconTurboGear.TopNavIconTurbo.backChev)
+                    Image("backButtonGreen")
+                        .resizable()
+                        .frame(width: bigSize ? 44 : 24, height: bigSize ? 44 : 24)
                 }
                 
                 Text(titleName)

@@ -17,6 +17,7 @@ struct MenuListToApp: View {
     @State var itemTypeChoosed: IconTurboGear.MenuIconTurbo?
     @State var openPage: Bool = false
     
+    
     @State var workInternetState: Bool = true
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
     @State var timer: Timer?
@@ -32,8 +33,8 @@ struct MenuListToApp: View {
                 VStack(alignment: .leading, spacing: 0) {
                     // Menu Title
                     Text("Menu")
-                        .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 34, type: .bold))
-                        .lineSpacing((32 * 0.3))
+                        .font(FontTurboGear.gilroyStyle(size: bigSize ? 44 : 32, type: .bold))
+//                        .lineSpacing((32 * 0.3))
                         .foregroundColor(ColorTurboGear.colorPicker(.darkGreen))
                         .padding(.horizontal, 20)
                         .padding(.top, bigSize ? 80 : 60)
@@ -47,6 +48,7 @@ struct MenuListToApp: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 
                 allLinks
+                    .ignoresSafeArea(.all)
                 
                 // Loading View
                 if showDownloadView {
@@ -92,28 +94,8 @@ struct MenuListToApp: View {
         }
     }
     
-//    private var listOfButtons: some View {
-//        VStack(spacing: bigSize ? 16 : 12) {
-//            ForEach(IconTurboGear.MenuIconTurbo.allCases, id: \.self) { menuType in
-//                MenuButton(
-//                    iconType: menuType,
-//                    isSelected: menuType == itemTypeChoosed,
-//                    action: {
-//                        itemTypeChoosed = menuType
-//                        if menuType == .avaGen || menuType == .editor {
-//                            showDownloadView.toggle()
-//                        } else {
-//                            openPage.toggle()
-//                        }
-//                    }
-//                )
-//            }
-//        }
-//    }
-    
-    
     private var listOfButtons: some View {
-        VStack(spacing: bigSize ? 16 : 12) { // Increased spacing for iPad
+        VStack(spacing: bigSize ? 16 : 12) {
             ForEach(IconTurboGear.MenuIconTurbo.allCases, id: \.self) { menuType in
                 MenuButton(
                     iconType: menuType,
@@ -129,7 +111,6 @@ struct MenuListToApp: View {
                 )
             }
         }
-        .padding(.horizontal, 20)
     }
     
     private var allLinks: some View {
@@ -166,86 +147,32 @@ struct MenuListToApp: View {
     }
 }
 
+// New Menu Button Component
 struct MenuButton: View {
-    let iconType: IconTurboGear.MenuIconTurbo
-    let isSelected: Bool
-    let action: () -> Void
-    let bigSize = UIDevice.current.userInterfaceIdiom == .pad
-    
-    // Dynamic sizing based on device type
-    private var buttonHeight: CGFloat { bigSize ? 42 : 23 }
-    private var buttonWidth: CGFloat { bigSize ? 80 : 45 }
-    private var fontSize: CGFloat { bigSize ? 32 : 18 }
-    private var lineHeight: CGFloat { bigSize ? 42 : 24 }
-    private var verticalPadding: CGFloat { bigSize ? 16 : 12 }
-    private var horizontalPadding: CGFloat { bigSize ? 32 : 24 }
-    
-    var body: some View {
-        Button(action: action) {
-            Text(iconType.sendTitleOfItem())
-                .font(FontTurboGear.gilroyStyle(size: fontSize, type: .bold))
-                .foregroundColor(isSelected ? .white : ColorTurboGear.colorPicker(.darkGreen))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, bigSize ? 32 : 12)
-                .padding(.horizontal, horizontalPadding)
-                .frame(height: buttonHeight)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(isSelected ? ColorTurboGear.colorPicker(.darkGreen) : .white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color(.sRGB, red: 143/255, green: 143/255, blue: 143/255, opacity: 0.25), lineWidth: 1)
-                        )
-                        .shadow(
-                            color: Color(.sRGB, red: 143/255, green: 143/255, blue: 143/255, opacity: 0.25),
-                            radius: 8,
-                            x: 0,
-                            y: 4
-                        )
-                )
-                .frame(width: 824, height: bigSize ? 80 : 47)
-        }
-    }
+   let iconType: IconTurboGear.MenuIconTurbo //no need
+   let isSelected: Bool
+   let action: () -> Void
+   let bigSize = UIDevice.current.userInterfaceIdiom == .pad
+   
+   var body: some View {
+       Button(action: action) {
+           Text(iconType.sendTitleOfItem())
+               .font(FontTurboGear.gilroyStyle(size: bigSize ? 32 : 18, type: .bold))
+               .foregroundColor(isSelected ? .white : ColorTurboGear.colorPicker(.darkGreen))
+               .frame(maxWidth: bigSize ? 824 : .infinity)
+               .padding(.vertical, 12)
+               .padding(.horizontal, 24)
+               .background(
+                   RoundedRectangle(cornerRadius: 8)
+                       .fill(isSelected ? ColorTurboGear.colorPicker(.darkGreen) : .white)
+                       .overlay(
+                           RoundedRectangle(cornerRadius: 8)
+                               .stroke(Color(.sRGB, red: 143/255, green: 143/255, blue: 143/255, opacity: 0.25), lineWidth: 1)
+                       )
+                       .shadow(color: Color(.sRGB, red: 143/255, green: 143/255, blue: 143/255, opacity: 0.25), radius: 8, x: 0, y: 4)
+               )
+               .frame(height: bigSize ? 74 : 47)
+       }
+   }
 }
-
-//// Preview provider
-//struct MenuButton_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Group {
-//            // iPhone preview
-//            VStack(spacing: 12) {
-//                MenuButton(
-//                    iconType: .dads,
-//                    isSelected: true,
-//                    action: {}
-//                )
-//                MenuButton(
-//                    iconType: .maps,
-//                    isSelected: false,
-//                    action: {}
-//                )
-//            }
-//            .padding()
-//            .previewDevice("iPhone 14")
-//            .previewDisplayName("iPhone")
-//            
-//            // iPad preview
-//            VStack(spacing: 16) {
-//                MenuButton(
-//                    iconType: .dads,
-//                    isSelected: true,
-//                    action: {}
-//                )
-//                MenuButton(
-//                    iconType: .maps,
-//                    isSelected: false,
-//                    action: {}
-//                )
-//            }
-//            .padding()
-//            .previewDevice("iPad Pro (11-inch)")
-//            .previewDisplayName("iPad")
-//        }
-//    }
-//}
 

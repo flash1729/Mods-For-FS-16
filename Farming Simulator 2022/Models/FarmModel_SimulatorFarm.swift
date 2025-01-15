@@ -29,8 +29,8 @@ struct FarmModel: Codable, Equatable {
     
     let id: String
     let image: String
-    var title: String?
-    var description: String?
+    var title: String
+    var description: String
     var file: String?
     var isFavorited: Bool?
     var imageData: Data?
@@ -49,15 +49,29 @@ struct FarmModel: Codable, Equatable {
         case new = "lastAdded"
     }
     
+//    init(from decoder: Decoder) throws {
+//       let container = try decoder.container(keyedBy: MyCodingKeysWallpaper.self)
+//       id = try container.decodeIfPresent(String.self, forKey: .id) ?? UUID().uuidString
+//       image = try container.decode(String.self, forKey: .image)
+//       title = try container.decodeIfPresent(String.self, forKey: .title)
+//       description = try container.decodeIfPresent(String.self, forKey: .description)
+//       file = try container.decode(String.self, forKey: .file)
+//       top = try container.decodeIfPresent(Bool.self, forKey: .top)
+//       new = try container.decodeIfPresent(Bool.self, forKey: .new)
+//    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MyCodingKeysWallpaper.self)
         id = try container.decodeIfPresent(String.self, forKey: .id) ?? UUID().uuidString
         image = try container.decode(String.self, forKey: .image)
+        title = try container.decode(String.self, forKey: .title)
+        description = try container.decode(String.self, forKey: .description)
+        file = try container.decode(String.self, forKey: .file)
         top = try container.decodeIfPresent(Bool.self, forKey: .top)
         new = try container.decodeIfPresent(Bool.self, forKey: .new)
     }
     
-    init(id: String, title: String?, description: String?, image: String, isFavorited: Bool?, file: String?, imageData: Data?, top: Bool?, new: Bool? ) {
+    init(id: String, title: String, description: String, image: String, isFavorited: Bool?, file: String, imageData: Data?, top:Bool?, new: Bool?) {
         self.id = id
         self.title = title
         self.description = description
@@ -69,6 +83,19 @@ struct FarmModel: Codable, Equatable {
         self.new = new
         
     }
+    
+//    init(id: String, title: String?, description: String?, image: String, isFavorited: Bool?, file: String?, imageData: Data?, top: Bool?, new: Bool? ) {
+//        self.id = id
+//        self.title = title
+//        self.description = description
+//        self.image = image
+//        self.isFavorited = isFavorited
+//        self.file = file
+//        self.imageData = imageData
+//        self.top = top
+//        self.new = new
+//        
+//    }
     
     init(from coreDataObject: Farm) {
         self.id = coreDataObject.id ?? ""
