@@ -96,7 +96,7 @@ struct AboutItemPageWithDownloadButton: View {
                         idItemToLike(bool)
                     },
                     linkDownloadItem: linkDownloadItem,
-                    clearItemName: clearItemName
+                    clearItemName: clearItemName, imageData: imageData
                 )
                 .id(navUpdateId)
                 .padding(.bottom, bigSize ? 10 : 5)

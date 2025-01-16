@@ -35,7 +35,7 @@ struct WallpapersPageController: View {
                         titleItemName: choosedItem?.title ?? "",
                         favoriteState: choosedItem?.isFavorited ?? false,
                         imageData: choosedItem?.imageData,
-                        linkDownloadItem: "\(DropBoxKeys_SimulatorFarm.farmsImagePartPath)\(choosedItem?.file ?? "")/download",
+                        linkDownloadItem: nil,
                         textItem: choosedItem?.description ?? "",
                         idItemToLike: { bool in
                             if let choosedItem {

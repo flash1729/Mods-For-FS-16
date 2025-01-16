@@ -20,6 +20,7 @@ struct NavPanelGreenWithDown: View {
     @State private var progressDownload: Double = 0.0
     let linkDownloadItem: String?           // Optional because some items might not have downloads
     let clearItemName: String
+    let imageData: Data?  // Add this parameter
     
     // Environment objects needed for download functionality
     @EnvironmentObject private var networkManager: NetworkManager_SimulatorFarm
@@ -47,13 +48,15 @@ struct NavPanelGreenWithDown: View {
                 Spacer()
                 
                 // Add CircularDownloadButton here
-                if linkDownloadItem != nil {
+                
                     DownloadButtonWithProgressController(
                         progressDownload: $progressDownload,
                         linkDownloadItem: linkDownloadItem,
-                        clearItemName: clearItemName
+                        clearItemName: clearItemName,
+                        imageData: imageData   // Pass the imageData
+                        
                     )
-                }
+                
             }
             .frame(maxHeight: .infinity, alignment: .bottom)
         }
@@ -67,14 +70,14 @@ struct NavPanelGreenWithDown: View {
 }
 
 // Updated preview provider to include the new required parameters
-#Preview {
-    NavPanelGreenWithDown(
-        titleName: "Name",
-        favoriteState: true,
-        favoriteTapped: {_ in},
-        linkDownloadItem: "sample/path",  // Add sample download path
-        clearItemName: "sample"           // Add sample clear name
-    )
-    .environmentObject(NetworkManager_SimulatorFarm())        // Provide required environment objects
-    .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)   // for the preview
-}
+//#Preview {
+//    NavPanelGreenWithDown(
+//        titleName: "Name",
+//        favoriteState: true,
+//        favoriteTapped: {_ in},
+//        linkDownloadItem: "sample/path",  // Add sample download path
+//        clearItemName: "sample"           // Add sample clear name
+//    )
+//    .environmentObject(NetworkManager_SimulatorFarm())        // Provide required environment objects
+//    .environmentObject(DropBoxManagerModel_SimulatorFarm.shared)   // for the preview
+//}
