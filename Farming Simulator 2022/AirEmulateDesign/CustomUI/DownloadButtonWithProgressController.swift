@@ -1130,14 +1130,134 @@ struct DownloadButtonWithProgressController: View {
 //            }
 //    }
     
+//    private func handleDownload() {
+//        guard networkManager.checkInternetConnectivity_SimulatorFarm() else {
+//            handleFailure("No internet connection")
+//            return
+//        }
+//        
+//        // If we have imageData, treat it as a wallpaper regardless of linkDownloadItem
+//        if let imageData = imageData, let image = UIImage(data: imageData) {
+//            downloadState = .downloading(progress: 0)
+//            
+//            PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
+//                DispatchQueue.main.async {
+//                    if status == .authorized || status == .limited {
+//                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+//                        progressDownload = 1.0
+//                        handleSuccess()
+//                    } else {
+//                        handleFailure("Photo library access denied")
+//                    }
+//                }
+//            }
+//            return
+//        }
+//        
+//        // Only proceed with file download if we have a valid linkDownloadItem
+//        guard let fileName = linkDownloadItem, !fileName.isEmpty else {
+//            handleFailure("Invalid file name")
+//            return
+//        }
+//        
+//        handleRegularDownload()
+//    }
+//    
+//    private func handleWallpaperDownload() {
+//        guard let imageData = imageData, let image = UIImage(data: imageData) else {
+//            handleFailure("Invalid image data")
+//            return
+//        }
+//        
+//        downloadState = .downloading(progress: 0)
+//        
+//        PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
+//            DispatchQueue.main.async {
+//                if status == .authorized || status == .limited {
+//                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+//                    progressDownload = 1.0
+//                    handleSuccess()
+//                } else {
+//                    handleFailure("Photo library access denied")
+//                }
+//            }
+//        }
+//    }
+//    
+//    private func handleRegularDownload() {
+//        guard let fileName = linkDownloadItem, !fileName.isEmpty else {
+//            handleFailure("Invalid file name")
+//            return
+//        }
+//        
+//        isLoading = true
+//        downloadState = .downloading(progress: 0)
+//        
+//        dropBoxManager.downloadFile_SimulatorFarm(fileName: fileName) { progressData in
+//            DispatchQueue.main.async {
+//                let progress = (progressData.fractionCompleted * 100).rounded() / 100
+//                progressDownload = progress
+//                downloadState = .downloading(progress: progress)
+//            }
+//        } completion: { downloadedData in
+//            handleDownloadCompletion(downloadedData, fileName: fileName)
+//        }
+//    }
+//    
+//    private func handleDownloadCompletion(_ downloadedData: Data?, fileName: String) {
+//        guard let fileData = downloadedData else {
+//            handleFailure("Download failed")
+//            return
+//        }
+//        
+//        handleFileDownload(fileData, fileName: fileName)
+//    }
+//    
+//    private func handleFileDownload(_ fileData: Data, fileName: String) {
+//        let fileArray = fileName.components(separatedBy: "/")
+//        let finalFileName = fileArray.last ?? ""
+//        let fileManager = FileManager.default
+//        
+//        do {
+//            let docsURL = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+//            let fileURL = docsURL.appendingPathComponent(finalFileName)
+//            
+//            try fileData.write(to: fileURL)
+//            
+//            if fileManager.fileExists(atPath: fileURL.path) {
+//                progressDownload = 1.0
+//                handleSuccess()
+//                showShareSheet(withURL: fileURL.path)
+//            } else {
+//                handleFailure("File save failed")
+//            }
+//        } catch {
+//            handleFailure(error.localizedDescription)
+//        }
+//    }
+    
     private func handleDownload() {
-        guard networkManager.checkInternetConnectivity_SimulatorFarm() else {
-            handleFailure("No internet connection")
-            return
+            guard networkManager.checkInternetConnectivity_SimulatorFarm() else {
+                handleFailure("No internet connection")
+                return
+            }
+            
+            // Priority 1: Direct image download when linkDownloadItem is nil
+            if linkDownloadItem == nil, let imageData = imageData, let image = UIImage(data: imageData) {
+                handleImageDownload(image)
+                return
+            }
+            
+            // Priority 2: File download using linkDownloadItem
+            guard let fileName = linkDownloadItem, !fileName.isEmpty else {
+                handleFailure("Invalid file name")
+                return
+            }
+            
+            handleFileDownload(fileName)
         }
         
-        // If we have imageData, treat it as a wallpaper regardless of linkDownloadItem
-        if let imageData = imageData, let image = UIImage(data: imageData) {
+        private func handleImageDownload(_ image: UIImage) {
             downloadState = .downloading(progress: 0)
             
             PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
@@ -1151,90 +1271,50 @@ struct DownloadButtonWithProgressController: View {
                     }
                 }
             }
-            return
         }
         
-        // Only proceed with file download if we have a valid linkDownloadItem
-        guard let fileName = linkDownloadItem, !fileName.isEmpty else {
-            handleFailure("Invalid file name")
-            return
+        private func handleFileDownload(_ fileName: String) {
+            isLoading = true
+            downloadState = .downloading(progress: 0)
+            
+            dropBoxManager.downloadFile_SimulatorFarm(fileName: fileName) { progressData in
+                DispatchQueue.main.async {
+                    let progress = (progressData.fractionCompleted * 100).rounded() / 100
+                    progressDownload = progress
+                    downloadState = .downloading(progress: progress)
+                }
+            } completion: { downloadedData in
+                handleDownloadCompletion(downloadedData, fileName: fileName)
+            }
         }
         
-        handleRegularDownload()
-    }
-    
-    private func handleWallpaperDownload() {
-        guard let imageData = imageData, let image = UIImage(data: imageData) else {
-            handleFailure("Invalid image data")
-            return
-        }
-        
-        downloadState = .downloading(progress: 0)
-        
-        PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
-            DispatchQueue.main.async {
-                if status == .authorized || status == .limited {
-                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        private func handleDownloadCompletion(_ downloadedData: Data?, fileName: String) {
+            guard let fileData = downloadedData else {
+                handleFailure("Download failed")
+                return
+            }
+            
+            let fileArray = fileName.components(separatedBy: "/")
+            let finalFileName = fileArray.last ?? ""
+            let fileManager = FileManager.default
+            
+            do {
+                let docsURL = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                let fileURL = docsURL.appendingPathComponent(finalFileName)
+                
+                try fileData.write(to: fileURL)
+                
+                if fileManager.fileExists(atPath: fileURL.path) {
                     progressDownload = 1.0
                     handleSuccess()
+                    showShareSheet(withURL: fileURL.path)
                 } else {
-                    handleFailure("Photo library access denied")
+                    handleFailure("File save failed")
                 }
+            } catch {
+                handleFailure(error.localizedDescription)
             }
         }
-    }
-    
-    private func handleRegularDownload() {
-        guard let fileName = linkDownloadItem, !fileName.isEmpty else {
-            handleFailure("Invalid file name")
-            return
-        }
-        
-        isLoading = true
-        downloadState = .downloading(progress: 0)
-        
-        dropBoxManager.downloadFile_SimulatorFarm(fileName: fileName) { progressData in
-            DispatchQueue.main.async {
-                let progress = (progressData.fractionCompleted * 100).rounded() / 100
-                progressDownload = progress
-                downloadState = .downloading(progress: progress)
-            }
-        } completion: { downloadedData in
-            handleDownloadCompletion(downloadedData, fileName: fileName)
-        }
-    }
-    
-    private func handleDownloadCompletion(_ downloadedData: Data?, fileName: String) {
-        guard let fileData = downloadedData else {
-            handleFailure("Download failed")
-            return
-        }
-        
-        handleFileDownload(fileData, fileName: fileName)
-    }
-    
-    private func handleFileDownload(_ fileData: Data, fileName: String) {
-        let fileArray = fileName.components(separatedBy: "/")
-        let finalFileName = fileArray.last ?? ""
-        let fileManager = FileManager.default
-        
-        do {
-            let docsURL = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            let fileURL = docsURL.appendingPathComponent(finalFileName)
-            
-            try fileData.write(to: fileURL)
-            
-            if fileManager.fileExists(atPath: fileURL.path) {
-                progressDownload = 1.0
-                handleSuccess()
-                showShareSheet(withURL: fileURL.path)
-            } else {
-                handleFailure("File save failed")
-            }
-        } catch {
-            handleFailure(error.localizedDescription)
-        }
-    }
     
     private func showShareSheet(withURL urlString: String) {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
